@@ -4,9 +4,10 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.android.application'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
@@ -44,6 +45,9 @@ android {
 }
 
 dependencies {
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
 

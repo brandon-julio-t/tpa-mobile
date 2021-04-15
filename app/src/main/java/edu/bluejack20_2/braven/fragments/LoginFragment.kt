@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
-import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -25,6 +23,11 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,12 +45,6 @@ class LoginFragment : Fragment() {
                 .build(),
             RC_SIGN_IN
         )
-
-        binding.logout.setOnClickListener {
-            AuthUI.getInstance().signOut(requireContext()).addOnSuccessListener {
-                findNavController().navigate(R.id.toLogin)
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,8 +54,7 @@ class LoginFragment : Fragment() {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
-                val user = FirebaseAuth.getInstance().currentUser
-                Log.wtf("hehe", user?.toString())
+                findNavController().navigate(LoginFragmentDirections.toHome())
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

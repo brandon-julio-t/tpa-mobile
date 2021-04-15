@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BRaVeN">
+        android:theme="@style/Theme.BRaVeN"
+        android:name=".BravenApplication">
         <activity android:name="edu.bluejack20_2.braven.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
