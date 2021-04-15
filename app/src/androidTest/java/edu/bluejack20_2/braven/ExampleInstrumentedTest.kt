@@ -1,4 +1,4 @@
-package edu.bluejack20_2.BRaVeN
+package edu.bluejack20_2.braven
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

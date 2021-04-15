@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "611668847442",
+    "project_id": "braven-c8c60",
+    "storage_bucket": "braven-c8c60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611668847442:android:0e23eec95f0ae84bd5a88b",
+        "android_client_info": {
+          "package_name": "edu.bluejack20_2.BRaVeN"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611668847442-6pe3fl534ivcrsj5o52dih33sm0f60a6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpsoyAu0iqsVl0yPLgEC9N-Ng9HU7Yh74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611668847442-6pe3fl534ivcrsj5o52dih33sm0f60a6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
