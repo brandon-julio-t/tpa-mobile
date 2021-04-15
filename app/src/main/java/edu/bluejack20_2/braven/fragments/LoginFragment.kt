@@ -1,18 +1,34 @@
-package edu.bluejack20_2.braven
+package edu.bluejack20_2.braven.fragments
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.databinding.FragmentLoginBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class LoginFragment : Fragment() {
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
@@ -26,6 +42,12 @@ class MainActivity : AppCompatActivity() {
                 .build(),
             RC_SIGN_IN
         )
+
+        binding.logout.setOnClickListener {
+            AuthUI.getInstance().signOut(requireContext()).addOnSuccessListener {
+                findNavController().navigate(R.id.toLogin)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
