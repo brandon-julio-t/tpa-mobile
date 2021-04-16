@@ -35,7 +35,6 @@
         android:label="@string/account"
         tools:layout="@layout/fragment_account" />
     <fragment
-<<<<<<< HEAD
         android:id="@+id/aboutFragment"
         android:name="edu.bluejack20_2.braven.fragments.AboutFragment"
         android:label="fragment_about"
@@ -45,10 +44,9 @@
         android:name="edu.bluejack20_2.braven.fragments.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
-=======
+    <fragment
         android:id="@+id/createPostFragment"
         android:name="edu.bluejack20_2.braven.fragments.CreatePostFragment"
         android:label="@string/create_post"
         tools:layout="@layout/fragment_create_post" />
->>>>>>> af6a8c077dc9bcdf3fd362b2e5a3db7be169e8aa
 </navigation>

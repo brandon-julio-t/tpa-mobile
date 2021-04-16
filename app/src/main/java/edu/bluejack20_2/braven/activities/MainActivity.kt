@@ -41,12 +41,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.toolbar.setupWithNavController(
-<<<<<<< HEAD
-            navController, AppBarConfiguration(navController.graph)
-=======
             navController,
             AppBarConfiguration(navController.graph)
->>>>>>> af6a8c077dc9bcdf3fd362b2e5a3db7be169e8aa
         )
 
         binding.bottomNavigation.setupWithNavController(navController)
