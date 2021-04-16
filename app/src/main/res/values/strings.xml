@@ -6,4 +6,11 @@
     <string name="hello">Hello, %s!</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
+    <string name="title_about">About</string>
+    <string name="about_paragraph1">Braven is an application where you can post anything and what you like in our forum. You can reply others forum too. It is a quite simple application that you can enjoy.</string>
+    <string name="about_paragraph2">With Braven, you can make a friend with anyone, comment in their post, like their activity, follow your friends, and search post that you like.</string>
+    <string name="about_paragraph3">Made with ❤\nby\nVincent Benedict VN20-2\nand\nBrandon Julio Thenaro BR20-2.</string>
+    <string name="about">about</string>
+    <string name="about_paragraph4">🚀 Powered by Android, Kotlin, and Firebase.</string>
+    <string name="setting">setting</string>
 </resources>

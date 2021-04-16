@@ -1,8 +1,10 @@
 package edu.bluejack20_2.braven.activities
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -21,15 +23,26 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val appSettingPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
+//        val sharedPrefsEdit: SharedPreferences.Editor? = appSettingPrefs?.edit()
+        val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
+
+        when(isNightModeOn){
+            true -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            false -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         binding.toolbar.setupWithNavController(
-            navController, AppBarConfiguration(
-                topLevelDestinationIds = setOf(),
-                fallbackOnNavigateUpListener = ::onSupportNavigateUp
-            )
+            navController, AppBarConfiguration(navController.graph)
         )
 
         binding.bottomNavigation.setupWithNavController(navController)
