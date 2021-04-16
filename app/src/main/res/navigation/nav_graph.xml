@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="edu.bluejack20_2.braven.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <action
         android:id="@+id/toLogin"
@@ -18,8 +18,12 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="edu.bluejack20_2.braven.fragments.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/toCreatePost"
+            app:destination="@id/createPostFragment" />
+    </fragment>
     <action
         android:id="@+id/toHome"
         app:destination="@id/homeFragment"
@@ -28,9 +32,10 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="edu.bluejack20_2.braven.fragments.AccountFragment"
-        android:label="fragment_account"
+        android:label="@string/account"
         tools:layout="@layout/fragment_account" />
     <fragment
+<<<<<<< HEAD
         android:id="@+id/aboutFragment"
         android:name="edu.bluejack20_2.braven.fragments.AboutFragment"
         android:label="fragment_about"
@@ -40,4 +45,10 @@
         android:name="edu.bluejack20_2.braven.fragments.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+=======
+        android:id="@+id/createPostFragment"
+        android:name="edu.bluejack20_2.braven.fragments.CreatePostFragment"
+        android:label="@string/create_post"
+        tools:layout="@layout/fragment_create_post" />
+>>>>>>> af6a8c077dc9bcdf3fd362b2e5a3db7be169e8aa
 </navigation>
