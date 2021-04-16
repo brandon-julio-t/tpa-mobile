@@ -9,19 +9,20 @@
         android:id="@+id/loginFragment"
         android:name="edu.bluejack20_2.braven.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/toHome"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
     <action
         android:id="@+id/toLogin"
         app:destination="@id/loginFragment"
-        app:popUpTo="@id/loginFragment"
+        app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="edu.bluejack20_2.braven.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <action
+        android:id="@+id/toHome"
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

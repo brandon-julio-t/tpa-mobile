@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentLoginBinding
+import java.lang.IllegalArgumentException
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -38,13 +40,25 @@ class LoginFragment : Fragment() {
             AuthUI.IdpConfig.GoogleBuilder().build(),
         )
 
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build(),
-            RC_SIGN_IN
-        )
+        try {
+            AuthUI.getInstance().silentSignIn(requireContext(), providers)
+                .addOnSuccessListener {
+                    findNavController().navigate(R.id.toHome)
+                }
+                .addOnFailureListener {
+                    startActivityForResult(
+                        AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .build(),
+                        RC_SIGN_IN
+                    )
+                }
+        } catch (e: IllegalArgumentException) {
+            // user already signed in
+            Log.wtf("hehe", e.toString())
+            findNavController().navigate(R.id.toHome)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -54,7 +68,7 @@ class LoginFragment : Fragment() {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
-                findNavController().navigate(LoginFragmentDirections.toHome())
+                findNavController().navigate(R.id.toHome)
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
