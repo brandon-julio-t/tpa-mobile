@@ -6,4 +6,6 @@
     <string name="hello">Hello, %s!</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
+    <string name="login">login</string>
+    <string name="create_post">Create Post</string>
 </resources>

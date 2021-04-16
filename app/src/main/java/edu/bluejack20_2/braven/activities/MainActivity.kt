@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -22,14 +21,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController
 
         binding.toolbar.setupWithNavController(
-            navController, AppBarConfiguration(
-                topLevelDestinationIds = setOf(),
-                fallbackOnNavigateUpListener = ::onSupportNavigateUp
-            )
+            navController,
+            AppBarConfiguration(navController.graph)
         )
 
         binding.bottomNavigation.setupWithNavController(navController)
