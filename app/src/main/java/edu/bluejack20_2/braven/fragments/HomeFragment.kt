@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.snackbar.Snackbar
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
-import edu.bluejack20_2.braven.services.AuthenticationService
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -31,6 +31,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.createPost.setOnClickListener { findNavController().navigate(HomeFragmentDirections.toCreatePost()) }
+        binding.createPost.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.toCreatePost())
+        }
     }
 }

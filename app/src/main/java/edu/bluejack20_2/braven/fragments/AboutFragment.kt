@@ -1,17 +1,14 @@
 package edu.bluejack20_2.braven.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import edu.bluejack20_2.braven.R
-import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
 
 
 class AboutFragment : Fragment() {
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -19,6 +16,4 @@ class AboutFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
-
-
 }

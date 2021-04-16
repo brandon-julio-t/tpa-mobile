@@ -22,11 +22,15 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initiateLightOrDarkMode()
+        setupToolbarAndBottomNavigationWithNavController()
+    }
+
+    private fun initiateLightOrDarkMode() {
         val appSettingPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
-//        val sharedPrefsEdit: SharedPreferences.Editor? = appSettingPrefs?.edit()
         val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
 
-        when(isNightModeOn){
+        when (isNightModeOn) {
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
@@ -34,8 +38,9 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
+    }
 
-
+    private fun setupToolbarAndBottomNavigationWithNavController() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController

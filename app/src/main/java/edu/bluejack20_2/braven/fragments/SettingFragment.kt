@@ -12,19 +12,13 @@ import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
 import edu.bluejack20_2.braven.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
-
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-
-
+    ): View {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,7 +27,6 @@ class SettingFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

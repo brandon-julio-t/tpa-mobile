@@ -3,14 +3,16 @@
     package="edu.bluejack20_2.braven">
 
     <application
+        android:name=".BravenApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BRaVeN"
-        android:name=".BravenApplication">
-        <activity android:name="edu.bluejack20_2.braven.activities.MainActivity">
+        android:theme="@style/Theme.BRaVeN">
+        <activity
+            android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -23,7 +23,7 @@ class CreatePostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCreatePostBinding.inflate(inflater, container, false)
-        createPostController.bind(binding)
+        createPostController.bind(binding, requireActivity())
         return binding.root
     }
 
