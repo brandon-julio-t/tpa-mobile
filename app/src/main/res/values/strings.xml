@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logout">Logout</string>
     <string name="hello">Hello, %s!</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
 </resources>
