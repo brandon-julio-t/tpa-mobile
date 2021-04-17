@@ -37,12 +37,12 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="edu.bluejack20_2.braven.fragments.AboutFragment"
-        android:label="fragment_about"
+        android:label="@string/about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/settingFragment"
         android:name="edu.bluejack20_2.braven.fragments.SettingFragment"
-        android:label="fragment_setting"
+        android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/createPostFragment"

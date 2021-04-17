@@ -1,12 +1,17 @@
 package edu.bluejack20_2.braven.activities
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
@@ -44,12 +49,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        binding.toolbar.setupWithNavController(
-            navController,
-            AppBarConfiguration(navController.graph)
-        )
-
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.toolbar.setOnMenuItemClickListener {
+            it.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
+                    || super.onOptionsItemSelected(it)
+        }
         binding.bottomNavigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->

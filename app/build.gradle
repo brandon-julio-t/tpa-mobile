@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:20.0.4'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     def nav_version = "2.3.4"
 
