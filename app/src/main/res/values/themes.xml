@@ -12,16 +12,47 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
     </style>
 
-    <style name="FontSizeSmall" parent="Theme.BRaVeN">
-        <item name="android:textSize">12sp</item>
+    <!-- Large Font Variant -->
+    <style name="Theme.BRaVeN.FontLarge" parent="Theme.BRaVeN">
+        <item name="textAppearanceHeadline5">@style/TextAppearance.BRaVeN.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.BRaVeN.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.BRaVeN.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.BRaVeN.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.BRaVeN.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.BRaVeN.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.BRaVeN.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.BRaVeN.Button</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.BRaVeN.Overline</item>
     </style>
-    <style name="FontSizeMedium">
-        <item name="android:textSize">14sp</item>
+
+    <!-- Override Style -->
+    <style name="TextAppearance.BRaVeN.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">27sp</item>
     </style>
-    <style name="FontSizeLarge">
-        <item name="android:textSize">18sp</item>
+    <style name="TextAppearance.BRaVeN.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">23sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">19sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">19sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="TextAppearance.BRaVeN.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textSize">13sp</item>
     </style>
 </resources>

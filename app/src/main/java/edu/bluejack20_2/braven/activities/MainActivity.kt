@@ -21,11 +21,27 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
+        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", true)
+
+        when (isLarge) {
+            true -> {
+                var themeID: Int = R.style.Theme_BRaVeN_FontLarge
+                setTheme(themeID)
+                Log.wtf("testis", "hehehe")
+            }
+            else -> {
+                var themeID: Int = R.style.Theme_BRaVeN
+                setTheme(themeID)
+                Log.wtf("testis", "else")
+            }
+        }
+
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initiateFontSize()
         initiateLightOrDarkMode()
         setupToolbarAndBottomNavigationWithNavController()
     }
@@ -40,22 +56,6 @@ class MainActivity : AppCompatActivity() {
             }
             false -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
-    }
-
-    private fun initiateFontSize(){
-        val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
-        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", false)
-
-        when (isLarge) {
-            true -> {
-                var themeID: Int = R.style.FontSizeLarge
-                setTheme(themeID)
-            }
-            else -> {
-                var themeID: Int = R.style.FontSizeMedium
-                setTheme(themeID)
             }
         }
     }

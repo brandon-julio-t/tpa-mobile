@@ -43,8 +43,6 @@ class SettingFragment : Fragment() {
         val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
         val isLarge: Boolean? = appSettingPrefs?.getBoolean("Large", false)
 
-        val viewText = getViewsByTag(binding.root, "textView")
-
         when(isNightModeOn){
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -54,6 +52,11 @@ class SettingFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.switchDark.isChecked = false
             }
+        }
+
+        when(isLarge){
+            true -> binding.switchSize.isChecked = true
+            false -> binding.switchSize.isChecked = false
         }
 
         binding.switchDark.setOnClickListener{
@@ -71,40 +74,15 @@ class SettingFragment : Fragment() {
             }
         }
 
-
-//        val isLarge: Boolean
-
-
         binding.switchSize.setOnClickListener{
 
-            sharedPrefsEdit?.putBoolean("Large", false)
+            sharedPrefsEdit?.putBoolean("Large", !isLarge!!)
             sharedPrefsEdit?.apply()
             requireActivity().recreate()
-
-
         }
 
 
 
     }
-
-
-    private fun getViewsByTag(root: ViewGroup, tag: String): ArrayList<View> {
-        val views = ArrayList<View>()
-        val childCount = root.childCount
-        for (i in 0 until childCount) {
-            val child = root.getChildAt(i)
-            if (child is ViewGroup) {
-                views.addAll(getViewsByTag(child, tag)!!)
-            }
-            val tagObj = child.tag
-            if (tagObj != null && tagObj == tag) {
-                views.add(child)
-            }
-        }
-        return views
-    }
-
-
 
 }
