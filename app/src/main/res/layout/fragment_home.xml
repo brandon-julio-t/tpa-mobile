@@ -38,6 +38,7 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/create_post"
             android:text="@string/create_post"
+            android:textAppearance="?attr/textAppearanceButton"
             app:icon="@drawable/ic_baseline_edit_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

@@ -79,7 +79,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public fun changeFontSize() {
-
-    }
 }

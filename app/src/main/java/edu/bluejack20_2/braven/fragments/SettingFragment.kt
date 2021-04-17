@@ -43,8 +43,6 @@ class SettingFragment : Fragment() {
         val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
         val isLarge: Boolean? = appSettingPrefs?.getBoolean("Large", false)
 
-        val viewText = getViewsByTag(binding.root, "textView")
-
         when(isNightModeOn){
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -54,6 +52,11 @@ class SettingFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.switchDark.isChecked = false
             }
+        }
+
+        when(isLarge){
+            true -> binding.switchSize.isChecked = true
+            false -> binding.switchSize.isChecked = false
         }
 
         binding.switchDark.setOnClickListener{
@@ -71,70 +74,15 @@ class SettingFragment : Fragment() {
             }
         }
 
-
-//        val isLarge: Boolean
-
-
         binding.switchSize.setOnClickListener{
-//            Log.wtf("tes", "heheh")
-//            try {
-//                // Get the font size value from SharedPreferences.
-//                val settings: SharedPreferences? =
-//                    requireActivity().getSharedPreferences("com.example.YourAppPackage", Context.MODE_PRIVATE)
-//
-//                // Get the font size option.  We use "FONT_SIZE" as the key.
-//                // Make sure to use this key when you set the value in SharedPreferences.
-//                // We specify "Medium" as the default value, if it does not exist.
-//                val fontSizePref = settings?.getString("FONT_SIZE", "Medium")
-//
-//                // Select the proper theme ID.
-//                // These will correspond to your theme names as defined in themes.xml.
-//                var themeID: Int = R.style.FontSizeLarge
-//                if (fontSizePref === "Small") {
-//                    themeID = R.style.FontSizeSmall
-//                } else if (fontSizePref === "Large") {
-//                    themeID = R.style.FontSizeLarge
-//                }
-//
-//                // Set the theme for the activity.
-//                requireActivity().setTheme(themeID)
-//                requireActivity().recreate()
-//
-//                Log.wtf("tes", themeID.toString())
-//
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
 
-            sharedPrefsEdit?.putBoolean("Large", true)
+            sharedPrefsEdit?.putBoolean("Large", !isLarge!!)
             sharedPrefsEdit?.apply()
-            Log.wtf("Get Boolean", appSettingPrefs?.getBoolean("Large", false).toString())
             requireActivity().recreate()
-
-
         }
 
 
 
     }
-
-
-    private fun getViewsByTag(root: ViewGroup, tag: String): ArrayList<View> {
-        val views = ArrayList<View>()
-        val childCount = root.childCount
-        for (i in 0 until childCount) {
-            val child = root.getChildAt(i)
-            if (child is ViewGroup) {
-                views.addAll(getViewsByTag(child, tag)!!)
-            }
-            val tagObj = child.tag
-            if (tagObj != null && tagObj == tag) {
-                views.add(child)
-            }
-        }
-        return views
-    }
-
-
 
 }
