@@ -1,13 +1,11 @@
 package edu.bluejack20_2.braven.activities
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,6 +21,23 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
+        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", false)
+
+        when (isLarge) {
+            true -> {
+                var themeID: Int = R.style.FontSizeLarge
+                setTheme(themeID)
+                Log.wtf("testis", "hehehe")
+            }
+            else -> {
+                var themeID: Int = R.style.FontSizeMedium
+                setTheme(themeID)
+                Log.wtf("testis", "else")
+            }
+        }
+
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -62,5 +77,9 @@ class MainActivity : AppCompatActivity() {
             val isOnLoginFragment = destination.id == R.id.loginFragment
             binding.bottomNavigation.visibility = if (isOnLoginFragment) View.GONE else View.VISIBLE
         }
+    }
+
+    public fun changeFontSize() {
+
     }
 }
