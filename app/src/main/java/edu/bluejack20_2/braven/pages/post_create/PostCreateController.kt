@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.pages.create_post
+package edu.bluejack20_2.braven.pages.post_create
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -9,15 +9,13 @@ import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.services.ImageMediaService
 import javax.inject.Inject
 
-class CreatePostController @Inject constructor(
+class PostCreateController @Inject constructor(
     private val postService: PostService,
     private val imageMediaService: ImageMediaService
 ) {
-    private lateinit var fragment: CreatePostFragment
-    private var isPostTaskFinished = false
-    private var isThumbnailTaskFinished = false
+    private lateinit var fragment: PostCreateFragment
 
-    fun bind(fragment: CreatePostFragment) {
+    fun bind(fragment: PostCreateFragment) {
         this.fragment = fragment
         fragment.binding.viewModel = fragment.viewModel
 
@@ -43,43 +41,34 @@ class CreatePostController @Inject constructor(
         }
 
         fragment.binding.submit.setOnClickListener {
-            val title = fragment.viewModel.title.value.toString()
-            val description = fragment.viewModel.description.value.toString()
-            val category = fragment.viewModel.category.value.toString()
+            val title = fragment.binding.title.editText?.text.toString()
+            val description = fragment.binding.description.editText?.text.toString()
+            val category = fragment.binding.category.editText?.text.toString()
             val thumbnail = fragment.viewModel.thumbnail.value ?: ByteArray(0)
 
             fragment.binding.progressIndicator.visibility = View.VISIBLE
 
-            val (postTask, thumbnailTask) = postService.createPost(
+            postService.createPost(
                 title,
                 description,
                 category,
                 thumbnail
-            )
+            ).addOnSuccessListener {
+                it.addOnSuccessListener {
+                    Snackbar.make(
+                        fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                        "Post Created",
+                        Snackbar.LENGTH_LONG
+                    ).show()
 
-            postTask.addOnSuccessListener {
-                isPostTaskFinished = true
-                bothSaveAndUploadHasFinished()
-            }
-
-            thumbnailTask?.addOnSuccessListener {
-                isThumbnailTaskFinished = true
-                bothSaveAndUploadHasFinished()
+                    fragment.binding.progressIndicator.visibility = View.INVISIBLE
+                    fragment.viewModel.reset()
+                    fragment.binding.title.editText?.setText("")
+                    fragment.binding.description.editText?.setText("")
+                    fragment.binding.category.editText?.setText("")
+                }
             }
         }
-    }
-
-    private fun bothSaveAndUploadHasFinished() {
-        if (!isPostTaskFinished || !isThumbnailTaskFinished) return
-
-        Snackbar.make(
-            fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-            "Post Created",
-            Snackbar.LENGTH_LONG
-        ).show()
-
-        fragment.binding.progressIndicator.visibility = View.INVISIBLE
-        fragment.viewModel.reset()
     }
 
     fun onThumbnailSelected(intent: Intent) {

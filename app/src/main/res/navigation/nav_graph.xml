@@ -21,8 +21,11 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/toCreatePost"
-            app:destination="@id/createPostFragment" />
+            android:id="@+id/toPostCreate"
+            app:destination="@id/postCreateFragment" />
+        <action
+            android:id="@+id/toPostDetail"
+            app:destination="@id/postDetailFragment" />
     </fragment>
     <action
         android:id="@+id/toHome"
@@ -50,13 +53,22 @@
         android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
-        android:id="@+id/createPostFragment"
-        android:name="edu.bluejack20_2.braven.pages.create_post.CreatePostFragment"
-        android:label="@string/create_post"
+        android:id="@+id/postCreateFragment"
+        android:name="edu.bluejack20_2.braven.pages.post_create.PostCreateFragment"
+        android:label="@string/post_create"
         tools:layout="@layout/fragment_create_post" />
     <fragment
         android:id="@+id/exploreFragment"
         android:name="edu.bluejack20_2.braven.ExploreFragment"
-        android:label="fragment_explore"
+        android:label="@string/explore"
         tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="edu.bluejack20_2.braven.pages.post_detail.PostDetailFragment"
+        android:label="@string/post_detail"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="post"
+            app:argType="android.os.Bundle" />
+    </fragment>
 </navigation>

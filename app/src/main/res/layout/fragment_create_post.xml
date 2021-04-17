@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="edu.bluejack20_2.braven.pages.create_post.CreatePostViewModel" />
+            type="edu.bluejack20_2.braven.pages.post_create.PostCreateViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".pages.create_post.CreatePostFragment">
+        tools:context=".pages.post_create.PostCreateFragment">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,8 +45,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.title}" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,8 +64,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.description}" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,8 +83,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.category}" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,27 +103,25 @@
 
             <Button
                 android:id="@+id/upload"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="@string/upload"
                 android:textAppearance="?attr/textAppearanceButton"
+                app:icon="@drawable/ic_baseline_image_24"
+                android:gravity=""
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/thumbnailPreview" />
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="@string/submit"
                 android:textAppearance="?attr/textAppearanceButton"
+                app:icon="@drawable/ic_baseline_publish_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/upload" />

@@ -27,7 +27,7 @@ class HomeController @Inject constructor(private val postService: PostService) {
         )
 
         binding.createPost.setOnClickListener {
-            fragment.findNavController().navigate(HomeFragmentDirections.toCreatePost())
+            fragment.findNavController().navigate(HomeFragmentDirections.toPostCreate())
         }
     }
 }

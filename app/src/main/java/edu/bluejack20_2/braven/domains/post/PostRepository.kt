@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
 class PostRepository @Inject constructor() {
@@ -15,17 +15,18 @@ class PostRepository @Inject constructor() {
 
     fun all(): Query = db.orderBy("timestamp", Query.Direction.DESCENDING)
 
-    fun createWithoutThumbnail(data: HashMap<String, Any>): Task<DocumentReference> = db.add(data)
+    fun storageReference(id: String): StorageReference = storage.child("${storageRoot}/${id}")
 
-    fun createWithThumbnail(
+    fun save(
         data: HashMap<String, Any>,
-        thumbnail: Pair<String, ByteArray>
-    ): Pair<Task<DocumentReference>, UploadTask> {
-        val (thumbnailId, thumbnailData) = thumbnail
-
-        val postTask = db.add(data)
-        val thumbnailTask = storage.child("${storageRoot}/${thumbnailId}").putBytes(thumbnailData)
-
-        return Pair(postTask, thumbnailTask)
+        thumbnail: ByteArray
+    ): Task<Task<DocumentReference>> {
+        return db.add(data).continueWith {
+            it.addOnSuccessListener { doc ->
+                if (thumbnail.isNotEmpty()) {
+                    storageReference(doc.id).putBytes(thumbnail)
+                }
+            }
+        }
     }
 }

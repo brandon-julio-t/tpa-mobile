@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
-import edu.bluejack20_2.braven.viewHolders.PostViewHolder
 
 class PostFirestorePagingAdapter(
     private val fragment: Fragment,

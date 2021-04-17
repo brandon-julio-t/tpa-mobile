@@ -1,29 +1,31 @@
-package edu.bluejack20_2.braven.pages.home
+package edu.bluejack20_2.braven.pages.post_detail
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
+import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.databinding.FragmentPostDetailBinding
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class PostDetailFragment : Fragment() {
+    private var _binding: FragmentPostDetailBinding? = null
 
     val binding get() = _binding!!
+    val args: PostDetailFragmentArgs by navArgs()
 
     @Inject
-    lateinit var controller: HomeController
+    lateinit var controller: PostDetailController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         controller.bind(this)
         return binding.root
     }

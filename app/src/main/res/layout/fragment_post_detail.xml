@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".pages.post_detail.PostDetailFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/poster_profile_picture"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/profile_picture"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/poster_information"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+
+            <TextView
+                android:id="@+id/poster_information"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/poster_information"
+                android:textAppearance="?attr/textAppearanceCaption"
+                app:layout_constraintBottom_toBottomOf="@+id/poster_profile_picture"
+                app:layout_constraintLeft_toRightOf="@+id/poster_profile_picture"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/poster_profile_picture" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/title"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                app:layout_constraintLeft_toLeftOf="@+id/poster_profile_picture"
+                app:layout_constraintRight_toRightOf="@+id/poster_information"
+                app:layout_constraintTop_toBottomOf="@+id/poster_profile_picture" />
+
+            <TextView
+                android:id="@+id/created_at"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/created_at"
+                android:textAppearance="?attr/textAppearanceCaption"
+                app:layout_constraintLeft_toLeftOf="@+id/title"
+                app:layout_constraintRight_toRightOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/category"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                app:layout_constraintLeft_toLeftOf="@+id/created_at"
+                app:layout_constraintRight_toRightOf="@+id/created_at"
+                app:layout_constraintTop_toBottomOf="@+id/created_at" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/description"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintLeft_toLeftOf="@+id/category"
+                app:layout_constraintRight_toRightOf="@+id/category"
+                app:layout_constraintTop_toBottomOf="@+id/category" />
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/thumbnail"
+                app:layout_constraintLeft_toLeftOf="@+id/description"
+                app:layout_constraintRight_toRightOf="@+id/description"
+                app:layout_constraintTop_toBottomOf="@+id/description" />
+
+            <Button
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/like"
+                app:icon="@drawable/ic_baseline_thumb_up_24"
+                app:layout_constraintLeft_toLeftOf="@+id/thumbnail"
+                app:layout_constraintRight_toLeftOf="@+id/dislike"
+                app:layout_constraintTop_toBottomOf="@+id/thumbnail" />
+
+            <Button
+                android:id="@+id/dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dislike"
+                app:icon="@drawable/ic_baseline_thumb_down_24"
+                app:layout_constraintLeft_toRightOf="@+id/like"
+                app:layout_constraintRight_toRightOf="@+id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/thumbnail"
+                app:layout_constraintTop_toTopOf="@+id/like" />
+
+            <TextView
+                android:id="@+id/comment_as"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/comment_as"
+                android:textAppearance="?attr/textAppearanceCaption"
+                app:layout_constraintLeft_toLeftOf="@+id/thumbnail"
+                app:layout_constraintRight_toRightOf="@+id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/like" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/comment_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/comment"
+                app:layout_constraintLeft_toLeftOf="@+id/comment_as"
+                app:layout_constraintRight_toRightOf="@+id/comment_as"
+                app:layout_constraintTop_toBottomOf="@+id/comment_as">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/post_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/post_comment"
+                app:icon="@drawable/ic_baseline_publish_24"
+                app:layout_constraintRight_toRightOf="@+id/comment_layout"
+                app:layout_constraintTop_toBottomOf="@+id/comment_layout" />
+
+            <TextView
+                android:id="@+id/comments_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/comments"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintLeft_toLeftOf="@+id/comment_layout"
+                app:layout_constraintRight_toRightOf="@+id/post_comment"
+                app:layout_constraintTop_toBottomOf="@+id/post_comment" />
+
+            <View
+                android:id="@+id/comment_horizontal_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintLeft_toLeftOf="@+id/comments_label"
+                app:layout_constraintRight_toRightOf="@+id/comments_label"
+                app:layout_constraintTop_toBottomOf="@+id/comments_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@+id/comment_horizontal_divider"
+                app:layout_constraintRight_toRightOf="@+id/comment_horizontal_divider"
+                app:layout_constraintTop_toBottomOf="@+id/comment_horizontal_divider"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</ScrollView>

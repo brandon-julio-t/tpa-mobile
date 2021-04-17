@@ -14,10 +14,17 @@ import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.services.AuthenticationService
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var loginActivityLauncher: ActivityResultLauncher<Intent>
+
+    @Inject
+    lateinit var authenticationService: AuthenticationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +68,7 @@ class LoginFragment : Fragment() {
         try {
             AuthUI.getInstance().silentSignIn(requireContext(), providers)
                 .addOnSuccessListener {
+                    authenticationService.persist()
                     findNavController().navigate(R.id.toHome)
                 }
                 .addOnFailureListener {
@@ -74,6 +82,7 @@ class LoginFragment : Fragment() {
         } catch (e: IllegalArgumentException) {
             // user already signed in
             Log.wtf("hehe", e.toString())
+            authenticationService.persist()
             findNavController().navigate(R.id.toHome)
         }
     }

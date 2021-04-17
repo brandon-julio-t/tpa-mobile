@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.pages.create_post
+package edu.bluejack20_2.braven.pages.post_create
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,14 +14,14 @@ import edu.bluejack20_2.braven.databinding.FragmentCreatePostBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CreatePostFragment : Fragment() {
+class PostCreateFragment : Fragment() {
     private var _binding: FragmentCreatePostBinding? = null
 
-    val viewModel: CreatePostViewModel by viewModels()
+    val viewModel: PostCreateViewModel by viewModels()
     val binding get() = _binding!!
 
     @Inject
-    lateinit var createPostController: CreatePostController
+    lateinit var createPostController: PostCreateController
     lateinit var thumbnailChooserActivityLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
