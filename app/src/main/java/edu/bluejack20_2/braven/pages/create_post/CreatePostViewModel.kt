@@ -8,4 +8,11 @@ class CreatePostViewModel : ViewModel() {
     val description: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val category: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val thumbnail: MutableLiveData<ByteArray> by lazy { MutableLiveData<ByteArray>() }
+
+    fun reset() {
+        title.value = ""
+        description.value = ""
+        category.value = ""
+        thumbnail.value = ByteArray(0)
+    }
 }

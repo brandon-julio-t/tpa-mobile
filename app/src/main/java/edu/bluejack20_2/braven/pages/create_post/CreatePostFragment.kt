@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentCreatePostBinding
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class CreatePostFragment : Fragment() {
     private var _binding: FragmentCreatePostBinding? = null
 
-    val viewModel: CreatePostViewModel by activityViewModels()
+    val viewModel: CreatePostViewModel by viewModels()
     val binding get() = _binding!!
 
     @Inject
@@ -39,12 +39,16 @@ class CreatePostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCreatePostBinding.inflate(inflater, container, false)
-        createPostController.bind(this)
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createPostController.bind(this)
     }
 }
