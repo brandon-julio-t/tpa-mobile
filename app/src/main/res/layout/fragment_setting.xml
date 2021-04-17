@@ -41,13 +41,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Setting Test"
-            android:textSize="24sp"
             android:textStyle="bold"
             android:tag="textView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="?attr/textAppearanceHeadline5"
             app:layout_constraintTop_toBottomOf="@+id/switch_dark"
             app:layout_constraintVertical_bias="0.197" />
 
@@ -60,6 +60,7 @@
             android:layout_marginEnd="32dp"
             android:tag="textView"
             android:text="lorem ipsumg grekmgrkamglkamglka kmdek,el;,wlflrv  rmekbb rtkb rtkb rtklkeqwlkr,wr,lwe,rlwe,l"
+            android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

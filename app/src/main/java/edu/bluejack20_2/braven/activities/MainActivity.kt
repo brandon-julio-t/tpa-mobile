@@ -23,16 +23,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
-        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", false)
+        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", true)
 
         when (isLarge) {
             true -> {
-                var themeID: Int = R.style.FontSizeLarge
+                var themeID: Int = R.style.Theme_BRaVeN_FontLarge
                 setTheme(themeID)
                 Log.wtf("testis", "hehehe")
             }
             else -> {
-                var themeID: Int = R.style.FontSizeMedium
+                var themeID: Int = R.style.Theme_BRaVeN
                 setTheme(themeID)
                 Log.wtf("testis", "else")
             }
