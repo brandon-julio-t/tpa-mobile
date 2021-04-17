@@ -17,7 +17,7 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="edu.bluejack20_2.braven.fragments.HomeFragment"
+        android:name="edu.bluejack20_2.braven.pages.home.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/createPostFragment"
-        android:name="edu.bluejack20_2.braven.fragments.CreatePostFragment"
+        android:name="edu.bluejack20_2.braven.pages.create_post.CreatePostFragment"
         android:label="@string/create_post"
         tools:layout="@layout/fragment_create_post" />
 </navigation>

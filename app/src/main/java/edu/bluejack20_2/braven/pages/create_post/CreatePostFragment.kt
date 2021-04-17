@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.fragments
+package edu.bluejack20_2.braven.pages.create_post
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.controllers.CreatePostController
 import edu.bluejack20_2.braven.databinding.FragmentCreatePostBinding
-import edu.bluejack20_2.braven.viewModels.CreatePostViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

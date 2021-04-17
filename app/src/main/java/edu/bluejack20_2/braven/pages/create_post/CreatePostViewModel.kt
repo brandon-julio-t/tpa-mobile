@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.viewModels
+package edu.bluejack20_2.braven.pages.create_post
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

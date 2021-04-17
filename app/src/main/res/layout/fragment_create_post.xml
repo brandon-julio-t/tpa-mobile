@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="edu.bluejack20_2.braven.viewModels.CreatePostViewModel" />
+            type="edu.bluejack20_2.braven.pages.create_post.CreatePostViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.CreatePostFragment">
+        tools:context=".pages.create_post.CreatePostFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

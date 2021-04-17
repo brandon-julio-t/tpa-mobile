@@ -1,11 +1,10 @@
-package edu.bluejack20_2.braven.controllers
+package edu.bluejack20_2.braven.pages.create_post
 
 import android.content.Intent
 import com.google.android.material.snackbar.Snackbar
 import edu.bluejack20_2.braven.R
-import edu.bluejack20_2.braven.fragments.CreatePostFragment
 import edu.bluejack20_2.braven.services.ImageMediaService
-import edu.bluejack20_2.braven.services.PostService
+import edu.bluejack20_2.braven.domains.post.PostService
 import javax.inject.Inject
 
 class CreatePostController @Inject constructor(
@@ -44,7 +43,7 @@ class CreatePostController @Inject constructor(
                 ).show()
             }
 
-            thumbnailTask.addOnSuccessListener {
+            thumbnailTask?.addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
                     "Post Thumbnail Uploaded",
