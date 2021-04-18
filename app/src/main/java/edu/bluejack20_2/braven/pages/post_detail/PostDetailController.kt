@@ -29,6 +29,14 @@ class PostDetailController @Inject constructor(
         val user = authenticationService.getUser()
         val username = user?.displayName.toString()
         val createdAt = (post["timestamp"] as Timestamp).toDate().toString()
+        val commentsAdapter = CommentFirestorePagingAdapter(
+            fragment,
+            authenticationService,
+            FirestorePagingAdapterOptionFactory(
+                fragment,
+                commentService.getAllCommentsByPost(post)
+            ).create()
+        )
 
         authenticationService.getUserById(post["userId"].toString()).addOnSuccessListener {
             if (it["photoUrl"] != null) {
@@ -76,6 +84,26 @@ class PostDetailController @Inject constructor(
             })
             .into(binding.thumbnail)
 
+        binding.like.setOnClickListener {
+            postService.likePost(post).addOnSuccessListener {
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    "Post liked",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        binding.dislike.setOnClickListener {
+            postService.dislikePost(post).addOnSuccessListener {
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    "Post disliked",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+
         binding.commentAs.text = fragment.getString(
             R.string.comment_as,
             username
@@ -92,6 +120,7 @@ class PostDetailController @Inject constructor(
                 ).show()
 
                 binding.comment.setText("")
+                commentsAdapter.refresh()
             }
         }
 
@@ -100,13 +129,6 @@ class PostDetailController @Inject constructor(
                 override fun canScrollVertically(): Boolean = false
             }
 
-        binding.comments.adapter = CommentFirestorePagingAdapter(
-            fragment,
-            authenticationService,
-            FirestorePagingAdapterOptionFactory(
-                fragment,
-                commentService.getAllCommentsByPost(post)
-            ).create()
-        )
+        binding.comments.adapter = commentsAdapter
     }
 }

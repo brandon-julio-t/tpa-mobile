@@ -32,4 +32,16 @@ class PostService @Inject constructor(
 
         return postRepository.save(data, thumbnail)
     }
+
+    fun likePost(post: Map<*, *>) =
+        postRepository.like(
+            post["id"].toString(),
+            authenticationService.getUser()?.uid.toString()
+        )
+
+    fun dislikePost(post: Map<*, *>) =
+        postRepository.dislike(
+            post["id"].toString(),
+            authenticationService.getUser()?.uid.toString()
+        )
 }

@@ -17,7 +17,7 @@ class CommentViewHolder(
     RecyclerView.ViewHolder(binding.root) {
     fun bind(fragment: Fragment, comment: DocumentSnapshot) {
         authenticationService.getUserById(comment["userId"].toString()).addOnSuccessListener {
-            binding.displayName.text = it["displayName"].toString()
+            binding.posterDisplayName.text = it["displayName"].toString()
 
             if (it["photoUrl"] != null) {
                 Glide.with(fragment)

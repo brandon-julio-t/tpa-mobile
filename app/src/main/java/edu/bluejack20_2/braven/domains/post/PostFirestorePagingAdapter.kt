@@ -1,20 +1,18 @@
 package edu.bluejack20_2.braven.domains.post
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
-import com.firebase.ui.firestore.paging.LoadingState
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
-import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
+import edu.bluejack20_2.braven.services.AuthenticationService
 
 class PostFirestorePagingAdapter(
     private val fragment: Fragment,
-    private val progressIndicator: View,
+    private val authenticationService: AuthenticationService,
+    private val postService: PostService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ) :
     FirestorePagingAdapter<DocumentSnapshot, PostViewHolder>(options) {
@@ -24,7 +22,10 @@ class PostFirestorePagingAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            fragment,
+            authenticationService,
+            postService
         )
 
     override fun onBindViewHolder(
@@ -32,22 +33,4 @@ class PostFirestorePagingAdapter(
         position: Int,
         model: DocumentSnapshot
     ) = holder.bind(model)
-
-    override fun onLoadingStateChanged(state: LoadingState) {
-        super.onLoadingStateChanged(state)
-
-        progressIndicator.visibility = when (state) {
-            LoadingState.LOADING_INITIAL, LoadingState.LOADED, LoadingState.FINISHED -> View.INVISIBLE
-            LoadingState.LOADING_MORE -> View.VISIBLE
-            LoadingState.ERROR -> {
-                Snackbar.make(
-                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Infinite Scrolling Error",
-                    Snackbar.LENGTH_LONG
-                ).show()
-
-                View.GONE
-            }
-        }
-    }
 }

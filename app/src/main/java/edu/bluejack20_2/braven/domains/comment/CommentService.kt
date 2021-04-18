@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class CommentService @Inject constructor(private val commentRepository: CommentRepository) {
     fun createComment(
-        post: HashMap<*, *>,
+        post: Map<*, *>,
         user: FirebaseUser?,
         comment: String
     ): Task<DocumentReference> {
@@ -23,7 +23,8 @@ class CommentService @Inject constructor(private val commentRepository: CommentR
         return commentRepository.save(data)
     }
 
-    fun getAllCommentsByPost(post: HashMap<*, *>): Query {
+    fun getAllCommentsByPost(post: Map<*, *>): Query {
         return commentRepository.allByPost(post["id"].toString())
+            .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

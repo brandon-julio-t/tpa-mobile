@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    app:cardUseCompatPadding="true"
     android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,39 +12,50 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="64dp"
+            android:id="@+id/poster_profile_picture"
+            android:layout_width="48dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:layout_marginVertical="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/created_at"
             android:contentDescription="@string/thumbnail"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
+            app:layout_constraintEnd_toStartOf="@+id/poster_display_name"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/poster_display_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/title"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/thumbnail"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="8dp"
+            android:text="@string/display_name"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            app:layout_constraintEnd_toStartOf="@+id/thumbnail"
+            app:layout_constraintStart_toEndOf="@+id/poster_profile_picture"
+            app:layout_constraintTop_toTopOf="@+id/poster_profile_picture" />
 
         <TextView
             android:id="@+id/created_at"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="@string/created_at"
             android:textAppearance="?attr/textAppearanceCaption"
-            app:layout_constraintEnd_toEndOf="@+id/title"
-            app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintEnd_toEndOf="@+id/poster_display_name"
+            app:layout_constraintStart_toStartOf="@+id/poster_display_name"
+            app:layout_constraintTop_toBottomOf="@+id/poster_display_name" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/title"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="@+id/created_at"
+            app:layout_constraintStart_toStartOf="@+id/poster_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/created_at" />
+
 
         <TextView
             android:id="@+id/category"
@@ -52,10 +63,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/category"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintEnd_toEndOf="@+id/created_at"
-            app:layout_constraintStart_toStartOf="@+id/created_at"
-            app:layout_constraintTop_toBottomOf="@+id/created_at" />
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            app:layout_constraintEnd_toEndOf="@+id/title"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="64dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:contentDescription="@string/thumbnail"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/poster_display_name"
+            app:layout_constraintTop_toTopOf="@+id/poster_display_name"
+            app:srcCompat="@drawable/logo" />
 
         <Button
             android:id="@+id/like"
@@ -65,8 +89,8 @@
             android:text="@string/like"
             app:icon="@drawable/ic_baseline_thumb_up_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/category"
-            app:layout_constraintRight_toLeftOf="@+id/dislike"
+            app:layout_constraintEnd_toStartOf="@+id/dislike"
+            app:layout_constraintStart_toStartOf="@+id/category"
             app:layout_constraintTop_toBottomOf="@+id/category" />
 
         <Button
@@ -77,8 +101,8 @@
             android:text="@string/dislike"
             app:icon="@drawable/ic_baseline_thumb_down_24"
             app:layout_constraintBottom_toBottomOf="@+id/like"
-            app:layout_constraintLeft_toRightOf="@+id/like"
-            app:layout_constraintRight_toRightOf="@+id/category"
+            app:layout_constraintEnd_toEndOf="@+id/thumbnail"
+            app:layout_constraintStart_toEndOf="@+id/like"
             app:layout_constraintTop_toTopOf="@+id/like" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

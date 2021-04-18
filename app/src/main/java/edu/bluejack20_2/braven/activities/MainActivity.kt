@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bottomNavigation.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             val isOnLoginFragment = destination.id == R.id.loginFragment
             binding.bottomNavigation.visibility = if (isOnLoginFragment) View.GONE else View.VISIBLE
         }

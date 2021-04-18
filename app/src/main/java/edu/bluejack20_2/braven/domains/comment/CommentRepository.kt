@@ -12,5 +12,5 @@ class CommentRepository @Inject constructor() {
 
     fun allByPost(postId: String): Query = db.whereEqualTo("postId", postId)
 
-    fun save(data: HashMap<*, *>): Task<DocumentReference> = db.add(data)
+    fun save(data: Map<*, *>): Task<DocumentReference> = db.add(data)
 }

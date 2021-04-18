@@ -64,6 +64,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:gravity="top"
+                    android:minLines="3"
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>

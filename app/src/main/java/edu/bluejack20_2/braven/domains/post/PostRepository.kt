@@ -2,10 +2,10 @@ package edu.bluejack20_2.braven.domains.post
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
 class PostRepository @Inject constructor() {
@@ -13,9 +13,9 @@ class PostRepository @Inject constructor() {
     private val storage get() = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
 
-    fun all(): Query = db.orderBy("timestamp", Query.Direction.DESCENDING)
+    fun all() = db.orderBy("timestamp", Query.Direction.DESCENDING)
 
-    fun storageReference(id: String): StorageReference = storage.child("${storageRoot}/${id}")
+    fun storageReference(id: String) = storage.child("${storageRoot}/${id}")
 
     fun save(
         data: HashMap<String, Any>,
@@ -29,4 +29,14 @@ class PostRepository @Inject constructor() {
             }
         }
     }
+
+    fun like(id: String, userId: String) =
+        db.document(id).update("likers", FieldValue.arrayUnion(userId)).continueWithTask {
+            db.document(id).update("dislikers", FieldValue.arrayRemove(userId))
+        }
+
+    fun dislike(id: String, userId: String) =
+        db.document(id).update("dislikers", FieldValue.arrayUnion(userId)).continueWithTask {
+            db.document(id).update("likers", FieldValue.arrayRemove(userId))
+        }
 }
