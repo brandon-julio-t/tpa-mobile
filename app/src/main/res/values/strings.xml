@@ -46,4 +46,6 @@
     <string name="unfollow">Unfollow</string>
     <string name="user_profile">User Profile</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="post_edit">Post Edit</string>
+    <string name="edit_post">Edit Post</string>
 </resources>

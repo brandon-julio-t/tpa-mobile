@@ -1,7 +1,6 @@
 package edu.bluejack20_2.braven.domains.post
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
+import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -13,22 +12,31 @@ class PostRepository @Inject constructor() {
     private val storage get() = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
 
-    fun all() = db.orderBy("timestamp", Query.Direction.DESCENDING)
+    fun getAll() = db.orderBy("timestamp", Query.Direction.DESCENDING)
 
-    fun storageReference(id: String) = storage.child("${storageRoot}/${id}")
+    fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
+
+    fun getById(id: String) = db.document(id)
 
     fun save(
         data: HashMap<String, Any>,
         thumbnail: ByteArray
-    ): Task<Task<DocumentReference>> {
-        return db.add(data).continueWith {
-            it.addOnSuccessListener { doc ->
+    ) =
+        db.add(data).continueWith {
+            it.addOnSuccessListener {
                 if (thumbnail.isNotEmpty()) {
-                    storageReference(doc.id).putBytes(thumbnail)
+                    getStorageReferenceById(data["thumbnailId"].toString()).putBytes(thumbnail)
                 }
             }
         }
-    }
+
+    fun update(id: String, data: HashMap<String, Any>, thumbnail: ByteArray, oldThumbnailId: String) =
+        db.document(id).update(data).continueWith {
+            if (thumbnail.isNotEmpty()) {
+                getStorageReferenceById(oldThumbnailId).delete()
+                getStorageReferenceById(data["thumbnailId"].toString()).putBytes(thumbnail)
+            }
+        }
 
     fun like(id: String, userId: String) =
         db.document(id).update("likers", FieldValue.arrayUnion(userId)).continueWithTask {

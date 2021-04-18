@@ -14,11 +14,16 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
+import edu.bluejack20_2.braven.services.AuthenticationService
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var authenticationService: AuthenticationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -71,9 +76,11 @@ class MainActivity : AppCompatActivity() {
             it.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
                     || super.onOptionsItemSelected(it)
         }
+
         binding.bottomNavigation.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { controller, destination, asdf ->
+
             val isOnLoginFragment = destination.id == R.id.loginFragment
             binding.bottomNavigation.visibility = if (isOnLoginFragment) View.GONE else View.VISIBLE
         }

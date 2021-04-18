@@ -29,7 +29,6 @@ class ExploreViewHolder(
 ):RecyclerView.ViewHolder(binding.root) {
 
     fun bind(explore: DocumentSnapshot){
-        Log.wtf("test", explore.data.toString())
         explore.data?.let{
             posts ->
 
@@ -84,9 +83,7 @@ class ExploreViewHolder(
 
             binding.cardLayout.setOnClickListener {
                 fragment.findNavController().navigate(
-                    ExploreFragmentDirections.exploreToPostDetail(
-                        bundleOf("post" to posts)
-                    )
+                    ExploreFragmentDirections.exploreToPostDetail(posts["id"].toString())
                 )
             }
 

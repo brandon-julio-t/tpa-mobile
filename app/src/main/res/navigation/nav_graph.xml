@@ -71,12 +71,15 @@
         android:name="edu.bluejack20_2.braven.pages.post_detail.PostDetailFragment"
         android:label="@string/post_detail"
         tools:layout="@layout/fragment_post_detail">
-        <argument
-            android:name="post"
-            app:argType="android.os.Bundle" />
         <action
             android:id="@+id/postDetailToUserProfile"
             app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/postDetailToPostEdit"
+            app:destination="@id/postEditFragment" />
+        <argument
+            android:name="postId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
@@ -87,4 +90,18 @@
             android:name="userId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/postEditFragment"
+        android:name="edu.bluejack20_2.braven.pages.post_edit.PostEditFragment"
+        android:label="@string/post_edit"
+        tools:layout="@layout/fragment_post_edit">
+        <argument
+            android:name="postId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileEditFragment"
+        android:name="edu.bluejack20_2.braven.pages.user_profile_edit.UserProfileEditFragment"
+        android:label="fragment_user_profile_edit"
+        tools:layout="@layout/fragment_user_profile_edit" />
 </navigation>

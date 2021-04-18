@@ -3,7 +3,9 @@ package edu.bluejack20_2.braven.pages.user_profile
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
 import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostCommentedPostsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostLikedPostsFragment
@@ -27,43 +29,16 @@ class UserProfileController @Inject constructor(
                 val followers = user["followers"] as? List<*>
                 val followings = user["followings"] as? List<*>
 
-                binding.follow.setOnClickListener {
-                    userService.follow(
-                        currentUser,
-                        user
-                    ).addOnSuccessListener {
-                        Snackbar.make(
-                            fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                            "User followed",
-                            Snackbar.LENGTH_LONG
-                        ).show()
-
-                        binding.follow.text = fragment.getString(R.string.unfollow)
-                    }
-                }
+                actionButtonFollowState(fragment, binding, currentUser, user)
 
                 followers?.contains(currentUser?.uid)?.let {
                     if (it) {
-                        binding.follow.text = fragment.getString(R.string.unfollow)
-                        binding.follow.setOnClickListener {
-                            userService.unFollow(
-                                currentUser,
-                                user
-                            ).addOnSuccessListener {
-                                Snackbar.make(
-                                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                                    "User unfollowed",
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-
-                                binding.follow.text = fragment.getString(R.string.follow)
-                            }
-                        }
+                        actionButtonUnFollowState(fragment, binding, currentUser, user)
                     }
                 }
 
                 if (user["id"] == currentUser?.uid) {
-                    binding.follow.text = fragment.getString(R.string.edit_profile)
+                    actionButtonEditProfileState(fragment, binding)
                 }
 
                 binding.postsCount.text = fragment.getString(
@@ -80,7 +55,11 @@ class UserProfileController @Inject constructor(
                     R.string.followings_count,
                     followings?.size ?: 0
                 )
+            }
+        }
 
+        userService.getUserById(fragment.args.userId).get().addOnSuccessListener { it ->
+            it?.data?.let { user ->
                 binding.displayName.text = user["displayName"].toString()
 
                 binding.personalData.text = fragment.getString(
@@ -107,6 +86,55 @@ class UserProfileController @Inject constructor(
         binding.viewPager.adapter = object : FragmentStateAdapter(fragment) {
             override fun getItemCount() = 4
             override fun createFragment(position: Int) = pages[position]
+        }
+    }
+
+    private fun actionButtonFollowState(
+        fragment: UserProfileFragment,
+        binding: FragmentUserProfileBinding,
+        currentUser: FirebaseUser?,
+        user: Map<String, Any>
+    ) {
+        binding.action.setOnClickListener {
+            userService.follow(currentUser, user).addOnSuccessListener {
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    "User followed",
+                    Snackbar.LENGTH_LONG
+                ).show()
+
+                binding.action.text = fragment.getString(R.string.unfollow)
+            }
+        }
+    }
+
+    private fun actionButtonUnFollowState(
+        fragment: UserProfileFragment,
+        binding: FragmentUserProfileBinding,
+        currentUser: FirebaseUser?,
+        user: Map<String, Any>
+    ) {
+        binding.action.text = fragment.getString(R.string.unfollow)
+        binding.action.setOnClickListener {
+            userService.unFollow(currentUser, user).addOnSuccessListener {
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    "User un-followed",
+                    Snackbar.LENGTH_LONG
+                ).show()
+
+                binding.action.text = fragment.getString(R.string.follow)
+            }
+        }
+    }
+
+    private fun actionButtonEditProfileState(
+        fragment: UserProfileFragment,
+        binding: FragmentUserProfileBinding
+    ) {
+        binding.action.text = fragment.getString(R.string.edit_profile)
+        binding.action.setOnClickListener {
+
         }
     }
 }

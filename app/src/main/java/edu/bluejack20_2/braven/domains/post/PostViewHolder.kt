@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.post
 
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +22,11 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(model: DocumentSnapshot) {
         model.data?.let { post ->
+            post["id"] = model.id
+
             binding.cardLayout.setOnClickListener {
                 fragment.findNavController().navigate(
-                    HomeFragmentDirections.homeToPostDetail(
-                        bundleOf("post" to post)
-                    )
+                    HomeFragmentDirections.homeToPostDetail(post["id"].toString())
                 )
             }
 
@@ -47,7 +46,7 @@ class PostViewHolder(
             binding.title.text = post["title"].toString()
             binding.category.text = post["category"].toString()
 
-            val path = "thumbnails/${model.id}"
+            val path = "thumbnails/${post["thumbnailId"]}"
             val storageReference = FirebaseStorage.getInstance().reference.child(path)
             GlideApp.with(binding.root).load(storageReference).into(binding.thumbnail)
 

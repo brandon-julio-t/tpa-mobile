@@ -21,8 +21,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/profile_picture"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/poster_information"
+                app:layout_constraintEnd_toStartOf="@+id/poster_information"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
@@ -30,14 +30,27 @@
                 android:id="@+id/poster_information"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:text="@string/poster_information"
                 android:textAppearance="?attr/textAppearanceCaption"
                 app:layout_constraintBottom_toBottomOf="@+id/poster_profile_picture"
-                app:layout_constraintLeft_toRightOf="@+id/poster_profile_picture"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/edit_post"
+                app:layout_constraintStart_toEndOf="@+id/poster_profile_picture"
                 app:layout_constraintTop_toTopOf="@+id/poster_profile_picture" />
+
+            <ImageButton
+                android:id="@+id/edit_post"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/edit_post"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/poster_information"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/poster_information"
+                app:layout_constraintTop_toTopOf="@+id/poster_information" />
 
             <TextView
                 android:id="@+id/title"
@@ -46,8 +59,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/title"
                 android:textAppearance="?attr/textAppearanceHeadline5"
-                app:layout_constraintLeft_toLeftOf="@+id/poster_profile_picture"
-                app:layout_constraintRight_toRightOf="@+id/poster_information"
+                app:layout_constraintEnd_toEndOf="@+id/edit_post"
+                app:layout_constraintStart_toStartOf="@+id/poster_profile_picture"
                 app:layout_constraintTop_toBottomOf="@+id/poster_profile_picture" />
 
             <TextView
@@ -57,8 +70,8 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/created_at"
                 android:textAppearance="?attr/textAppearanceCaption"
-                app:layout_constraintLeft_toLeftOf="@+id/title"
-                app:layout_constraintRight_toRightOf="@+id/title"
+                app:layout_constraintEnd_toEndOf="@+id/title"
+                app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
 
             <TextView
@@ -68,8 +81,8 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/category"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
-                app:layout_constraintLeft_toLeftOf="@+id/created_at"
-                app:layout_constraintRight_toRightOf="@+id/created_at"
+                app:layout_constraintEnd_toEndOf="@+id/created_at"
+                app:layout_constraintStart_toStartOf="@+id/created_at"
                 app:layout_constraintTop_toBottomOf="@+id/created_at" />
 
             <TextView
@@ -79,8 +92,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/description"
                 android:textAppearance="?attr/textAppearanceBody1"
-                app:layout_constraintLeft_toLeftOf="@+id/category"
-                app:layout_constraintRight_toRightOf="@+id/category"
+                app:layout_constraintEnd_toEndOf="@+id/category"
+                app:layout_constraintStart_toStartOf="@+id/category"
                 app:layout_constraintTop_toBottomOf="@+id/category" />
 
             <ImageView
@@ -89,8 +102,8 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/thumbnail"
-                app:layout_constraintLeft_toLeftOf="@+id/description"
-                app:layout_constraintRight_toRightOf="@+id/description"
+                app:layout_constraintEnd_toEndOf="@+id/description"
+                app:layout_constraintStart_toStartOf="@+id/description"
                 app:layout_constraintTop_toBottomOf="@+id/description" />
 
             <Button
@@ -101,8 +114,8 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/like"
                 app:icon="@drawable/ic_baseline_thumb_up_24"
-                app:layout_constraintLeft_toLeftOf="@+id/thumbnail"
-                app:layout_constraintRight_toLeftOf="@+id/dislike"
+                app:layout_constraintEnd_toStartOf="@+id/dislike"
+                app:layout_constraintStart_toStartOf="@+id/thumbnail"
                 app:layout_constraintTop_toBottomOf="@+id/thumbnail" />
 
             <Button
@@ -112,8 +125,8 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/dislike"
                 app:icon="@drawable/ic_baseline_thumb_down_24"
-                app:layout_constraintLeft_toRightOf="@+id/like"
-                app:layout_constraintRight_toRightOf="@+id/thumbnail"
+                app:layout_constraintEnd_toEndOf="@+id/thumbnail"
+                app:layout_constraintStart_toEndOf="@+id/like"
                 app:layout_constraintTop_toBottomOf="@+id/thumbnail"
                 app:layout_constraintTop_toTopOf="@+id/like" />
 
@@ -124,8 +137,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/comment_as"
                 android:textAppearance="?attr/textAppearanceCaption"
-                app:layout_constraintLeft_toLeftOf="@+id/thumbnail"
-                app:layout_constraintRight_toRightOf="@+id/thumbnail"
+                app:layout_constraintEnd_toEndOf="@+id/thumbnail"
+                app:layout_constraintStart_toStartOf="@+id/thumbnail"
                 app:layout_constraintTop_toBottomOf="@+id/like" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -134,8 +147,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/comment"
-                app:layout_constraintLeft_toLeftOf="@+id/comment_as"
-                app:layout_constraintRight_toRightOf="@+id/comment_as"
+                app:layout_constraintEnd_toEndOf="@+id/comment_as"
+                app:layout_constraintStart_toStartOf="@+id/comment_as"
                 app:layout_constraintTop_toBottomOf="@+id/comment_as">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -154,7 +167,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/post_comment"
                 app:icon="@drawable/ic_baseline_publish_24"
-                app:layout_constraintRight_toRightOf="@+id/comment_layout"
+                app:layout_constraintEnd_toEndOf="@+id/comment_layout"
                 app:layout_constraintTop_toBottomOf="@+id/comment_layout" />
 
             <TextView
@@ -164,8 +177,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/comments"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                app:layout_constraintLeft_toLeftOf="@+id/comment_layout"
-                app:layout_constraintRight_toRightOf="@+id/post_comment"
+                app:layout_constraintEnd_toEndOf="@+id/post_comment"
+                app:layout_constraintStart_toStartOf="@+id/comment_layout"
                 app:layout_constraintTop_toBottomOf="@+id/post_comment" />
 
             <View
@@ -173,17 +186,17 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider"
-                app:layout_constraintLeft_toLeftOf="@+id/comments_label"
-                app:layout_constraintRight_toRightOf="@+id/comments_label"
+                app:layout_constraintEnd_toEndOf="@+id/comments_label"
+                app:layout_constraintStart_toStartOf="@+id/comments_label"
                 app:layout_constraintTop_toBottomOf="@+id/comments_label" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="@+id/comment_horizontal_divider"
-                app:layout_constraintRight_toRightOf="@+id/comment_horizontal_divider"
-                app:layout_constraintTop_toBottomOf="@+id/comment_horizontal_divider"/>
+                app:layout_constraintEnd_toEndOf="@+id/comment_horizontal_divider"
+                app:layout_constraintStart_toStartOf="@+id/comment_horizontal_divider"
+                app:layout_constraintTop_toBottomOf="@+id/comment_horizontal_divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

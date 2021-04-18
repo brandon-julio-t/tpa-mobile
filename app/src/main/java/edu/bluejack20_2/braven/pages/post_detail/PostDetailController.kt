@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.post_detail
 
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -25,16 +26,20 @@ class PostDetailController @Inject constructor(
 ) {
     fun bind(fragment: PostDetailFragment) {
         val binding = fragment.binding
-        val post = fragment.args.post.get("post") as HashMap<*, *>
 
-        bindEvents(binding, fragment, post)
-        bindUIs(binding, fragment, post)
+        postService.getPostById(fragment.args.postId).get().addOnSuccessListener {
+            it.data?.let { post ->
+                post["id"] = it.id
+                bindEvents(binding, fragment, post)
+                bindUIs(binding, fragment, post)
+            }
+        }
     }
 
     private fun bindEvents(
         binding: FragmentPostDetailBinding,
         fragment: PostDetailFragment,
-        post: HashMap<*, *>
+        post: Map<*, *>
     ) {
         listOf(binding.posterProfilePicture, binding.posterInformation).forEach {
             it.setOnClickListener {
@@ -51,7 +56,7 @@ class PostDetailController @Inject constructor(
     private fun bindUIs(
         binding: FragmentPostDetailBinding,
         fragment: PostDetailFragment,
-        post: HashMap<*, *>
+        post: Map<*, *>
     ) {
         val user = authenticationService.getUser()
         val username = user?.displayName.toString()
@@ -79,13 +84,21 @@ class PostDetailController @Inject constructor(
             }
         }
 
+        if (authenticationService.getUser()?.uid == post["userId"]) {
+            binding.editPost.visibility = View.VISIBLE
+            binding.editPost.setOnClickListener {
+                fragment.findNavController()
+                    .navigate(PostDetailFragmentDirections.postDetailToPostEdit(post["id"].toString()))
+            }
+        }
+
         binding.title.text = post["title"].toString()
         binding.createdAt.text = createdAt
         binding.category.text = post["category"].toString()
         binding.description.text = post["description"].toString()
 
         GlideApp.with(fragment)
-            .load(postService.getStorageReference(post["id"].toString()))
+            .load(postService.getStorageReference(post["thumbnailId"].toString()))
             .listener(
                 FailedRequestListenerFactory {
                     binding.thumbnail.layoutParams.height = 0

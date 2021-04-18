@@ -29,7 +29,6 @@ class UserRepository @Inject constructor() {
         val data = hashMapOf(
             "displayName" to user.displayName?.toString(),
             "fullName" to user.displayName?.toString(),
-            "phoneNumber" to user.phoneNumber?.toString(),
             "email" to user.email?.toString(),
             "photoUrl" to user.photoUrl?.toString(),
             "isEmailVerified" to user.isEmailVerified,
