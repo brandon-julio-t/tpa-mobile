@@ -9,9 +9,8 @@ import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 
-
 @GlideModule
-class GlideModule : AppGlideModule() {
+class GlideFirebaseStorageModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         // Register FirebaseImageLoader to handle StorageReference
         registry.append(

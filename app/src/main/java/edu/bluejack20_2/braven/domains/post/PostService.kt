@@ -10,11 +10,11 @@ import javax.inject.Inject
 
 class PostService @Inject constructor(
     private val authenticationService: AuthenticationService,
-    private val postRepository: PostRepository,
+    private val repository: PostRepository,
 ) {
-    fun getAllPosts(): Query = postRepository.all()
+    fun getAllPosts(): Query = repository.all()
 
-    fun getStorageReference(id: String): StorageReference = postRepository.storageReference(id)
+    fun getStorageReference(id: String): StorageReference = repository.storageReference(id)
 
     fun createPost(
         title: String,
@@ -30,17 +30,17 @@ class PostService @Inject constructor(
             "timestamp" to FieldValue.serverTimestamp()
         )
 
-        return postRepository.save(data, thumbnail)
+        return repository.save(data, thumbnail)
     }
 
     fun likePost(post: Map<*, *>) =
-        postRepository.like(
+        repository.like(
             post["id"].toString(),
             authenticationService.getUser()?.uid.toString()
         )
 
     fun dislikePost(post: Map<*, *>) =
-        postRepository.dislike(
+        repository.dislike(
             post["id"].toString(),
             authenticationService.getUser()?.uid.toString()
         )

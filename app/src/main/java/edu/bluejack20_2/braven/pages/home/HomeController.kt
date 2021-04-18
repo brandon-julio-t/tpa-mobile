@@ -4,13 +4,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.post.PostService
-import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionFactory
+import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class HomeController @Inject constructor(
     private val postService: PostService,
-    private val authenticationService: AuthenticationService
+    private val userService: UserService
 ) {
     fun bind(fragment: HomeFragment) {
         val binding = fragment.binding
@@ -23,16 +24,16 @@ class HomeController @Inject constructor(
 
         binding.posts.adapter = PostFirestorePagingAdapter(
             fragment,
-            authenticationService,
+            userService,
             postService,
-            FirestorePagingAdapterOptionFactory(
+            FirestorePagingAdapterOptionsFactory(
                 fragment,
                 postService.getAllPosts()
             ).create()
         )
 
         binding.createPost.setOnClickListener {
-            fragment.findNavController().navigate(HomeFragmentDirections.toPostCreate())
+            fragment.findNavController().navigate(HomeFragmentDirections.homeToPostCreate())
         }
     }
 }

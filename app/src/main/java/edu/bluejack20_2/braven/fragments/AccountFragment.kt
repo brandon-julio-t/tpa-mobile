@@ -37,7 +37,7 @@ class AccountFragment : Fragment() {
         val user = authenticationService.getUser()
         binding.email.text = user?.email
         binding.posterDisplayName.text = user?.displayName
-        binding.fullName.text = user?.displayName
+        binding.displayName.text = user?.displayName
         binding.dateOfBirth.text = "not set"
         binding.photoUrl.text = user?.photoUrl.toString()
         binding.logout.setOnClickListener { authenticationService.logout(it) }

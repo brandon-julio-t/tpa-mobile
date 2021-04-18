@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.interfaces.SimpleFactory
 
-class FirestorePagingAdapterOptionFactory constructor(
+class FirestorePagingAdapterOptionsFactory constructor(
     private val lifecycleOwner: LifecycleOwner,
     private val query: Query
 ) : SimpleFactory<FirestorePagingOptions<DocumentSnapshot>> {
