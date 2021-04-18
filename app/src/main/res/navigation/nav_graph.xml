@@ -61,7 +61,11 @@
         android:id="@+id/exploreFragment"
         android:name="edu.bluejack20_2.braven.pages.explore.ExploreFragment"
         android:label="@string/explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/exploreToPostDetail"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="edu.bluejack20_2.braven.pages.post_detail.PostDetailFragment"

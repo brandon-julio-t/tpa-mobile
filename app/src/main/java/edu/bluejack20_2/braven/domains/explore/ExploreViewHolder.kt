@@ -2,7 +2,9 @@ package edu.bluejack20_2.braven.domains.explore
 
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -13,13 +15,17 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.braven.databinding.ItemExploreBinding
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.modules.GlideApp
+import edu.bluejack20_2.braven.pages.explore.ExploreFragmentDirections
+import edu.bluejack20_2.braven.pages.home.HomeFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 
 class ExploreViewHolder(
     private val binding: ItemExploreBinding,
-    private val authenticationService: AuthenticationService
+    private val userService: UserService,
+    private val fragment: Fragment
 ):RecyclerView.ViewHolder(binding.root) {
 
     fun bind(explore: DocumentSnapshot){
@@ -31,7 +37,7 @@ class ExploreViewHolder(
 
             posts["id"] = explore.id
 
-            authenticationService.getUserById(posts["userId"].toString()).addOnSuccessListener {
+            userService.getUserById(posts["userId"].toString()).get().addOnSuccessListener {
                 it.data?.let { user ->
                     binding.usernameText.text = user["displayName"].toString()
 
@@ -75,6 +81,14 @@ class ExploreViewHolder(
                     }
                 })
                 .into(binding.thumbnailImage)
+
+            binding.cardLayout.setOnClickListener {
+                fragment.findNavController().navigate(
+                    ExploreFragmentDirections.exploreToPostDetail(
+                        bundleOf("post" to posts)
+                    )
+                )
+            }
 
         }
     }

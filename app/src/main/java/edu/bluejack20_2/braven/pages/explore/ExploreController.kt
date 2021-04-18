@@ -6,13 +6,14 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.explore.ExploreFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.explore.ExploreService
 import edu.bluejack20_2.braven.domains.post.PostService
-import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionFactory
+import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class ExploreController @Inject constructor(
     private val exploreService: ExploreService,
-    private val authenticationService: AuthenticationService
+    private val userService: UserService
 ) {
 
     fun bind(fragment: ExploreFragment){
@@ -24,8 +25,8 @@ class ExploreController @Inject constructor(
             false
         )
 
-        binding.exploreRecycleview.adapter = ExploreFirestorePagingAdapter(fragment, authenticationService,
-            FirestorePagingAdapterOptionFactory(fragment, exploreService.getAllPosts()).create()
+        binding.exploreRecycleview.adapter = ExploreFirestorePagingAdapter(fragment, userService,
+            FirestorePagingAdapterOptionsFactory(fragment, exploreService.getAllPosts()).create()
         )
     }
 

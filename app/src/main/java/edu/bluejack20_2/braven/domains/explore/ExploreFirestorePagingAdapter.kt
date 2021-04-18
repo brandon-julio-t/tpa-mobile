@@ -8,11 +8,12 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemExploreBinding
 import edu.bluejack20_2.braven.domains.comment.CommentViewHolder
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class ExploreFirestorePagingAdapter (
     private val fragment: Fragment,
-    private val authenticationService: AuthenticationService,
+    private val userService: UserService,
     options: FirestorePagingOptions<DocumentSnapshot>
         ): FirestorePagingAdapter<DocumentSnapshot, ExploreViewHolder>(options) {
 
@@ -23,7 +24,8 @@ class ExploreFirestorePagingAdapter (
                 parent,
                 false
             ),
-            authenticationService
+            userService,
+            fragment
         )
 
     override fun onBindViewHolder(
