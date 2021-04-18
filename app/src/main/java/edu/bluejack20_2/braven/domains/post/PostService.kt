@@ -67,4 +67,8 @@ class PostService @Inject constructor(
             post["id"].toString(),
             authenticationService.getUser()?.uid.toString()
         )
+
+    fun incrementCommentsCount(id: String) {
+        repository.update(id, hashMapOf("commentsCount" to FieldValue.increment(1)))
+    }
 }

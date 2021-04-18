@@ -29,7 +29,9 @@ class PostRepository @Inject constructor() {
         }
     }
 
-    fun update(id: String, data: HashMap<String, *>, thumbnail: ByteArray, oldThumbnailId: String) =
+    fun update(id: String, data: Map<String,*>) = db.document(id).update(data)
+
+    fun update(id: String, data: Map<String, *>, thumbnail: ByteArray, oldThumbnailId: String) =
         db.document(id).update(data).continueWith {
             if (thumbnail.isNotEmpty()) {
                 getStorageReferenceById(oldThumbnailId).delete()
