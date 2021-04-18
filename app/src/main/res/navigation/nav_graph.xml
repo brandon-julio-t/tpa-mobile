@@ -59,7 +59,7 @@
         tools:layout="@layout/fragment_create_post" />
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="edu.bluejack20_2.braven.ExploreFragment"
+        android:name="edu.bluejack20_2.braven.pages.explore.ExploreFragment"
         android:label="@string/explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
