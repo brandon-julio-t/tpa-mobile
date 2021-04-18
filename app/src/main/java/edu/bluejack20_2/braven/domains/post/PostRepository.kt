@@ -20,12 +20,11 @@ class PostRepository @Inject constructor() {
     fun save(
         data: HashMap<*, *>,
         thumbnail: ByteArray
-    ) =
-        db.add(data).continueWith {
-            if (thumbnail.isNotEmpty()) {
-                getStorageReferenceById(data["thumbnailId"].toString()).putBytes(thumbnail)
-            }
+    ) = db.add(data).continueWith {
+        if (thumbnail.isNotEmpty()) {
+            getStorageReferenceById(data["thumbnailId"].toString()).putBytes(thumbnail)
         }
+    }
 
     fun update(id: String, data: HashMap<String, *>, thumbnail: ByteArray, oldThumbnailId: String) =
         db.document(id).update(data).continueWith {

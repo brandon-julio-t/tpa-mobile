@@ -54,19 +54,17 @@ class PostCreateController @Inject constructor(
                 category,
                 thumbnail
             ).addOnSuccessListener {
-                it.addOnSuccessListener {
-                    Snackbar.make(
-                        fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                        "Post Created",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    "Post Created",
+                    Snackbar.LENGTH_LONG
+                ).show()
 
-                    fragment.binding.progressIndicator.visibility = View.INVISIBLE
-                    fragment.viewModel.reset()
-                    fragment.binding.title.editText?.setText("")
-                    fragment.binding.description.editText?.setText("")
-                    fragment.binding.category.editText?.setText("")
-                }
+                fragment.binding.progressIndicator.visibility = View.INVISIBLE
+                fragment.viewModel.reset()
+                fragment.binding.title.editText?.setText("")
+                fragment.binding.description.editText?.setText("")
+                fragment.binding.category.editText?.setText("")
             }
         }
     }

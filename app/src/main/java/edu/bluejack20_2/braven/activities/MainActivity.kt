@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -79,8 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { controller, destination, asdf ->
-
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             val isOnLoginFragment = destination.id == R.id.loginFragment
             binding.bottomNavigation.visibility = if (isOnLoginFragment) View.GONE else View.VISIBLE
         }

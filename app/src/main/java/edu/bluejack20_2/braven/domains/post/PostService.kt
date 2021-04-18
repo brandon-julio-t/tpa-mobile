@@ -24,7 +24,7 @@ class PostService @Inject constructor(
         description: String,
         category: String,
         thumbnail: ByteArray
-    ): Task<Task<DocumentReference>> {
+    ): Task<Unit> {
         val data = hashMapOf(
             "title" to title,
             "description" to description,
