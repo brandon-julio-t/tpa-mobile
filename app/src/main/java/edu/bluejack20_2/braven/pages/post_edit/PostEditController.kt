@@ -6,11 +6,13 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.domains.post.PostService
+import edu.bluejack20_2.braven.domains.post.PostValidator
 import edu.bluejack20_2.braven.services.ImageMediaService
 import javax.inject.Inject
 
 class PostEditController @Inject constructor(
     private val postService: PostService,
+    private val postValidator: PostValidator,
     private val imageMediaService: ImageMediaService
 ) {
     private lateinit var fragment: PostEditFragment
@@ -58,6 +60,15 @@ class PostEditController @Inject constructor(
                     val description = binding.description.editText?.text.toString()
                     val category = binding.category.editText?.text.toString()
                     val thumbnail = viewModel.thumbnail.value ?: ByteArray(0)
+
+                    val (message, ok) = postValidator.validate(title, description, category)
+                    if (!ok) {
+                        return@setOnClickListener Snackbar.make(
+                            fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                            message,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
 
                     binding.progressIndicator.visibility = View.VISIBLE
 

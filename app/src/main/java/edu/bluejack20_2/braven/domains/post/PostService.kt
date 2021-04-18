@@ -1,8 +1,6 @@
 package edu.bluejack20_2.braven.domains.post
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import edu.bluejack20_2.braven.services.AuthenticationService
@@ -16,6 +14,8 @@ class PostService @Inject constructor(
     fun getAllPosts() = repository.getAll()
 
     fun getPostById(id: String) = repository.getById(id)
+
+    fun getAllPostsByUser(userId: String) = repository.getByUser(userId)
 
     fun getStorageReference(id: String): StorageReference = repository.getStorageReferenceById(id)
 

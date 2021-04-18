@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.user_profile.view_pager_fragments.UserProfileRecentlyCreatedPostsFragment">
+    tools:context=".pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/posts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Recently Created Posts" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.fragments
+package edu.bluejack20_2.braven.pages
 
 import android.app.Activity
 import android.content.Intent

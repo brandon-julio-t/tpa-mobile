@@ -1,13 +1,14 @@
 package edu.bluejack20_2.braven.domains.post
 
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import android.util.Log
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import javax.inject.Inject
 
 class PostRepository @Inject constructor() {
-    private val db get() = FirebaseFirestore.getInstance().collection("posts")
+    private val firestore get() = FirebaseFirestore.getInstance()
+    private val db get() = firestore.collection("posts")
     private val storage get() = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
 
@@ -16,6 +17,8 @@ class PostRepository @Inject constructor() {
     fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
 
     fun getById(id: String) = db.document(id)
+
+    fun getByUser(userId: String) = getAll().whereEqualTo("userId", userId)
 
     fun save(
         data: HashMap<*, *>,
@@ -34,13 +37,58 @@ class PostRepository @Inject constructor() {
             }
         }
 
-    fun like(id: String, userId: String) =
-        db.document(id).update("likers", FieldValue.arrayUnion(userId)).continueWithTask {
-            db.document(id).update("dislikers", FieldValue.arrayRemove(userId))
-        }
+    fun like(id: String, userId: String): Task<Void> {
+        return firestore.runBatch {
+            val document = db.document(id)
 
-    fun dislike(id: String, userId: String) =
-        db.document(id).update("dislikers", FieldValue.arrayUnion(userId)).continueWithTask {
-            db.document(id).update("likers", FieldValue.arrayRemove(userId))
+            document.update("likers", FieldValue.arrayUnion(userId)).continueWith {
+                it.addOnSuccessListener {
+                    document.get().addOnSuccessListener { post ->
+                        updateLikersDislikersCount(post, document)
+                    }
+                }
+            }
+
+            document.update("dislikers", FieldValue.arrayRemove(userId)).continueWith {
+                it.addOnSuccessListener {
+                    document.get().addOnSuccessListener { post ->
+                        updateLikersDislikersCount(post, document)
+                    }
+                }
+            }
         }
+    }
+
+    private fun updateLikersDislikersCount(
+        post: DocumentSnapshot,
+        document: DocumentReference
+    ) {
+        val likers = post.get("likers") as? List<*>
+        val dislikers = post.get("dislikers") as? List<*>
+
+        document.update("likersCount", likers?.size)
+        document.update("dislikersCount", dislikers?.size)
+    }
+
+    fun dislike(id: String, userId: String): Task<Void> {
+        return firestore.runBatch {
+            val document = db.document(id)
+
+            document.update("dislikers", FieldValue.arrayUnion(userId)).continueWith {
+                it.addOnSuccessListener {
+                    document.get().addOnSuccessListener { post ->
+                        updateLikersDislikersCount(post, document)
+                    }
+                }
+            }
+
+            document.update("likers", FieldValue.arrayRemove(userId)).continueWith {
+                it.addOnSuccessListener {
+                    document.get().addOnSuccessListener { post ->
+                        updateLikersDislikersCount(post, document)
+                    }
+                }
+            }
+        }
+    }
 }

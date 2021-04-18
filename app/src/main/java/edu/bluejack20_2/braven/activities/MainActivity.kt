@@ -6,13 +6,13 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
 import edu.bluejack20_2.braven.services.AuthenticationService
@@ -80,9 +80,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { controller, destination, _ ->
             val isOnLoginFragment = destination.id == R.id.loginFragment
             binding.bottomNavigation.visibility = if (isOnLoginFragment) View.GONE else View.VISIBLE
+
+            if (destination.id == R.id.accountFragment) {
+                controller.navigate(
+                    NavGraphDirections.toUserProfile(
+                        authenticationService.getUser()?.uid.toString()
+                    )
+                )
+            }
         }
     }
 

@@ -6,11 +6,13 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.domains.post.PostService
+import edu.bluejack20_2.braven.domains.post.PostValidator
 import edu.bluejack20_2.braven.services.ImageMediaService
 import javax.inject.Inject
 
 class PostCreateController @Inject constructor(
     private val postService: PostService,
+    private val postValidator: PostValidator,
     private val imageMediaService: ImageMediaService
 ) {
     private lateinit var fragment: PostCreateFragment
@@ -46,6 +48,15 @@ class PostCreateController @Inject constructor(
             val category = fragment.binding.category.editText?.text.toString()
             val thumbnail = fragment.viewModel.thumbnail.value ?: ByteArray(0)
 
+            val (message, ok) = postValidator.validate(title, description, category)
+            if (!ok) {
+                return@setOnClickListener Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    message,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
             fragment.binding.progressIndicator.visibility = View.VISIBLE
 
             postService.createPost(
@@ -56,7 +67,7 @@ class PostCreateController @Inject constructor(
             ).addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Post Created",
+                    "Post created",
                     Snackbar.LENGTH_LONG
                 ).show()
 

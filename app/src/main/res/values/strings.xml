@@ -49,4 +49,8 @@
     <string name="post_edit">Post Edit</string>
     <string name="edit_post">Edit Post</string>
     <string name="create">Create</string>
+    <string name="recent_posts">Recent Posts</string>
+    <string name="recent_likes">Recent Likes</string>
+    <string name="most_likes">Most Likes</string>
+    <string name="most_comments">Most Comments</string>
 </resources>

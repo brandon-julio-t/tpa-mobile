@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="edu.bluejack20_2.braven.fragments.LoginFragment"
+        android:name="edu.bluejack20_2.braven.pages.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <action
@@ -33,23 +33,13 @@
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
     <fragment
-        android:id="@+id/Expl"
-        android:name="edu.bluejack20_2.braven.fragments.AccountFragment"
-        android:label="@string/account"
-        tools:layout="@layout/fragment_account" />
-    <fragment
-        android:id="@+id/accountFragment"
-        android:name="edu.bluejack20_2.braven.fragments.AccountFragment"
-        android:label="@string/account"
-        tools:layout="@layout/fragment_account" />
-    <fragment
         android:id="@+id/aboutFragment"
-        android:name="edu.bluejack20_2.braven.fragments.AboutFragment"
+        android:name="edu.bluejack20_2.braven.pages.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="edu.bluejack20_2.braven.fragments.SettingFragment"
+        android:name="edu.bluejack20_2.braven.pages.SettingFragment"
         android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
@@ -104,4 +94,13 @@
         android:name="edu.bluejack20_2.braven.pages.user_profile_edit.UserProfileEditFragment"
         android:label="fragment_user_profile_edit"
         tools:layout="@layout/fragment_user_profile_edit" />
+    <action
+        android:id="@+id/toUserProfile"
+        app:destination="@id/userProfileFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="edu.bluejack20_2.braven.pages.user_profile.UserProfileFragment"
+        android:label="@string/account" />
 </navigation>
