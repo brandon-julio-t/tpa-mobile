@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
@@ -33,7 +34,7 @@ class LoginFragment : Fragment() {
                 val response = IdpResponse.fromResultIntent(it.data)
 
                 if (it.resultCode == Activity.RESULT_OK) {
-                    findNavController().navigate(R.id.toHome)
+                    findNavController().navigate(NavGraphDirections.toHome())
                 } else {
                     // Sign in failed. If response is null the user canceled the
                     // sign-in flow using the back button. Otherwise check
@@ -69,7 +70,7 @@ class LoginFragment : Fragment() {
             AuthUI.getInstance().silentSignIn(requireContext(), providers)
                 .addOnSuccessListener {
                     authenticationService.persist()
-                    findNavController().navigate(R.id.toHome)
+                    findNavController().navigate(NavGraphDirections.toHome())
                 }
                 .addOnFailureListener {
                     loginActivityLauncher.launch(
@@ -83,7 +84,7 @@ class LoginFragment : Fragment() {
             // user already signed in
             Log.wtf("hehe", e.toString())
             authenticationService.persist()
-            findNavController().navigate(R.id.toHome)
+            findNavController().navigate(NavGraphDirections.toHome())
         }
     }
 }

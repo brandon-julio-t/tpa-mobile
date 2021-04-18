@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
-class CommentService @Inject constructor(private val commentRepository: CommentRepository) {
+class CommentService @Inject constructor(private val repository: CommentRepository) {
     fun createComment(
         post: Map<*, *>,
         user: FirebaseUser?,
@@ -20,11 +20,11 @@ class CommentService @Inject constructor(private val commentRepository: CommentR
             "timestamp" to Timestamp.now()
         )
 
-        return commentRepository.save(data)
+        return repository.save(data)
     }
 
     fun getAllCommentsByPost(post: Map<*, *>): Query {
-        return commentRepository.allByPost(post["id"].toString())
+        return repository.allByPost(post["id"].toString())
             .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

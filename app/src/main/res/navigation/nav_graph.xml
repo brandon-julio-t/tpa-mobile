@@ -21,10 +21,10 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/toPostCreate"
+            android:id="@+id/homeToPostCreate"
             app:destination="@id/postCreateFragment" />
         <action
-            android:id="@+id/toPostDetail"
+            android:id="@+id/homeToPostDetail"
             app:destination="@id/postDetailFragment" />
     </fragment>
     <action
@@ -56,7 +56,7 @@
         android:id="@+id/postCreateFragment"
         android:name="edu.bluejack20_2.braven.pages.post_create.PostCreateFragment"
         android:label="@string/post_create"
-        tools:layout="@layout/fragment_create_post" />
+        tools:layout="@layout/fragment_post_create" />
     <fragment
         android:id="@+id/exploreFragment"
         android:name="edu.bluejack20_2.braven.ExploreFragment"
@@ -70,5 +70,17 @@
         <argument
             android:name="post"
             app:argType="android.os.Bundle" />
+        <action
+            android:id="@+id/postDetailToUserProfile"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="edu.bluejack20_2.braven.pages.user_profile.UserProfileFragment"
+        android:label="@string/user_profile"
+        tools:layout="@layout/fragment_user_profile">
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
 </navigation>

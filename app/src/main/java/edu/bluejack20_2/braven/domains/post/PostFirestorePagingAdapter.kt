@@ -7,11 +7,12 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class PostFirestorePagingAdapter(
     private val fragment: Fragment,
-    private val authenticationService: AuthenticationService,
+    private val userService: UserService,
     private val postService: PostService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ) :
@@ -24,7 +25,7 @@ class PostFirestorePagingAdapter(
                 false
             ),
             fragment,
-            authenticationService,
+            userService,
             postService
         )
 

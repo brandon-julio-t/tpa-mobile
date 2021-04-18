@@ -10,12 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.databinding.FragmentCreatePostBinding
+import edu.bluejack20_2.braven.databinding.FragmentPostCreateBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostCreateFragment : Fragment() {
-    private var _binding: FragmentCreatePostBinding? = null
+    private var _binding: FragmentPostCreateBinding? = null
 
     val viewModel: PostCreateViewModel by viewModels()
     val binding get() = _binding!!
@@ -38,7 +38,7 @@ class PostCreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCreatePostBinding.inflate(inflater, container, false)
+        _binding = FragmentPostCreateBinding.inflate(inflater, container, false)
         return binding.root
     }
 

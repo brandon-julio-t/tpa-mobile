@@ -7,11 +7,12 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemCommentBinding
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class CommentFirestorePagingAdapter(
     private val fragment: Fragment,
-    private val authenticationService: AuthenticationService,
+    private val userService: UserService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ) :
     FirestorePagingAdapter<DocumentSnapshot, CommentViewHolder>(options) {
@@ -22,7 +23,7 @@ class CommentFirestorePagingAdapter(
                 parent,
                 false
             ),
-            authenticationService
+            userService
         )
 
     override fun onBindViewHolder(

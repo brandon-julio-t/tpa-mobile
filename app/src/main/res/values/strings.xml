@@ -32,8 +32,18 @@
     <string name="poster_information">Posted by %s at %s</string>
     <string name="like">Like</string>
     <string name="dislike">Dislike</string>
-    <string name="display_name">Display Name</string>
+    <string name="personal_data">%s (%s) • %s</string>
     <string name="body">Body</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="upload_thumbnail">Upload Thumbnail</string>
+    <string name="email">Email</string>
+    <string name="display_name">Display Name</string>
+    <string name="posts_count">%d\nPosts</string>
+    <string name="followers_count">%d\nFollowers</string>
+    <string name="followings_count">%d\nFollowings</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="user_profile">User Profile</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>
