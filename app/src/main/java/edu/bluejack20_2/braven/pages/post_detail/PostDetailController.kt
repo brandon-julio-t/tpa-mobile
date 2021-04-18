@@ -27,7 +27,22 @@ class PostDetailController @Inject constructor(
     fun bind(fragment: PostDetailFragment) {
         val binding = fragment.binding
 
-        postService.getPostById(fragment.args.postId).get().addOnSuccessListener {
+        val query = postService.getPostById(fragment.args.postId)
+
+        query.addSnapshotListener { it, _ ->
+            it?.data?.let { post ->
+                binding.like.text = fragment.getString(
+                    R.string.like,
+                    (post["likers"] as? List<*>)?.size ?: 0
+                )
+                binding.dislike.text = fragment.getString(
+                    R.string.dislike,
+                    (post["dislikers"] as? List<*>)?.size ?: 0
+                )
+            }
+        }
+
+        query.get().addOnSuccessListener {
             it.data?.let { post ->
                 post["id"] = it.id
                 bindEvents(binding, fragment, post)

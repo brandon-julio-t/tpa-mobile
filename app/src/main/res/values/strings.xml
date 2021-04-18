@@ -30,8 +30,8 @@
     <string name="upload">Upload</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="poster_information">Posted by %s at %s</string>
-    <string name="like">Like</string>
-    <string name="dislike">Dislike</string>
+    <string name="like">Like (%d)</string>
+    <string name="dislike">Dislike (%d)</string>
     <string name="personal_data">%s (%s) • %s</string>
     <string name="body">Body</string>
     <string name="update">Update</string>
@@ -48,4 +48,5 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="post_edit">Post Edit</string>
     <string name="edit_post">Edit Post</string>
+    <string name="create">Create</string>
 </resources>

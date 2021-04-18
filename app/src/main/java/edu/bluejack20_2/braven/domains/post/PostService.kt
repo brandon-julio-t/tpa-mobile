@@ -51,7 +51,6 @@ class PostService @Inject constructor(
             "category" to category,
             "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
-            "timestamp" to FieldValue.serverTimestamp()
         )
 
         return repository.update(postId, data, thumbnail, oldThumbnailId)

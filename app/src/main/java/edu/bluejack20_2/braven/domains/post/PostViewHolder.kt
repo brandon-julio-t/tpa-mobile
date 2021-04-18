@@ -69,7 +69,20 @@ class PostViewHolder(
                     ).show()
                 }
             }
-        }
 
+            postService.getPostById(post["id"].toString()).addSnapshotListener { it, _ ->
+                it?.data?.let { post ->
+                    binding.like.text = fragment.getString(
+                        R.string.like,
+                        (post["likers"] as? List<*>)?.size ?: 0
+                    )
+
+                    binding.dislike.text = fragment.getString(
+                        R.string.dislike,
+                        (post["dislikers"] as? List<*>)?.size ?: 0
+                    )
+                }
+            }
+        }
     }
 }
