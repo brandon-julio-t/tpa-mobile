@@ -8,7 +8,7 @@ import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 class CommentRepository @Inject constructor() {
-    private val db get() = FirebaseFirestore.getInstance().collection("comments")
+    private val db = FirebaseFirestore.getInstance().collection("comments")
 
     fun allByPost(postId: String): Query = db.whereEqualTo("postId", postId)
 
