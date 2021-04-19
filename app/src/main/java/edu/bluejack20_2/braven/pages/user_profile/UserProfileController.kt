@@ -1,8 +1,6 @@
 package edu.bluejack20_2.braven.pages.user_profile
 
-import android.view.View
 import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
@@ -15,11 +13,9 @@ import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragmentDirections
-import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
-import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileRecentlyLikedPostsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_comments.MostCommentsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_likes.MostLikesFragment
+import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_likes.RecentLikesFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
@@ -186,7 +182,7 @@ class UserProfileController @Inject constructor(
 
         val pages = listOf(
             Pair("Recent Posts", RecentPostsFragment(userId)),
-            Pair("Recent Likes", UserProfileRecentlyLikedPostsFragment()),
+            Pair("Recent Likes", RecentLikesFragment(userId)),
             Pair("Most Comments", MostCommentsFragment(userId)),
             Pair("Most Likes", MostLikesFragment(userId))
         )

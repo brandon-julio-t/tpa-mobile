@@ -3,9 +3,10 @@ package edu.bluejack20_2.braven.domains.post
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_2.braven.domains.user.UserService
 import javax.inject.Inject
 
-class PostRepository @Inject constructor() {
+class PostRepository @Inject constructor(private val userService: UserService) {
     private val firestore get() = FirebaseFirestore.getInstance()
     private val db get() = firestore.collection("posts")
     private val storage get() = FirebaseStorage.getInstance().reference
@@ -57,6 +58,8 @@ class PostRepository @Inject constructor() {
                     }
                 }
             }
+
+            userService.addLikedPost(userId, document)
         }
     }
 
@@ -90,6 +93,8 @@ class PostRepository @Inject constructor() {
                     }
                 }
             }
+
+            userService.removeLikedPost(userId, document)
         }
     }
 }
