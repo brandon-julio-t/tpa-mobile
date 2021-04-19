@@ -109,6 +109,7 @@
         android:id="@+id/accountFragment"
         android:name="edu.bluejack20_2.braven.pages.user_profile.UserProfileFragment"
         android:label="@string/account" />
+
     <fragment
         android:id="@+id/followingUserProfileFragment"
         android:name="edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragment"
@@ -126,4 +127,9 @@
             android:name="auth"
             app:argType="string" />
     </fragment>
+
+    <action
+        android:id="@+id/toPostDetail"
+        app:destination="@id/postDetailFragment" />
+
 </navigation>

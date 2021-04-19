@@ -10,16 +10,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragmentDirections
 import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
-import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostCommentedPostsFragment
-import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostLikedPostsFragment
-import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileRecentlyLikedPostsFragment
+import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_comments.MostCommentsFragment
+import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_likes.MostLikesFragment
+import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
@@ -109,9 +110,11 @@ class UserProfileController @Inject constructor(
                     actionButtonEditProfileState(fragment, binding)
                 }
 
-                postService.getAllPostsByUser(user["id"].toString()).get().addOnSuccessListener {
-                    binding.postsCount.text = fragment.getString(R.string.posts_count, it.size())
-                }
+                postService.getAllPostsByUser(user["id"].toString())
+                    .orderBy("timestamp", Query.Direction.DESCENDING).get().addOnSuccessListener {
+                        binding.postsCount.text =
+                            fragment.getString(R.string.posts_count, it.size())
+                    }
 
                 binding.followersCount.text = fragment.getString(
                     R.string.followers_count,
@@ -179,11 +182,13 @@ class UserProfileController @Inject constructor(
         fragment: UserProfileFragment,
         binding: FragmentUserProfileBinding
     ) {
+        val userId = fragment.args.userId
+
         val pages = listOf(
-            Pair("Recent Posts", RecentPostsFragment(fragment.args.userId)),
+            Pair("Recent Posts", RecentPostsFragment(userId)),
             Pair("Recent Likes", UserProfileRecentlyLikedPostsFragment()),
-            Pair("Most Comments", UserProfileMostCommentedPostsFragment()),
-            Pair("Most Likes", UserProfileMostLikedPostsFragment())
+            Pair("Most Comments", MostCommentsFragment(userId)),
+            Pair("Most Likes", MostLikesFragment(userId))
         )
 
         binding.viewPager.adapter = object : FragmentStateAdapter(fragment) {
