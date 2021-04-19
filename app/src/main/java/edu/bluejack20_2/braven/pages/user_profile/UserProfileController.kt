@@ -1,5 +1,9 @@
 package edu.bluejack20_2.braven.pages.user_profile
 
+import android.view.View
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -10,6 +14,8 @@ import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragmentDirections
+import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostCommentedPostsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.UserProfileMostLikedPostsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment
@@ -26,9 +32,32 @@ class UserProfileController @Inject constructor(
         val binding = fragment.binding
         val query = userService.getUserById(fragment.args.userId)
 
+        directFollowingPage(fragment, binding)
+        directFollowersPage(fragment, binding)
         populateData(fragment, binding, query)
         populateRealtimeData(fragment, binding, query)
         setupViewPagerTabs(fragment, binding)
+    }
+
+
+    private fun directFollowingPage(
+        fragment: UserProfileFragment,
+        binding: FragmentUserProfileBinding
+    ) {
+        binding.followingsCount.setOnClickListener {
+            it.findNavController()
+                .navigate(R.id.userProfileToFollowingPage, bundleOf("auth" to fragment.args.userId))
+        }
+    }
+
+    private fun directFollowersPage(
+        fragment: UserProfileFragment,
+        binding: FragmentUserProfileBinding
+    ) {
+        binding.followersCount.setOnClickListener {
+            it.findNavController()
+                .navigate(R.id.userProfileToFollowersPage, bundleOf("auth" to fragment.args.userId))
+        }
     }
 
     private fun populateData(

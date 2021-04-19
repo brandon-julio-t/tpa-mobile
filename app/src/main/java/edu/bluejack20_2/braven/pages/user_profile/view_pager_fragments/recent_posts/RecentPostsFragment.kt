@@ -10,7 +10,7 @@ import edu.bluejack20_2.braven.databinding.FragmentRecentPostsBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RecentPostsFragment(val userId: String) : Fragment() {
+class RecentPostsFragment(val userId: String?=null) : Fragment() {
     private var _binding: FragmentRecentPostsBinding? = null
 
     val binding get() = _binding!!

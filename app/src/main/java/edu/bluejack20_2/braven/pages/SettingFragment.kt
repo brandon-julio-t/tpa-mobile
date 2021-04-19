@@ -9,15 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentSettingBinding
+import edu.bluejack20_2.braven.services.AuthenticationService
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 //    private var viewText: Array<View>? = null
-
+    @Inject lateinit var authenticationService: AuthenticationService
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +82,10 @@ class SettingFragment : Fragment() {
             sharedPrefsEdit?.putBoolean("Large", !isLarge!!)
             sharedPrefsEdit?.apply()
             requireActivity().recreate()
+        }
+
+        binding.buttonLogout.setOnClickListener {
+            authenticationService.logout(it)
         }
 
 

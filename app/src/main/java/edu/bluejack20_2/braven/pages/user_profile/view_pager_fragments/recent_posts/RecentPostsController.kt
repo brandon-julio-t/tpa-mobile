@@ -13,7 +13,7 @@ class RecentPostsController @Inject constructor(
 ) {
     fun bind(fragment: RecentPostsFragment) {
         val binding = fragment.binding
-        val query = postService.getAllPostsByUser(fragment.userId)
+        val query = postService.getAllPostsByUser(fragment.userId!!)
 
         binding.posts.layoutManager = object : LinearLayoutManager(fragment.requireActivity()) {
             override fun canScrollVertically(): Boolean = false

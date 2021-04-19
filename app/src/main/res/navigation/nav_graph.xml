@@ -79,6 +79,12 @@
         <argument
             android:name="userId"
             app:argType="string" />
+        <action
+            android:id="@+id/userProfileToFollowingPage"
+            app:destination="@id/followingUserProfileFragment" />
+        <action
+            android:id="@+id/userProfileToFollowersPage"
+            app:destination="@id/followersUserProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/postEditFragment"
@@ -103,4 +109,21 @@
         android:id="@+id/accountFragment"
         android:name="edu.bluejack20_2.braven.pages.user_profile.UserProfileFragment"
         android:label="@string/account" />
+    <fragment
+        android:id="@+id/followingUserProfileFragment"
+        android:name="edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragment"
+        android:label="fragment_following_user_profile"
+        tools:layout="@layout/fragment_following_user_profile">
+        <argument
+            android:name="auth"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/followersUserProfileFragment"
+        android:name="edu.bluejack20_2.braven.pages.followers_page.FollowersUserProfileFragment"
+        android:label="FollowersUserProfileFragment" >
+        <argument
+            android:name="auth"
+            app:argType="string" />
+    </fragment>
 </navigation>

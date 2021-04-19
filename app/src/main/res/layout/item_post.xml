@@ -4,25 +4,41 @@
     android:id="@+id/card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    android:clickable="true">
+    android:clickable="true"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <!--        <ImageView-->
+        <!--            android:id="@+id/poster_profile_picture"-->
+        <!--            android:layout_width="36dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/created_at"-->
+        <!--            android:contentDescription="@string/thumbnail"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/poster_display_name"-->
+        <!--            app:srcCompat="@drawable/ic_baseline_account_circle_24" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/poster_profile_picture"
-            android:layout_width="36dp"
-            android:layout_height="0dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/created_at"
             android:contentDescription="@string/thumbnail"
+            app:civ_border_color="#C1C1C1"
+            app:civ_border_width="0.5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/created_at"
+            app:layout_constraintEnd_toStartOf="@+id/poster_display_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/poster_display_name"
-            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+            app:layout_constraintVertical_bias="0.041" />
 
         <TextView
             android:id="@+id/poster_display_name"
@@ -54,7 +70,7 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="@+id/created_at"
             app:layout_constraintStart_toStartOf="@+id/poster_profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/created_at" />
+            app:layout_constraintTop_toBottomOf="@+id/poster_profile_picture" />
 
 
         <TextView
@@ -83,9 +99,9 @@
 
         <Button
             android:id="@+id/like"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_marginVertical="8dp"
             android:text="@string/like"
             app:icon="@drawable/ic_baseline_thumb_up_24"
@@ -96,9 +112,9 @@
 
         <Button
             android:id="@+id/dislike"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_marginVertical="8dp"
             android:text="@string/dislike"
             app:icon="@drawable/ic_baseline_thumb_down_24"

@@ -16,6 +16,5 @@ class ExploreService @Inject constructor(){
     fun getAllPosts() : Query = db.orderBy("timestamp", Query.Direction.DESCENDING)
 
     fun getStorageReference(id: String): StorageReference = storage.child("${storageRoot}/${id}")
-
-
+    
 }
