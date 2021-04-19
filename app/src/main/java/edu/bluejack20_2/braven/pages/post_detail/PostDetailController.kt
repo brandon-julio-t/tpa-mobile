@@ -30,17 +30,15 @@ class PostDetailController @Inject constructor(
         val query = postService.getPostById(fragment.args.postId)
 
         query.addSnapshotListener { it, _ ->
-            it?.data?.let { post ->
                 binding.like.text = fragment.getString(
                     R.string.like,
-                    (post["likers"] as? List<*>)?.size ?: 0
+                    it?.getLong("likersCount") ?: 0
                 )
                 binding.dislike.text = fragment.getString(
                     R.string.dislike,
-                    (post["dislikers"] as? List<*>)?.size ?: 0
+                    it?.getLong("dislikersCount") ?: 0
                 )
             }
-        }
 
         query.get().addOnSuccessListener {
             it.data?.let { post ->

@@ -8,11 +8,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.modules.GlideApp
-import edu.bluejack20_2.braven.pages.home.HomeFragmentDirections
 
 class PostViewHolder(
     private val binding: ItemPostBinding,
@@ -26,7 +26,7 @@ class PostViewHolder(
 
             binding.cardLayout.setOnClickListener {
                 fragment.findNavController().navigate(
-                    HomeFragmentDirections.homeToPostDetail(post["id"].toString())
+                    NavGraphDirections.toPostDetail(post["id"].toString())
                 )
             }
 
@@ -71,17 +71,15 @@ class PostViewHolder(
             }
 
             postService.getPostById(post["id"].toString()).addSnapshotListener { it, _ ->
-                it?.data?.let { post ->
-                    binding.like.text = fragment.getString(
-                        R.string.like,
-                        (post["likers"] as? List<*>)?.size ?: 0
-                    )
+                binding.like.text = fragment.getString(
+                    R.string.like,
+                    it?.getLong("likersCount") ?: 0
+                )
 
-                    binding.dislike.text = fragment.getString(
-                        R.string.dislike,
-                        (post["dislikers"] as? List<*>)?.size ?: 0
-                    )
-                }
+                binding.dislike.text = fragment.getString(
+                    R.string.dislike,
+                    it?.getLong("dislikersCount") ?: 0
+                )
             }
         }
     }

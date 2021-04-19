@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.post
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
@@ -18,7 +17,7 @@ class PostRepository @Inject constructor() {
 
     fun getById(id: String) = db.document(id)
 
-    fun getByUser(userId: String) = getAll().whereEqualTo("userId", userId)
+    fun getByUser(userId: String) = db.whereEqualTo("userId", userId)
 
     fun save(
         data: HashMap<*, *>,
