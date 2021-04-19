@@ -90,7 +90,7 @@ class UserProfileController @Inject constructor(
             it?.data?.let { user ->
                 user["id"] = it.id
 
-                val currentUser = authenticationService.getUser()
+                val currentUser = authenticationService.getCurrentUser()
                 val followers = user["followers"] as? List<*>
                 val followings = user["followings"] as? List<*>
 

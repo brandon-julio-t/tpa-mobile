@@ -7,10 +7,13 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(private val userService: UserService) {
-    private val firestore get() = FirebaseFirestore.getInstance()
-    private val db get() = firestore.collection("posts")
-    private val storage get() = FirebaseStorage.getInstance().reference
+    private val path = "posts"
+    private val firestore = FirebaseFirestore.getInstance()
+    private val db = firestore.collection(path)
+    private val storage = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
+
+    fun getDocumentReference(id: String) = firestore.document("${path}/${id}")
 
     fun getAll() = db.orderBy("timestamp", Query.Direction.DESCENDING)
 

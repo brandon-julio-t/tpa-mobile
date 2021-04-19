@@ -10,10 +10,12 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import javax.inject.Inject
 
 class AuthenticationService @Inject constructor(private val userService: UserService) {
-    fun getUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+    fun getCurrentUserDocumentReference() = userService.getDocumentReference(getCurrentUser()?.uid.toString())
 
     fun persist() {
-        getUser()?.let { userService.save(it) }
+        getCurrentUser()?.let { userService.save(it) }
     }
 
     fun logout(view: View) {

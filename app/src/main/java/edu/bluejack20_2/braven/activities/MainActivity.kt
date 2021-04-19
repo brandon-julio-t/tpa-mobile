@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.accountFragment) {
                 controller.navigate(
                     NavGraphDirections.toUserProfile(
-                        authenticationService.getUser()?.uid.toString()
+                        authenticationService.getCurrentUser()?.uid.toString()
                     )
                 )
             }
