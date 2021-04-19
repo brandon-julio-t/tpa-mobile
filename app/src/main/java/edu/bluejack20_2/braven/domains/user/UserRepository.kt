@@ -10,11 +10,8 @@ import java.util.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor() {
-    private val path = "users"
-    private val firestore = FirebaseFirestore.getInstance()
-    private val db = firestore.collection(path)
-
-    fun getDocumentReference(id: String) = firestore.document("${path}/${id}")
+    private val firestore get() = FirebaseFirestore.getInstance()
+    private val db get() = firestore.collection("users")
 
     fun getById(id: String) = db.document(id)
 

@@ -7,8 +7,6 @@ import com.google.firebase.firestore.FieldValue
 import javax.inject.Inject
 
 class UserService @Inject constructor(private val repository: UserRepository) {
-    fun getDocumentReference(id: String) = repository.getDocumentReference(id)
-
     fun getUserById(id: String) = repository.getById(id)
 
     fun follow(me: FirebaseUser?, you: Map<*, *>): Task<Void> =

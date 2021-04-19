@@ -2,18 +2,15 @@ package edu.bluejack20_2.braven.domains.post
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.util.*
 import javax.inject.Inject
 
 class PostService @Inject constructor(
-    private val repository: PostRepository,
     private val authenticationService: AuthenticationService,
+    private val repository: PostRepository,
 ) {
-    fun getDocumentReference(id: String) = repository.getDocumentReference(id)
-
     fun getAllPosts() = repository.getAll()
 
     fun getPostById(id: String) = repository.getById(id)
@@ -32,8 +29,7 @@ class PostService @Inject constructor(
             "title" to title,
             "description" to description,
             "category" to category,
-            "userId" to authenticationService.getCurrentUser()?.uid.toString(),
-            "user" to authenticationService.getCurrentUserDocumentReference(),
+            "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
             "timestamp" to FieldValue.serverTimestamp()
         )
@@ -53,8 +49,7 @@ class PostService @Inject constructor(
             "title" to title,
             "description" to description,
             "category" to category,
-            "userId" to authenticationService.getCurrentUser()?.uid.toString(),
-            "user" to authenticationService.getCurrentUserDocumentReference(),
+            "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
         )
 
@@ -64,13 +59,13 @@ class PostService @Inject constructor(
     fun likePost(post: Map<*, *>) =
         repository.like(
             post["id"].toString(),
-            authenticationService.getCurrentUser()?.uid.toString()
+            authenticationService.getUser()?.uid.toString()
         )
 
     fun dislikePost(post: Map<*, *>) =
         repository.dislike(
             post["id"].toString(),
-            authenticationService.getCurrentUser()?.uid.toString()
+            authenticationService.getUser()?.uid.toString()
         )
 
     fun incrementCommentsCount(id: String) {

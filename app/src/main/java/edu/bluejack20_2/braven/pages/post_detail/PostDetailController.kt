@@ -71,7 +71,7 @@ class PostDetailController @Inject constructor(
         fragment: PostDetailFragment,
         post: Map<*, *>
     ) {
-        val user = authenticationService.getCurrentUser()
+        val user = authenticationService.getUser()
         val username = user?.displayName.toString()
         val createdAt = (post["timestamp"] as Timestamp).toDate().toString()
         val commentsAdapter = CommentFirestorePagingAdapter(
@@ -97,7 +97,7 @@ class PostDetailController @Inject constructor(
             }
         }
 
-        if (authenticationService.getCurrentUser()?.uid == post["userId"]) {
+        if (authenticationService.getUser()?.uid == post["userId"]) {
             binding.editPost.visibility = View.VISIBLE
             binding.editPost.setOnClickListener {
                 fragment.findNavController()
