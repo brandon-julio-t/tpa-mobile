@@ -1,8 +1,9 @@
-package edu.bluejack20_2.braven.activities
+package edu.bluejack20_2.braven
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -12,8 +13,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.NavGraphDirections
-import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.toolbar.setOnMenuItemClickListener {
             it.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
-                    || super.onOptionsItemSelected(it)
+                    || this.onOptionsItemSelected(it)
         }
 
         binding.bottomNavigation.setupWithNavController(navController)
@@ -94,4 +93,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menu_logout -> {
+            authenticationService.logout(findViewById(R.id.nav_host_fragment))
+            true
+        }
+        else -> false
+    }
 }

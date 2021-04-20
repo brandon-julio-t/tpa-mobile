@@ -10,8 +10,8 @@ import java.util.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor() {
-    private val firestore get() = FirebaseFirestore.getInstance()
-    private val db get() = firestore.collection("users")
+    private val firestore = FirebaseFirestore.getInstance()
+    private val db = firestore.collection("users")
 
     fun getById(id: String) = db.document(id)
 
@@ -24,6 +24,8 @@ class UserRepository @Inject constructor() {
         db.document(myId).update("followings", FieldValue.arrayRemove(yourId))
         db.document(yourId).update("followers", FieldValue.arrayRemove(myId))
     }
+
+    fun update(userId: String, data: Map<String, *>) = db.document(userId).update(data)
 
     fun save(user: FirebaseUser): Task<Void> {
         val data = hashMapOf(

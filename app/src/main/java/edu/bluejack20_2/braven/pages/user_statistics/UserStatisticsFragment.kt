@@ -1,4 +1,4 @@
-package edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts
+package edu.bluejack20_2.braven.pages.user_statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,23 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.databinding.FragmentUserProfileRecentPostsBinding
+import edu.bluejack20_2.braven.databinding.FragmentUserStatisticsBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RecentPostsFragment(val userId: String? = null) : Fragment() {
-    private var _binding: FragmentUserProfileRecentPostsBinding? = null
+class UserStatisticsFragment : Fragment() {
+    private var _binding: FragmentUserStatisticsBinding? = null
 
     val binding get() = _binding!!
 
     @Inject
-    lateinit var controller: RecentPostsController
+    lateinit var controller: UserStatisticsController
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUserProfileRecentPostsBinding.inflate(inflater, container, false)
+        _binding = FragmentUserStatisticsBinding.inflate(inflater, container, false)
         controller.bind(this)
         return binding.root
     }

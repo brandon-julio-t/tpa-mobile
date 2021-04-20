@@ -34,6 +34,7 @@ class LoginFragment : Fragment() {
                 val response = IdpResponse.fromResultIntent(it.data)
 
                 if (it.resultCode == Activity.RESULT_OK) {
+                    authenticationService.persist()
                     findNavController().navigate(NavGraphDirections.toHome())
                 } else {
                     // Sign in failed. If response is null the user canceled the
