@@ -2,8 +2,10 @@ package edu.bluejack20_2.braven.pages.user_profile
 
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -11,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
+import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -170,11 +173,12 @@ class UserProfileController @Inject constructor(
 
     private fun actionButtonEditProfileState(
         fragment: UserProfileFragment,
-        binding: FragmentUserProfileBinding
+        binding: FragmentUserProfileBinding,
     ) {
         binding.action.text = fragment.getString(R.string.edit_profile)
         binding.action.setOnClickListener {
-            TODO("Navigate to user profile edit fragment")
+
+            fragment.findNavController().navigate(R.id.userProfileToUserProfileEdit)
         }
     }
 

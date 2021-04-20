@@ -85,6 +85,9 @@
         <action
             android:id="@+id/userProfileToFollowersPage"
             app:destination="@id/followersUserProfileFragment" />
+        <action
+            android:id="@+id/userProfileToUserProfileEdit"
+            app:destination="@id/userProfileEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/postEditFragment"

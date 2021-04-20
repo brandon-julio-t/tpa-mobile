@@ -53,4 +53,8 @@
     <string name="recent_likes">Recent Likes</string>
     <string name="most_likes">Most Likes</string>
     <string name="most_comments">Most Comments</string>
+    <string name="label">Username</string>
+    <string name="label2">Password</string>
+    <string name="label3">Biography</string>
+    <string name="upload_image_edit">Upload Image</string>
 </resources>

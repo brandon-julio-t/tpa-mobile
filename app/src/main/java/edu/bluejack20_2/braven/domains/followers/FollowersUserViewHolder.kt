@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.followers
 
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,4 +11,5 @@ class FollowersUserViewHolder(
 ):RecyclerView.ViewHolder(binding.root) {
     val userName: TextView = binding.usernameText
     val photoProfile: ImageView = binding.profilePictureImage
+    var button: Button = binding.action
 }
