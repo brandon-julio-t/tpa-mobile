@@ -59,4 +59,5 @@
     <string name="upload_image_edit">Upload Image</string>
     <string name="my_statistics">My Statistics</string>
     <string name="user_statistics">User Statistics</string>
+    <string name="update_page_button">Update</string>
 </resources>

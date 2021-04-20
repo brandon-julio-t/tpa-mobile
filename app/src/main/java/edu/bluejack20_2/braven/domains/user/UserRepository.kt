@@ -27,6 +27,10 @@ class UserRepository @Inject constructor() {
 
     fun update(userId: String, data: Map<String, *>) = db.document(userId).update(data)
 
+    fun updateProfile(userId: String, username: String) = db.document(userId).update(mapOf(
+        "displayName" to username
+    ))
+
     fun save(user: FirebaseUser): Task<Void> {
         val data = hashMapOf(
             "displayName" to user.displayName?.toString(),

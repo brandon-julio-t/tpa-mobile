@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -46,6 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editUsername">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/biography_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -69,6 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editBio">>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -90,13 +93,22 @@
         <ImageView
             android:id="@+id/preview_profile_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="32dp"
+            android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upload_button" />
+
+        <Button
+            android:id="@+id/update_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/update_page_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_profile_image" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
