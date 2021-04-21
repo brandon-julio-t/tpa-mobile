@@ -70,6 +70,7 @@ class PostRepository @Inject constructor(private val userService: UserService) {
         post.reference.update("dislikersCount", dislikers?.size ?: 0)
     }
 
+
     fun unlikeAndDislike(postId: String, userId: String) = firestore.runBatch {
         val document = db.document(postId)
         it.update(document, "likers", FieldValue.arrayRemove(userId))
@@ -77,7 +78,6 @@ class PostRepository @Inject constructor(private val userService: UserService) {
     }.addOnSuccessListener {
         db.document(postId).get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
     }
-
 
     fun dislike(id: String, userId: String): Task<Void> {
         return firestore.runBatch {

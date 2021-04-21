@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
@@ -41,8 +40,7 @@ class PostViewHolder(
         binding.title.text = post["title"].toString()
         binding.category.text = post["category"].toString()
 
-        val path = "thumbnails/${post["thumbnailId"]}"
-        val storageReference = FirebaseStorage.getInstance().reference.child(path)
+        val storageReference = postService.getStorageReference(post["thumbnailId"].toString())
         GlideApp.with(binding.root).load(storageReference).into(binding.thumbnail)
 
         post.reference.addSnapshotListener { updatedPost, err ->
@@ -64,53 +62,49 @@ class PostViewHolder(
                 updatedPost?.getLong("dislikersCount") ?: 0
             )
 
-            val likers = (updatedPost?.get("likers") as? List<*>)
-                ?.mapNotNull { it as? String }
-                ?: emptyList()
-
-            val dislikers = (updatedPost?.get("dislikers") as? List<*>)
-                ?.mapNotNull { it as? String }
-                ?: emptyList()
-
             binding.like.setOnClickListener {
-                if (likers.contains(post["userId"])) {
-                    postService.unlikeAndDislikePost(post).addOnSuccessListener {
-                        Snackbar.make(
-                            fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                            "Post un-liked",
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
+                val likers = (updatedPost?.get("likers") as? List<*>)
+                    ?.mapNotNull { it as? String }
+                    ?: emptyList()
 
-                    return@setOnClickListener
-                }
+                val isLiked = likers.contains(post["userId"])
 
-                postService.likePost(post).addOnSuccessListener {
+                val action =
+                    if (isLiked) postService.unlikeAndDislikePost(post)
+                    else postService.likePost(post)
+
+                action.addOnSuccessListener {
+                    val notification =
+                        if (isLiked) "Post un-liked"
+                        else "Post liked"
+
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                        "Post liked",
+                        notification,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
             }
 
             binding.dislike.setOnClickListener {
-                if (dislikers.contains(post["userId"])) {
-                    postService.unlikeAndDislikePost(post).addOnSuccessListener {
-                        Snackbar.make(
-                            fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                            "Post un-disliked",
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
+                val dislikers = (updatedPost?.get("dislikers") as? List<*>)
+                    ?.mapNotNull { it as? String }
+                    ?: emptyList()
 
-                    return@setOnClickListener
-                }
+                val isDisliked = dislikers.contains(post["userId"])
 
-                postService.dislikePost(post).addOnSuccessListener {
+                val action =
+                    if (isDisliked) postService.unlikeAndDislikePost(post)
+                    else postService.dislikePost(post)
+
+                action.addOnSuccessListener {
+                    val notification =
+                        if (isDisliked) "Post un-disliked"
+                        else "Post disliked"
+
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                        "Post disliked",
+                        notification,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }

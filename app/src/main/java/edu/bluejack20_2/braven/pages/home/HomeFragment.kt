@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
 import javax.inject.Inject
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
 
+    val viewModel: HomeViewModel by viewModels()
     val binding get() = _binding!!
 
     @Inject

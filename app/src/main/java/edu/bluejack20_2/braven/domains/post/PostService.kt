@@ -5,17 +5,15 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.StorageReference
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.util.*
 import javax.inject.Inject
 
 class PostService @Inject constructor(
-    private val authenticationService: AuthenticationService,
     private val repository: PostRepository,
+    private val authenticationService: AuthenticationService
 ) {
-    fun getAllPosts() = repository.getAll()
-
     fun getPostById(id: String) = repository.getById(id)
 
     fun getAllPostsByUser(userId: String) = repository.getByUser(userId)
@@ -26,7 +24,7 @@ class PostService @Inject constructor(
             .whereGreaterThanOrEqualTo("timestamp", start)
             .whereLessThanOrEqualTo("timestamp", end)
 
-    fun getStorageReference(id: String): StorageReference = repository.getStorageReferenceById(id)
+    fun getStorageReference(id: String) = repository.getStorageReferenceById(id)
 
     fun createPost(
         title: String,
