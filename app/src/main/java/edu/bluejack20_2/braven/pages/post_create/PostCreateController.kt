@@ -95,5 +95,6 @@ class PostCreateController @Inject constructor(
                 Snackbar.LENGTH_LONG
             ).show()
         }
+
     }
 }

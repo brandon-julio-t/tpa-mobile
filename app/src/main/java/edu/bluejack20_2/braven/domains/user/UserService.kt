@@ -15,6 +15,8 @@ class UserService @Inject constructor(private val repository: UserRepository) {
     fun unFollow(me: FirebaseUser?, you: Map<*, *>): Task<Void> =
         repository.unFollow(me?.uid.toString(), you["id"].toString())
 
+    fun updateProfile(userId: String, username: String) = repository.updateProfile(userId, username)
+
     fun addLikedPost(userId: String, post: DocumentReference): Task<Void> {
         val data = hashMapOf(
             "likedPosts" to FieldValue.arrayUnion(post)

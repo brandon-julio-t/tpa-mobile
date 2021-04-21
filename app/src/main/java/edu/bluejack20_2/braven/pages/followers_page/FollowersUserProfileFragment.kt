@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.databinding.FragmentFollowersUserProfileBinding
 import edu.bluejack20_2.braven.databinding.FragmentFollowingUserProfileBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class FollowersUserProfileFragment : Fragment() {
 
-    private var _binding: FragmentFollowingUserProfileBinding? = null
+    private var _binding: FragmentFollowersUserProfileBinding? = null
     val binding get() = _binding!!
     val userId = arguments?.getString("auth")
 
@@ -23,7 +24,7 @@ class FollowersUserProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFollowingUserProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentFollowersUserProfileBinding.inflate(inflater, container, false)
         controller.bind(this)
         return binding.root
     }
