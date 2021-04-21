@@ -1,7 +1,10 @@
 package edu.bluejack20_2.braven.domains.post
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.braven.domains.user.UserService
 import javax.inject.Inject
@@ -45,17 +48,13 @@ class PostRepository @Inject constructor(private val userService: UserService) {
 
             document.update("likers", FieldValue.arrayUnion(userId)).continueWith {
                 it.addOnSuccessListener {
-                    document.get().addOnSuccessListener { post ->
-                        updateLikersDislikersCount(post, document)
-                    }
+                    document.get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
                 }
             }
 
             document.update("dislikers", FieldValue.arrayRemove(userId)).continueWith {
                 it.addOnSuccessListener {
-                    document.get().addOnSuccessListener { post ->
-                        updateLikersDislikersCount(post, document)
-                    }
+                    document.get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
                 }
             }
 
@@ -63,16 +62,22 @@ class PostRepository @Inject constructor(private val userService: UserService) {
         }
     }
 
-    private fun updateLikersDislikersCount(
-        post: DocumentSnapshot,
-        document: DocumentReference
-    ) {
+    private fun updateLikersDislikersCount(post: DocumentSnapshot) {
         val likers = post.get("likers") as? List<*>
         val dislikers = post.get("dislikers") as? List<*>
 
-        document.update("likersCount", likers?.size)
-        document.update("dislikersCount", dislikers?.size)
+        post.reference.update("likersCount", likers?.size ?: 0)
+        post.reference.update("dislikersCount", dislikers?.size ?: 0)
     }
+
+    fun unlikeAndDislike(postId: String, userId: String) = firestore.runBatch {
+        val document = db.document(postId)
+        it.update(document, "likers", FieldValue.arrayRemove(userId))
+        it.update(document, "dislikers", FieldValue.arrayRemove(userId))
+    }.addOnSuccessListener {
+        db.document(postId).get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
+    }
+
 
     fun dislike(id: String, userId: String): Task<Void> {
         return firestore.runBatch {
@@ -80,17 +85,13 @@ class PostRepository @Inject constructor(private val userService: UserService) {
 
             document.update("dislikers", FieldValue.arrayUnion(userId)).continueWith {
                 it.addOnSuccessListener {
-                    document.get().addOnSuccessListener { post ->
-                        updateLikersDislikersCount(post, document)
-                    }
+                    document.get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
                 }
             }
 
             document.update("likers", FieldValue.arrayRemove(userId)).continueWith {
                 it.addOnSuccessListener {
-                    document.get().addOnSuccessListener { post ->
-                        updateLikersDislikersCount(post, document)
-                    }
+                    document.get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
                 }
             }
 

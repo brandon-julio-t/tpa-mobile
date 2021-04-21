@@ -55,4 +55,7 @@
     <string name="most_comments">Most Comments</string>
     <string name="my_statistics">My Statistics</string>
     <string name="user_statistics">User Statistics</string>
+    <string name="posts_in_a_month">Posts in a Month</string>
+    <string name="post_categories">Post Categories</string>
+    <string name="posts_in_a_year">Posts in a Year</string>
 </resources>

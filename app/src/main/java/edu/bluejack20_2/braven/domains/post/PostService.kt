@@ -1,7 +1,10 @@
 package edu.bluejack20_2.braven.domains.post
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.StorageReference
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.util.*
@@ -16,6 +19,12 @@ class PostService @Inject constructor(
     fun getPostById(id: String) = repository.getById(id)
 
     fun getAllPostsByUser(userId: String) = repository.getByUser(userId)
+
+    fun getAllPostsByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+        getAllPostsByUser(userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereGreaterThanOrEqualTo("timestamp", start)
+            .whereLessThanOrEqualTo("timestamp", end)
 
     fun getStorageReference(id: String): StorageReference = repository.getStorageReferenceById(id)
 
@@ -56,19 +65,15 @@ class PostService @Inject constructor(
         return repository.update(postId, data, thumbnail, oldThumbnailId)
     }
 
-    fun likePost(post: Map<*, *>) =
-        repository.like(
-            post["id"].toString(),
-            authenticationService.getUser()?.uid.toString()
-        )
+    fun likePost(post: DocumentSnapshot) =
+        repository.like(post.id, authenticationService.getUser()?.uid.toString())
 
-    fun dislikePost(post: Map<*, *>) =
-        repository.dislike(
-            post["id"].toString(),
-            authenticationService.getUser()?.uid.toString()
-        )
+    fun unlikeAndDislikePost(post: DocumentSnapshot) =
+        repository.unlikeAndDislike(post.id, authenticationService.getUser()?.uid.toString())
 
-    fun incrementCommentsCount(id: String) {
+    fun dislikePost(post: DocumentSnapshot) =
+        repository.dislike(post.id, authenticationService.getUser()?.uid.toString())
+
+    fun incrementCommentsCount(id: String) =
         repository.update(id, hashMapOf("commentsCount" to FieldValue.increment(1)))
-    }
 }

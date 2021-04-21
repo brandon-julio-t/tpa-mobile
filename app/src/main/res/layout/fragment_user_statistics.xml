@@ -1,29 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".pages.user_statistics.UserStatisticsFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        tools:context=".pages.user_statistics.UserStatisticsFragment">
 
-        <com.anychart.AnyChartView
-            android:id="@+id/chart"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout><!--</ScrollView>-->
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_posts_in_a_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/posts_in_a_month"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/posts_in_a_month_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_posts_in_a_month"
+                app:layout_constraintStart_toStartOf="@+id/text_posts_in_a_month"
+                app:layout_constraintTop_toBottomOf="@+id/text_posts_in_a_month" />
+
+
+            <TextView
+                android:id="@+id/text_posts_in_a_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/posts_in_a_year"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="@+id/posts_in_a_month_chart"
+                app:layout_constraintStart_toStartOf="@+id/posts_in_a_month_chart"
+                app:layout_constraintTop_toBottomOf="@+id/posts_in_a_month_chart" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/posts_in_a_year_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_posts_in_a_year"
+                app:layout_constraintStart_toStartOf="@+id/text_posts_in_a_year"
+                app:layout_constraintTop_toBottomOf="@+id/text_posts_in_a_year" />
+
+
+            <TextView
+                android:id="@+id/post_categories"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/post_categories"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="@+id/posts_in_a_year_chart"
+                app:layout_constraintStart_toStartOf="@+id/posts_in_a_year_chart"
+                app:layout_constraintTop_toBottomOf="@+id/posts_in_a_year_chart" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/post_categories_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/post_categories"
+                app:layout_constraintStart_toStartOf="@+id/post_categories"
+                app:layout_constraintTop_toBottomOf="@+id/post_categories" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</ScrollView>
