@@ -1,11 +1,11 @@
 package edu.bluejack20_2.braven.domains.post
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
-import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.util.*
 import javax.inject.Inject
@@ -23,6 +23,16 @@ class PostService @Inject constructor(
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("timestamp", start)
             .whereLessThanOrEqualTo("timestamp", end)
+
+    fun getAllFollowingsPosts(user: DocumentSnapshot): Query {
+        val followings = user.get("followings").let {
+            var list = it as? List<*>
+            list = list?.mapNotNull { e -> e as? String }
+            return@let list ?: emptyList()
+        }
+
+        return repository.getAllFollowingsPosts(followings)
+    }
 
     fun getStorageReference(id: String) = repository.getStorageReferenceById(id)
 

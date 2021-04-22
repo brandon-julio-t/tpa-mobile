@@ -23,6 +23,10 @@ class PostRepository @Inject constructor(private val userService: UserService) {
 
     fun getByUser(userId: String) = db.whereEqualTo("userId", userId)
 
+    fun getAllFollowingsPosts(followings: List<String>) =
+        db.whereIn("userId", followings)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+
     fun save(
         data: HashMap<*, *>,
         thumbnail: ByteArray
@@ -62,6 +66,7 @@ class PostRepository @Inject constructor(private val userService: UserService) {
         }
     }
 
+
     private fun updateLikersDislikersCount(post: DocumentSnapshot) {
         val likers = post.get("likers") as? List<*>
         val dislikers = post.get("dislikers") as? List<*>
@@ -69,7 +74,6 @@ class PostRepository @Inject constructor(private val userService: UserService) {
         post.reference.update("likersCount", likers?.size ?: 0)
         post.reference.update("dislikersCount", dislikers?.size ?: 0)
     }
-
 
     fun unlikeAndDislike(postId: String, userId: String) = firestore.runBatch {
         val document = db.document(postId)
