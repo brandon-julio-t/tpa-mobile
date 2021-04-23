@@ -28,7 +28,7 @@ class PostService @Inject constructor(
         val followings = user.get("followings").let {
             var list = it as? List<*>
             list = list?.mapNotNull { e -> e as? String }
-            return@let list ?: emptyList()
+            return@let list ?: listOf("forever alone")
         }
 
         return repository.getAllFollowingsPosts(followings)

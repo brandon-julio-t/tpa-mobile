@@ -1,12 +1,11 @@
 package edu.bluejack20_2.braven.domains.user
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -36,12 +35,22 @@ class UserRepository @Inject constructor() {
 
     fun update(userId: String, data: Map<String, *>) = db.document(userId).update(data)
 
-    fun updateProfile(userId: String, username: String, onUpdateSuccess: () -> Unit) {
+    fun updateProfile(
+        username: String,
+        biography: String,
+        password: String,
+        onUpdateSuccess: () -> Unit
+    ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
-            user.updateProfile(
-                UserProfileChangeRequest.Builder().setDisplayName(username).build()
+            Tasks.whenAllSuccess<Void>(
+                listOf(
+                    db.document(user.uid).update("biography", biography),
+                    user.updatePassword(password),
+                    user.updateProfile(
+                        UserProfileChangeRequest.Builder().setDisplayName(username).build()
+                    )
+                )
             ).addOnSuccessListener {
-
                 onUpdateSuccess()
             }
         }

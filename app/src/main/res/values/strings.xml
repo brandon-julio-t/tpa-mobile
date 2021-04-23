@@ -64,5 +64,8 @@
     <string name="posts_in_a_month">Posts in a Month</string>
     <string name="post_categories">Post Categories</string>
     <string name="posts_in_a_year">Posts in a Year</string>
->>>>>>> origin/master
+    <string name="update_profile_picture">Update Profile Picture</string>
+    <string name="preview_image">Preview Image</string>
+    <string name="click_here_to_upload_your_profile_picture">Click here to upload your Profile Picture...</string>
+    >>>>>>> origin/master
 </resources>

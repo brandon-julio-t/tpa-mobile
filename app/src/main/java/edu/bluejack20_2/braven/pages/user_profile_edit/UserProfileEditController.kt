@@ -48,7 +48,6 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.uploadButton.setOnClickListener {
-            Log.wtf("isi fragment profile picture", fragment.viewModel.profilePicture.value.toString() )
             if(fragment.viewModel.profilePicture.value?.isEmpty() == true){
                 val chooserIntent = imageMediaService.createIntent()
                 fragment.thumbnailChooserActivityLauncher.launch(chooserIntent)
@@ -59,13 +58,16 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.updateButton.setOnClickListener {
-            val username = fragment.binding.usernameEditText.text
+            val username = fragment.binding.usernameEditText.text.toString()
+            val biography = fragment.binding.biographyEditText.text.toString()
+            val password = fragment.binding.passwordEditText.text.toString()
+
             auth?.let { user ->
                 SafetyNet.getClient(fragment.requireActivity())
                     .verifyWithRecaptcha("6Le5xrUaAAAAACrndJTA0nwjgx8S2_g0YJE07Nhg")
                     .addOnSuccessListener { response ->
                         if (response.tokenResult?.isNotEmpty() == true) {
-                            userService.updateProfile(user.uid, username.toString())
+                            userService.updateProfile(username, biography, password)
                         }
                     }
                     .addOnFailureListener { e -> Log.wtf("hehe", e.toString()) }
