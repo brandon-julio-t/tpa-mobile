@@ -7,6 +7,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.interfaces.SimpleFactory
+import javax.inject.Inject
 
 class FirestorePagingAdapterOptionsFactory constructor(
     private val lifecycleOwner: LifecycleOwner,

@@ -2,8 +2,7 @@ package edu.bluejack20_2.braven.pages.home
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.bluejack20_2.braven.domains.notification.NotificationService
-import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapter
+import edu.bluejack20_2.braven.domains.post.PostFirestorePagingModule
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
@@ -15,7 +14,7 @@ class HomeController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
     private val userService: UserService,
-    private val notificationService: NotificationService
+    private val postFirestorePagingModule: PostFirestorePagingModule
 ) {
     private lateinit var fragment: HomeFragment
     private val binding get() = fragment.binding
@@ -41,12 +40,8 @@ class HomeController @Inject constructor(
             userService.getUserById(auth.uid).get().addOnSuccessListener { user ->
                 val query = postService.getAllFollowingsPosts(user)
 
-                binding.posts.adapter = PostFirestorePagingAdapter(
+                binding.posts.adapter = postFirestorePagingModule.Adapter(
                     fragment,
-                    userService,
-                    postService,
-                    authenticationService,
-                    notificationService,
                     FirestorePagingAdapterOptionsFactory(
                         fragment.viewLifecycleOwner,
                         query
