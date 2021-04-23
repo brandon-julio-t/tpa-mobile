@@ -1,11 +1,7 @@
 package edu.bluejack20_2.braven.pages.home
 
-import android.util.Log
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.firestore.paging.FirestorePagingAdapter
-import edu.bluejack20_2.braven.databinding.FragmentHomeBinding
 import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService

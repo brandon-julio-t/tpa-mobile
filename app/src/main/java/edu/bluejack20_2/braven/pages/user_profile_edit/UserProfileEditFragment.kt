@@ -40,7 +40,7 @@ class UserProfileEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUserProfileEditBinding.inflate(inflater, container, false)
         controller.bind(this)
         return binding.root

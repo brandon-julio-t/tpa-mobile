@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var authenticationService: AuthenticationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
         val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", true)
 
