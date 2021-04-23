@@ -1,23 +1,40 @@
 package edu.bluejack20_2.braven.domains.post
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.util.*
 import javax.inject.Inject
 
 class PostService @Inject constructor(
-    private val authenticationService: AuthenticationService,
     private val repository: PostRepository,
+    private val authenticationService: AuthenticationService
 ) {
-    fun getAllPosts() = repository.getAll()
-
     fun getPostById(id: String) = repository.getById(id)
 
     fun getAllPostsByUser(userId: String) = repository.getByUser(userId)
 
-    fun getStorageReference(id: String): StorageReference = repository.getStorageReferenceById(id)
+    fun getAllPostsByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+        getAllPostsByUser(userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereGreaterThanOrEqualTo("timestamp", start)
+            .whereLessThanOrEqualTo("timestamp", end)
+
+    fun getAllFollowingsPosts(user: DocumentSnapshot): Query {
+        val followings = user.get("followings").let {
+            var list = it as? List<*>
+            list = list?.mapNotNull { e -> e as? String }
+            return@let list ?: emptyList()
+        }
+
+        return repository.getAllFollowingsPosts(followings)
+    }
+
+    fun getStorageReference(id: String) = repository.getStorageReferenceById(id)
 
     fun createPost(
         title: String,
@@ -56,19 +73,15 @@ class PostService @Inject constructor(
         return repository.update(postId, data, thumbnail, oldThumbnailId)
     }
 
-    fun likePost(post: Map<*, *>) =
-        repository.like(
-            post["id"].toString(),
-            authenticationService.getUser()?.uid.toString()
-        )
+    fun likePost(post: DocumentSnapshot) =
+        repository.like(post.id, authenticationService.getUser()?.uid.toString())
 
-    fun dislikePost(post: Map<*, *>) =
-        repository.dislike(
-            post["id"].toString(),
-            authenticationService.getUser()?.uid.toString()
-        )
+    fun unlikeAndDislikePost(post: DocumentSnapshot) =
+        repository.unlikeAndDislike(post.id, authenticationService.getUser()?.uid.toString())
 
-    fun incrementCommentsCount(id: String) {
+    fun dislikePost(post: DocumentSnapshot) =
+        repository.dislike(post.id, authenticationService.getUser()?.uid.toString())
+
+    fun incrementCommentsCount(id: String) =
         repository.update(id, hashMapOf("commentsCount" to FieldValue.increment(1)))
-    }
 }

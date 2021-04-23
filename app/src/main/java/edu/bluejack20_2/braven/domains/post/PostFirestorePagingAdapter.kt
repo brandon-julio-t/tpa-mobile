@@ -18,8 +18,7 @@ class PostFirestorePagingAdapter(
     private val authenticationService: AuthenticationService,
     private val notificationService: NotificationService,
     options: FirestorePagingOptions<DocumentSnapshot>
-) :
-    FirestorePagingAdapter<DocumentSnapshot, PostViewHolder>(options) {
+) : FirestorePagingAdapter<DocumentSnapshot, PostViewHolder>(options) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder =
         PostViewHolder(
             ItemPostBinding.inflate(

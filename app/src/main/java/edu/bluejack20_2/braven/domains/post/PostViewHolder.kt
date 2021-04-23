@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
@@ -25,41 +24,68 @@ class PostViewHolder(
     private val notificationService: NotificationService
 
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(model: DocumentSnapshot) {
-        model.data?.let { post ->
-            post["id"] = model.id
+    fun bind(post: DocumentSnapshot) {
+        binding.cardLayout.setOnClickListener {
+            fragment.findNavController().navigate(
+                NavGraphDirections.toPostDetail(post.id)
+            )
+        }
 
-            binding.cardLayout.setOnClickListener {
-                fragment.findNavController().navigate(
-                    NavGraphDirections.toPostDetail(post["id"].toString())
-                )
+        userService.getUserById(post["userId"].toString()).get().addOnSuccessListener { user ->
+            binding.posterDisplayName.text = user["displayName"].toString()
+
+            user["photoUrl"]?.let { url ->
+                Glide.with(binding.root)
+                    .load(url.toString())
+                    .into(binding.posterProfilePicture)
+            }
+        }
+
+        binding.createdAt.text = (post["timestamp"] as? Timestamp)?.toDate().toString()
+        binding.title.text = post["title"].toString()
+        binding.category.text = post["category"].toString()
+
+        val storageReference = postService.getStorageReference(post["thumbnailId"].toString())
+        GlideApp.with(binding.root).load(storageReference).into(binding.thumbnail)
+
+        post.reference.addSnapshotListener { updatedPost, err ->
+            err?.let {
+                Snackbar.make(
+                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                    it.toString(),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
 
-            userService.getUserById(post["userId"].toString()).get().addOnSuccessListener {
-                it.data?.let { user ->
-                    binding.posterDisplayName.text = user["displayName"].toString()
+            binding.like.text = fragment.getString(
+                R.string.like,
+                updatedPost?.getLong("likersCount") ?: 0
+            )
 
-                    user["photoUrl"]?.let { url ->
-                        Glide.with(binding.root)
-                            .load(url.toString())
-                            .into(binding.posterProfilePicture)
-                    }
-                }
-            }
-
-            binding.createdAt.text = (post["timestamp"] as? Timestamp)?.toDate().toString()
-            binding.title.text = post["title"].toString()
-            binding.category.text = post["category"].toString()
-
-            val path = "thumbnails/${post["thumbnailId"]}"
-            val storageReference = FirebaseStorage.getInstance().reference.child(path)
-            GlideApp.with(binding.root).load(storageReference).into(binding.thumbnail)
+            binding.dislike.text = fragment.getString(
+                R.string.dislike,
+                updatedPost?.getLong("dislikersCount") ?: 0
+            )
 
             binding.like.setOnClickListener {
-                postService.likePost(post).addOnSuccessListener {
+                val likers = (updatedPost?.get("likers") as? List<*>)
+                    ?.mapNotNull { it as? String }
+                    ?: emptyList()
+
+                val isLiked = likers.contains(post["userId"])
+
+                val action =
+                    if (isLiked) postService.unlikeAndDislikePost(post)
+                    else postService.likePost(post)
+
+                action.addOnSuccessListener {
+                    val notification =
+                        if (isLiked) "Post un-liked"
+                        else "Post liked"
+
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                        "Post liked",
+                        notification,
                         Snackbar.LENGTH_LONG
                     ).show()
                     notificationService.deleteNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
@@ -68,10 +94,24 @@ class PostViewHolder(
             }
 
             binding.dislike.setOnClickListener {
-                postService.dislikePost(post).addOnSuccessListener {
+                val dislikers = (updatedPost?.get("dislikers") as? List<*>)
+                    ?.mapNotNull { it as? String }
+                    ?: emptyList()
+
+                val isDisliked = dislikers.contains(post["userId"])
+
+                val action =
+                    if (isDisliked) postService.unlikeAndDislikePost(post)
+                    else postService.dislikePost(post)
+
+                action.addOnSuccessListener {
+                    val notification =
+                        if (isDisliked) "Post un-disliked"
+                        else "Post disliked"
+
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                        "Post disliked",
+                        notification,
                         Snackbar.LENGTH_LONG
                     ).show()
                     notificationService.deleteNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())

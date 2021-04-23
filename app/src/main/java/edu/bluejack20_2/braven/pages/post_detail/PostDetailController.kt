@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentPostDetailBinding
 import edu.bluejack20_2.braven.domains.comment.CommentFirestorePagingAdapter
@@ -41,18 +42,15 @@ class PostDetailController @Inject constructor(
             }
 
         query.get().addOnSuccessListener {
-            it.data?.let { post ->
-                post["id"] = it.id
-                bindEvents(binding, fragment, post)
-                bindUIs(binding, fragment, post)
-            }
+            bindEvents(binding, fragment, it)
+            bindUIs(binding, fragment, it)
         }
     }
 
     private fun bindEvents(
         binding: FragmentPostDetailBinding,
         fragment: PostDetailFragment,
-        post: Map<*, *>
+        post: DocumentSnapshot
     ) {
         listOf(binding.posterProfilePicture, binding.posterInformation).forEach {
             it.setOnClickListener {
@@ -69,11 +67,11 @@ class PostDetailController @Inject constructor(
     private fun bindUIs(
         binding: FragmentPostDetailBinding,
         fragment: PostDetailFragment,
-        post: Map<*, *>
+        post: DocumentSnapshot
     ) {
         val user = authenticationService.getUser()
         val username = user?.displayName.toString()
-        val createdAt = (post["timestamp"] as Timestamp).toDate().toString()
+        val createdAt = (post["timestamp"] as? Timestamp)?.toDate().toString()
         val commentsAdapter = CommentFirestorePagingAdapter(
             fragment,
             userService,
