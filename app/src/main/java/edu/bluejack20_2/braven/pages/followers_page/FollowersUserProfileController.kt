@@ -25,7 +25,7 @@ class FollowersUserProfileController @Inject constructor(
         val loginId = fragment.requireArguments().getString("auth")
 
         followersUserService.getAllUserFollowers(loginId as String).get().addOnSuccessListener {
-            var followers = it.get("followers") as? List<*>
+            val followers = it.get("followers") as? List<*>
 
             binding.followersUserRecycleview.adapter = followers?.let { it1 -> FollowersAdapter(it1, followersUserService, userService, authenticationService) }
         }

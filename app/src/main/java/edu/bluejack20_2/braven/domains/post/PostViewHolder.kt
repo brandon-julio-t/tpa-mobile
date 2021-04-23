@@ -89,7 +89,11 @@ class PostViewHolder(
                         Snackbar.LENGTH_LONG
                     ).show()
                     notificationService.deleteNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
-                    notificationService.addNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString(), )
+                    notificationService.addNotificationLike(
+                        authenticationService.getUser(),
+                        post["userId"].toString(),
+                        post["id"].toString(),
+                    )
                 }
             }
 

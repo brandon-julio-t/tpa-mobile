@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.notification
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
@@ -13,8 +12,6 @@ class NotificationService @Inject constructor(){
 
     private val firestore = FirebaseFirestore.getInstance()
     private val db = FirebaseFirestore.getInstance().collection("notification")
-    private val storage = FirebaseStorage.getInstance().reference
-    private val storageRoot = "thumbnails"
 
     /* NOTIFICATION FOLLOW */
 

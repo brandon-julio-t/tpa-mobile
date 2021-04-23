@@ -8,7 +8,6 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemCommentBinding
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 
 class CommentFirestorePagingAdapter(
     private val fragment: Fragment,

@@ -9,7 +9,6 @@ import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
-
 class HomeController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,

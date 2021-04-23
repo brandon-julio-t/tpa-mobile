@@ -6,9 +6,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(
@@ -18,8 +16,6 @@ class PostRepository @Inject constructor(
     private val db = firestore.collection("posts")
     private val storage = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
-
-    fun getAll() = db.orderBy("timestamp", Query.Direction.DESCENDING)
 
     fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
 

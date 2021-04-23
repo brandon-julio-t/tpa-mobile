@@ -27,16 +27,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
-        val isLarge: Boolean? = appFontPrefs?.getBoolean("Large", true)
 
-        when (isLarge) {
+        when (appFontPrefs?.getBoolean("Large", true)) {
             true -> {
-                var themeID: Int = R.style.Theme_BRaVeN_FontLarge
+                val themeID: Int = R.style.Theme_BRaVeN_FontLarge
                 setTheme(themeID)
                 Log.wtf("testis", "hehehe")
             }
             else -> {
-                var themeID: Int = R.style.Theme_BRaVeN
+                val themeID: Int = R.style.Theme_BRaVeN
                 setTheme(themeID)
                 Log.wtf("testis", "else")
             }
@@ -52,9 +51,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initiateLightOrDarkMode() {
         val appSettingPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
-        val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
 
-        when (isNightModeOn) {
+        when (appSettingPrefs?.getBoolean("NightMode", false)) {
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }

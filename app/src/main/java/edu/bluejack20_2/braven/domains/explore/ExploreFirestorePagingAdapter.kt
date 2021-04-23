@@ -7,9 +7,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemExploreBinding
-import edu.bluejack20_2.braven.domains.comment.CommentViewHolder
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 
 class ExploreFirestorePagingAdapter (
     private val fragment: Fragment,

@@ -1,14 +1,10 @@
 package edu.bluejack20_2.braven.pages.explore
 
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.explore.ExploreFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.explore.ExploreService
-import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class ExploreController @Inject constructor(

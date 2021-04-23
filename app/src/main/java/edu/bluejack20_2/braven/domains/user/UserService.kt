@@ -5,8 +5,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class UserService @Inject constructor(private val repository: UserRepository) {

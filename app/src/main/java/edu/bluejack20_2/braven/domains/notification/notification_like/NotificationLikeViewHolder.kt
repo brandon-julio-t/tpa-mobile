@@ -1,11 +1,9 @@
 package edu.bluejack20_2.braven.domains.notification.notification_like
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
-import edu.bluejack20_2.braven.databinding.ItemNotificationFollowingBinding
 import edu.bluejack20_2.braven.databinding.ItemNotificationLikeBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -16,13 +14,12 @@ class NotificationLikeViewHolder(
     private val binding: ItemNotificationLikeBinding,
     private val authenticationService: AuthenticationService,
     private val userService: UserService,
-    private val notifcationService: NotificationService,
     private val postService: PostService
 ):RecyclerView.ViewHolder(binding.root) {
 
     fun bind(documentSnapshot: DocumentSnapshot) {
 
-        documentSnapshot?.data.let {
+        documentSnapshot.data.let {
 
             val user = authenticationService.getUser()
             val postId = it?.get("postId").toString()

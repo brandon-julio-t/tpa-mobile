@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.pages.notification.view_pager_fragments.following
 
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.notification.notification_following.NotificationFollowingFirestorePagingAdapter
@@ -31,7 +30,7 @@ class NotificationFollowingController @Inject constructor(
                 userService,
                 authenticationService,
                 notificationService,
-                FirestorePagingAdapterOptionsFactory(fragment, query!!).create()
+                FirestorePagingAdapterOptionsFactory(fragment, query).create()
             )
         }
     }

@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.followers
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +53,7 @@ class FollowersAdapter(
                             true -> {
                                 holder.button.text = "Following"
                                 holder.button.setOnClickListener {
-                                    userService.unFollow(currentUser, friendData!!).addOnSuccessListener {
+                                    userService.unFollow(currentUser, friendData).addOnSuccessListener {
                                         holder.button.text = "Follow"
                                     }
                                 }

@@ -19,7 +19,7 @@ class UserRepository @Inject constructor() {
     private val storage = FirebaseStorage.getInstance().reference
     private val storageRoot = "profilePictures"
 
-    fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
+    private fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
 
     fun getById(id: String) = db.document(id)
 
