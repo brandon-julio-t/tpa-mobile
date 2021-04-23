@@ -3,6 +3,7 @@ package edu.bluejack20_2.braven.pages.home
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.Query
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
@@ -12,7 +13,9 @@ import javax.inject.Inject
 
 class HomeController @Inject constructor(
     private val postService: PostService,
-    private val userService: UserService
+    private val userService: UserService,
+    private val authenticationService: AuthenticationService,
+    private val notificationService: NotificationService
 ) {
     fun bind(fragment: HomeFragment) {
         val binding = fragment.binding
@@ -27,6 +30,8 @@ class HomeController @Inject constructor(
             fragment,
             userService,
             postService,
+            authenticationService,
+            notificationService,
             FirestorePagingAdapterOptionsFactory(
                 fragment,
                 postService.getAllPosts()

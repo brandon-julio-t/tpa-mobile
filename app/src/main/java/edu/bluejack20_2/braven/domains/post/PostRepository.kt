@@ -3,10 +3,14 @@ package edu.bluejack20_2.braven.domains.post
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
-class PostRepository @Inject constructor(private val userService: UserService) {
+class PostRepository @Inject constructor(
+    private val userService: UserService
+    ) {
     private val firestore = FirebaseFirestore.getInstance()
     private val db = firestore.collection("posts")
     private val storage = FirebaseStorage.getInstance().reference

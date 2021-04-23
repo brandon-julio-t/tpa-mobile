@@ -60,4 +60,5 @@
     <string name="my_statistics">My Statistics</string>
     <string name="user_statistics">User Statistics</string>
     <string name="update_page_button">Update</string>
+    <string name="notification">Notification</string>
 </resources>
