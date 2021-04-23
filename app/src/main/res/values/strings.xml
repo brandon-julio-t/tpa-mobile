@@ -59,7 +59,10 @@
     <string name="upload_image_edit">Upload Image</string>
     <string name="my_statistics">My Statistics</string>
     <string name="user_statistics">User Statistics</string>
+    <string name="update_page_button">Update</string>
+    <string name="notification">Notification</string>
     <string name="posts_in_a_month">Posts in a Month</string>
     <string name="post_categories">Post Categories</string>
     <string name="posts_in_a_year">Posts in a Year</string>
+>>>>>>> origin/master
 </resources>

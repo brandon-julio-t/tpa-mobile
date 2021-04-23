@@ -1,17 +1,26 @@
 package edu.bluejack20_2.braven.domains.user
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor() {
     private val firestore = FirebaseFirestore.getInstance()
     private val db = firestore.collection("users")
+    private val storage = FirebaseStorage.getInstance().reference
+    private val storageRoot = "profilePictures"
+
+    fun getStorageReferenceById(id: String) = storage.child("${storageRoot}/${id}")
 
     fun getById(id: String) = db.document(id)
 
@@ -27,9 +36,31 @@ class UserRepository @Inject constructor() {
 
     fun update(userId: String, data: Map<String, *>) = db.document(userId).update(data)
 
-    fun updateProfile(userId: String, username: String) = db.document(userId).update(mapOf(
-        "displayName" to username
-    ))
+    fun updateProfile(userId: String, username: String, onUpdateSuccess: () -> Unit) {
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            user.updateProfile(
+                UserProfileChangeRequest.Builder().setDisplayName(username).build()
+            ).addOnSuccessListener {
+
+                onUpdateSuccess()
+            }
+        }
+    }
+
+    fun updateProfilePicture(profilePicture: ByteArray, onUpdateSuccess: () -> Unit) {
+        if (profilePicture.isNotEmpty()) {
+            getStorageReferenceById(UUID.randomUUID().toString()).putBytes(profilePicture)
+                .addOnSuccessListener {
+                    it.storage.downloadUrl.addOnSuccessListener {
+                        FirebaseAuth.getInstance().currentUser?.updateProfile(
+                            UserProfileChangeRequest.Builder().setPhotoUri(it).build()
+                        )?.addOnSuccessListener {
+                            onUpdateSuccess()
+                        }
+                    }
+                }
+        }
+    }
 
     fun save(user: FirebaseUser): Task<Void> {
         val data = hashMapOf(

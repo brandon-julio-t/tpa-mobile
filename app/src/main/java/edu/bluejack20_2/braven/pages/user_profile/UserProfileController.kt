@@ -13,6 +13,7 @@ import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_comments.MostCommentsFragment
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class UserProfileController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val userService: UserService,
-    private val postService: PostService
+    private val postService: PostService,
+    private val notificationService: NotificationService
 ) {
     fun bind(fragment: UserProfileFragment) {
         val binding = fragment.binding
@@ -143,6 +145,8 @@ class UserProfileController @Inject constructor(
 
                 binding.action.text = fragment.getString(R.string.unfollow)
             }
+
+            notificationService.addNotificationFollow(currentUser, user)
         }
     }
 
@@ -162,6 +166,10 @@ class UserProfileController @Inject constructor(
                 ).show()
 
                 binding.action.text = fragment.getString(R.string.follow)
+            }
+
+            if (currentUser != null) {
+                notificationService.deleteNotificationFollow(currentUser.uid, user["id"].toString())
             }
         }
     }

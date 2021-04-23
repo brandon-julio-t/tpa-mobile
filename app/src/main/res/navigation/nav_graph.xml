@@ -138,5 +138,10 @@
         android:id="@+id/userStatisticsFragment"
         android:name="edu.bluejack20_2.braven.pages.user_statistics.UserStatisticsFragment"
         android:label="@string/user_statistics" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="edu.bluejack20_2.braven.pages.notification.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 
 </navigation>

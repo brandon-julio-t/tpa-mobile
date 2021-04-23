@@ -10,14 +10,19 @@ import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.modules.GlideApp
+import edu.bluejack20_2.braven.services.AuthenticationService
 
 class PostViewHolder(
     private val binding: ItemPostBinding,
     private val fragment: Fragment,
     private val userService: UserService,
-    private val postService: PostService
+    private val postService: PostService,
+    private val authenticationService: AuthenticationService,
+    private val notificationService: NotificationService
+
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: DocumentSnapshot) {
         binding.cardLayout.setOnClickListener {
@@ -83,6 +88,8 @@ class PostViewHolder(
                         notification,
                         Snackbar.LENGTH_LONG
                     ).show()
+                    notificationService.deleteNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
+                    notificationService.addNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString(), )
                 }
             }
 
@@ -107,7 +114,20 @@ class PostViewHolder(
                         notification,
                         Snackbar.LENGTH_LONG
                     ).show()
+                    notificationService.deleteNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
+                    notificationService.addNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
                 }
+            }
+
+            postService.getPostById(post["id"].toString()).addSnapshotListener { it, _ ->
+                binding.like.text = fragment.getString(
+                    R.string.like,
+                    it?.getLong("likersCount") ?: 0
+                )
+                binding.dislike.text = fragment.getString(
+                    R.string.dislike,
+                    it?.getLong("dislikersCount") ?: 0
+                )
             }
         }
     }

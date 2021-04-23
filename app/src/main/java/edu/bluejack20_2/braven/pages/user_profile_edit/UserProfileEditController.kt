@@ -25,6 +25,7 @@ class UserProfileEditController @Inject constructor(
 
     fun bind(fragment: UserProfileEditFragment) {
         this.fragment = fragment
+        val viewModel = fragment.viewModel
 
         auth = authenticationService.getUser()
         fragment.binding.usernameEditText.setText(auth?.displayName.toString())
@@ -47,8 +48,14 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.uploadButton.setOnClickListener {
-            val chooserIntent = imageMediaService.createIntent()
-            fragment.thumbnailChooserActivityLauncher.launch(chooserIntent)
+            Log.wtf("isi fragment profile picture", fragment.viewModel.profilePicture.value.toString() )
+            if(fragment.viewModel.profilePicture.value?.isEmpty() == true){
+                val chooserIntent = imageMediaService.createIntent()
+                fragment.thumbnailChooserActivityLauncher.launch(chooserIntent)
+            } else{
+                val profilePicture = fragment.viewModel.profilePicture.value?: ByteArray(0)
+                auth?.let { it1 -> userService.updateProfilePicture(profilePicture) }
+            }
         }
 
         fragment.binding.updateButton.setOnClickListener {
@@ -77,6 +84,10 @@ class UserProfileEditController @Inject constructor(
                     it
                 )
             )
+
+
+            fragment.binding.uploadButton.text = "Save"
+            fragment.binding.hintUpdateText.text = "Click here to Save it..."
 
             Snackbar.make(
                 fragment.requireActivity().findViewById(R.id.coordinatorLayout),
