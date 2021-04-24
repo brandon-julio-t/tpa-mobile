@@ -16,14 +16,14 @@ import edu.bluejack20_2.braven.databinding.ItemExploreBinding
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.modules.GlideApp
 import edu.bluejack20_2.braven.pages.explore.ExploreFragmentDirections
-
+import edu.bluejack20_2.braven.services.TimestampService
 
 class ExploreViewHolder(
     private val binding: ItemExploreBinding,
     private val userService: UserService,
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val timestampService: TimestampService
 ):RecyclerView.ViewHolder(binding.root) {
-
     fun bind(explore: DocumentSnapshot){
         explore.data?.let{
             posts ->
@@ -44,7 +44,7 @@ class ExploreViewHolder(
                 }
             }
 
-            binding.createdAtText.text = timestamp?.toDate().toString()
+            binding.createdAtText.text = timestamp?.let { timestampService.prettyTime(it) }
             binding.titlePostText.text = posts["title"].toString()
             binding.categoryText.text = posts["category"].toString()
             binding.contentPostText.text = posts["description"].toString()
@@ -85,5 +85,4 @@ class ExploreViewHolder(
 
         }
     }
-
 }

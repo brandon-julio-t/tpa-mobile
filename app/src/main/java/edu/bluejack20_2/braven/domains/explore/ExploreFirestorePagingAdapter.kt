@@ -8,13 +8,14 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemExploreBinding
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.services.TimestampService
 
-class ExploreFirestorePagingAdapter (
+class ExploreFirestorePagingAdapter(
     private val fragment: Fragment,
     private val userService: UserService,
+    private val timestampService: TimestampService,
     options: FirestorePagingOptions<DocumentSnapshot>
-        ): FirestorePagingAdapter<DocumentSnapshot, ExploreViewHolder>(options) {
-
+) : FirestorePagingAdapter<DocumentSnapshot, ExploreViewHolder>(options) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExploreViewHolder =
         ExploreViewHolder(
             ItemExploreBinding.inflate(
@@ -23,7 +24,8 @@ class ExploreFirestorePagingAdapter (
                 false
             ),
             userService,
-            fragment
+            fragment,
+            timestampService
         )
 
     override fun onBindViewHolder(

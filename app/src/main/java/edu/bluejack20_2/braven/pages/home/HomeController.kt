@@ -2,7 +2,7 @@ package edu.bluejack20_2.braven.pages.home
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.bluejack20_2.braven.domains.post.PostFirestorePagingModule
+import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapterModule
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
@@ -13,38 +13,28 @@ class HomeController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
     private val userService: UserService,
-    private val postFirestorePagingModule: PostFirestorePagingModule
+    private val postFirestorePagingAdapterModule: PostFirestorePagingAdapterModule
 ) {
-    private lateinit var fragment: HomeFragment
-    private val binding get() = fragment.binding
-
     fun bind(fragment: HomeFragment) {
-        this.fragment = fragment
+        val binding = fragment.binding
 
         binding.createPost.setOnClickListener {
             fragment.findNavController().navigate(HomeFragmentDirections.homeToPostCreate())
         }
 
-        setupPostsSuperRecyclerView()
+        setupPostsSuperRecyclerView(fragment)
     }
 
-    private fun setupPostsSuperRecyclerView() {
-        binding.posts.layoutManager = LinearLayoutManager(
-            fragment.requireActivity(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+    private fun setupPostsSuperRecyclerView(fragment: HomeFragment) {
+        val binding = fragment.binding
+
+        binding.posts.layoutManager = LinearLayoutManager(fragment.requireActivity())
 
         authenticationService.getUser()?.let { auth ->
             userService.getUserById(auth.uid).get().addOnSuccessListener { user ->
-                val query = postService.getAllFollowingsPosts(user)
-
-                binding.posts.adapter = postFirestorePagingModule.Adapter(
+                binding.posts.adapter = postFirestorePagingAdapterModule.Adapter(
                     fragment,
-                    FirestorePagingAdapterOptionsFactory(
-                        fragment.viewLifecycleOwner,
-                        query
-                    ).create()
+                    postService.getAllFollowingsPosts(user)
                 )
             }
         }

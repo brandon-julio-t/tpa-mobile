@@ -2,17 +2,13 @@ package edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_l
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.DocumentReference
-import edu.bluejack20_2.braven.domains.notification.NotificationService
-import edu.bluejack20_2.braven.domains.post.PostService
+import edu.bluejack20_2.braven.domains.post.PostViewHolderModule
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class RecentLikesController @Inject constructor(
     private val userService: UserService,
-    private val postService: PostService,
-    private val authenticationService: AuthenticationService,
-    private val notificationService: NotificationService
+    private val postViewHolderModule: PostViewHolderModule
 ) {
     fun bind(fragment: RecentLikesFragment) {
         val binding = fragment.binding
@@ -23,14 +19,7 @@ class RecentLikesController @Inject constructor(
                 list.mapNotNull { it as? DocumentReference }.asReversed()
             } ?: emptyList()
 
-            binding.posts.adapter = RecentLikesAdapter(
-                fragment,
-                userService,
-                postService,
-                likedPosts,
-                authenticationService,
-                notificationService
-            )
+            binding.posts.adapter = RecentLikesAdapter(fragment, likedPosts, postViewHolderModule)
         }
 
         binding.posts.layoutManager = object : LinearLayoutManager(fragment.requireActivity()) {

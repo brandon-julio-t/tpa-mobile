@@ -50,9 +50,7 @@ class UserRepository @Inject constructor() {
                         UserProfileChangeRequest.Builder().setDisplayName(username).build()
                     )
                 )
-            ).addOnSuccessListener {
-                onUpdateSuccess()
-            }
+            ).addOnSuccessListener { onUpdateSuccess() }
         }
     }
 
