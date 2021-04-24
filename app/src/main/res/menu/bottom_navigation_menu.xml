@@ -9,9 +9,9 @@
         android:icon="@drawable/ic_baseline_explore_24"
         android:title="@string/explore" />
     <item
-        android:id="@+id/notificationFragment"
-        android:icon="@drawable/ic_baseline_notifications_active_24"
-        android:title="@string/notification" />
+        android:id="@+id/postCreateFragment"
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/post_create" />
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
