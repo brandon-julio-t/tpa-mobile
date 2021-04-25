@@ -142,6 +142,13 @@
         android:id="@+id/notificationFragment"
         android:name="edu.bluejack20_2.braven.pages.notification.NotificationFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
 
 </navigation>

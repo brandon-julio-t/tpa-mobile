@@ -21,9 +21,7 @@ class NotificationFollowingController @Inject constructor(
 
         val query = notificationService.getNotificationFollow(user?.uid.toString())
 
-        binding.notificationFollowingRecycleview.layoutManager = object : LinearLayoutManager(fragment.requireActivity()) {
-            override fun canScrollVertically(): Boolean = false
-        }
+        binding.notificationFollowingRecycleview.layoutManager = LinearLayoutManager(fragment.requireActivity())
 
         if (user != null) {
             binding.notificationFollowingRecycleview.adapter = NotificationFollowingFirestorePagingAdapter(

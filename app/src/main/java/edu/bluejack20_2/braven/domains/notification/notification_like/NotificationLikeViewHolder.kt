@@ -1,6 +1,8 @@
 package edu.bluejack20_2.braven.domains.notification.notification_like
 
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
@@ -10,6 +12,7 @@ import edu.bluejack20_2.braven.databinding.ItemNotificationLikeBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class NotificationLikeViewHolder(
@@ -17,7 +20,8 @@ class NotificationLikeViewHolder(
     private val authenticationService: AuthenticationService,
     private val userService: UserService,
     private val notifcationService: NotificationService,
-    private val postService: PostService
+    private val postService: PostService,
+    private val fragment: Fragment
 ):RecyclerView.ViewHolder(binding.root) {
 
     fun bind(documentSnapshot: DocumentSnapshot) {
@@ -59,6 +63,13 @@ class NotificationLikeViewHolder(
             postService.getPostById(postId).addSnapshotListener { data, _ ->
                 binding.postTitleText.text = "Post Title : ${data!!.getString("title")}"
             }
+
+            binding.cardLayout.setOnClickListener {
+                fragment.findNavController().navigate(
+                    NotificationFragmentDirections.toPostDetail(postId)
+                )
+            }
+
         }
 
     }

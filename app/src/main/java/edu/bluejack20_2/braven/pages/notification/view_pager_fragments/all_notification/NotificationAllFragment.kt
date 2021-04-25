@@ -5,16 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.R
+import edu.bluejack20_2.braven.databinding.FragmentNotificationAllBinding
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NotificationAllFragment : Fragment() {
+
+    private var _binding: FragmentNotificationAllBinding? = null
+    val binding get() = _binding!!
+
+    @Inject
+    lateinit var controller: NotificationAllController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification_all, container, false)
+
+        _binding = FragmentNotificationAllBinding.inflate(inflater, container, false)
+        controller.bind(this)
+        return binding.root
     }
 
   

@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.post
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -72,13 +73,38 @@ class PostViewHolder(
                     ?.mapNotNull { it as? String }
                     ?: emptyList()
 
-                val isLiked = likers.contains(post["userId"])
+                val isLiked = likers.contains(authenticationService.getUser()?.uid)
 
                 val action =
-                    if (isLiked) postService.unlikeAndDislikePost(post)
-                    else postService.likePost(post)
+                    if (isLiked) {
+                        postService.unlikeAndDislikePost(post)
+                    } else {
+                        postService.likePost(post)
+                    }
+
 
                 action.addOnSuccessListener {
+
+                    if(isLiked){
+                        notificationService.deleteNotificationLike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                    }
+                    else{
+                        notificationService.deleteNotificationDislike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                        notificationService.addNotificationLike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                    }
+
                     val notification =
                         if (isLiked) "Post un-liked"
                         else "Post liked"
@@ -88,8 +114,6 @@ class PostViewHolder(
                         notification,
                         Snackbar.LENGTH_LONG
                     ).show()
-                    notificationService.deleteNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
-                    notificationService.addNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString(), )
                 }
             }
 
@@ -98,7 +122,7 @@ class PostViewHolder(
                     ?.mapNotNull { it as? String }
                     ?: emptyList()
 
-                val isDisliked = dislikers.contains(post["userId"])
+                val isDisliked = dislikers.contains(authenticationService.getUser()?.uid)
 
                 val action =
                     if (isDisliked) postService.unlikeAndDislikePost(post)
@@ -109,25 +133,31 @@ class PostViewHolder(
                         if (isDisliked) "Post un-disliked"
                         else "Post disliked"
 
+                    if(isDisliked){
+                        notificationService.deleteNotificationDislike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                    } else{
+                        notificationService.deleteNotificationLike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                        notificationService.addNotificationDislike(
+                            authenticationService.getUser(),
+                            post["userId"].toString(),
+                            post.id
+                        )
+                    }
+
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
                         notification,
                         Snackbar.LENGTH_LONG
                     ).show()
-                    notificationService.deleteNotificationLike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
-                    notificationService.addNotificationDislike(authenticationService.getUser(), post["userId"].toString(), post["id"].toString())
                 }
-            }
-
-            postService.getPostById(post["id"].toString()).addSnapshotListener { it, _ ->
-                binding.like.text = fragment.getString(
-                    R.string.like,
-                    it?.getLong("likersCount") ?: 0
-                )
-                binding.dislike.text = fragment.getString(
-                    R.string.dislike,
-                    it?.getLong("dislikersCount") ?: 0
-                )
             }
         }
     }

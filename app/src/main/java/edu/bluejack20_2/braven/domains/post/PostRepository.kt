@@ -27,9 +27,14 @@ class PostRepository @Inject constructor(
 
     fun getByUser(userId: String) = db.whereEqualTo("userId", userId)
 
-    fun getAllFollowingsPosts(followings: List<String>) =
-        db.whereIn("userId", followings)
+    fun getAllFollowingsPosts(followings: List<String>): Query {
+        if(followings.isEmpty()) {
+            return db.whereIn("userId", listOf("grmekagmarklmflawmeioqjiofmkvfkanreuhfiaovmkl"))
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+        }
+        return db.whereIn("userId", followings)
             .orderBy("timestamp", Query.Direction.DESCENDING)
+    }
 
     fun save(
         data: HashMap<*, *>,

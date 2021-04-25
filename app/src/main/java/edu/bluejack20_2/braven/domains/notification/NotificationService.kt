@@ -3,6 +3,7 @@ package edu.bluejack20_2.braven.domains.notification
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -15,6 +16,11 @@ class NotificationService @Inject constructor(){
     private val db = FirebaseFirestore.getInstance().collection("notification")
     private val storage = FirebaseStorage.getInstance().reference
     private val storageRoot = "thumbnails"
+
+    /* NOTIFICATION ALL */
+
+    fun getNotificationAll(userId: String): Query =
+        db.whereEqualTo("userId", userId).orderBy("time", Query.Direction.DESCENDING)
 
     /* NOTIFICATION FOLLOW */
 
@@ -78,7 +84,7 @@ class NotificationService @Inject constructor(){
         db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString()).whereEqualTo("postId", postId)
             .whereEqualTo("type", "like").whereEqualTo("like", "yes").get()
             .addOnSuccessListener {
-                for (document in it)
+                for (document in it.documents)
                     document.reference.delete()
             }
     }
@@ -102,9 +108,41 @@ class NotificationService @Inject constructor(){
         db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString()).whereEqualTo("postId", postId)
             .whereEqualTo("type", "like").whereEqualTo("like", "no").get()
             .addOnSuccessListener {
+                for (document in it.documents)
+                    document.reference.delete()
+            }
+    }
+
+    /* NOTIFICATION COMMENT */
+
+    fun getNotificationComment(userId: String): Query =
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").orderBy("time", Query.Direction.DESCENDING)
+
+    fun addNotificationComment(me: FirebaseUser?, post: DocumentSnapshot, postId: String, commentId: String): Task<Void> {
+        val data = hashMapOf(
+            "userId"  to post["userId"].toString(),
+            "friendId" to me?.uid.toString(),
+            "postId" to postId,
+            "commentId" to commentId,
+            "time" to FieldValue.serverTimestamp(),
+            "type" to "comment"
+        )
+
+        return firestore.runBatch{
+            db.add(data).addOnSuccessListener {}
+        }
+    }
+
+    /*
+    fun deleteNotificationComment(me: FirebaseUser?, you: String, postId: String, commentId: String): Unit{
+        db.whereEqualTo("userId", you).whereEqualTo("postId", postId)
+            .whereEqualTo("commentId", commentId).whereEqualTo("type", "comment").get()
+            .addOnSuccessListener {
                 for (document in it)
                     document.reference.delete()
             }
     }
+    */
+
 
 }

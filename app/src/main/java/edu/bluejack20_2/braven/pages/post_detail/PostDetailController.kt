@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.post_detail
 
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentPostDetailBinding
 import edu.bluejack20_2.braven.domains.comment.CommentFirestorePagingAdapter
 import edu.bluejack20_2.braven.domains.comment.CommentService
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FailedRequestListenerFactory
