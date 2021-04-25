@@ -13,7 +13,7 @@ class  MostLikesController @Inject constructor(
 ) {
     fun bind(fragment: MostLikesFragment) {
         val binding = fragment.binding
-        val query = postService.getAllPostsByUser(fragment.userId)
+        val query = postService.getAllPostsByUser(fragment.userId!!)
             .orderBy("likersCount", Query.Direction.DESCENDING)
             .orderBy("timestamp", Query.Direction.DESCENDING)
 

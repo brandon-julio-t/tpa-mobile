@@ -26,27 +26,29 @@ class MainActivity : AppCompatActivity() {
     lateinit var authenticationService: AuthenticationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupPreferredFontSize()
+        initiateLightOrDarkMode()
+
+        super.onCreate(savedInstanceState)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupToolbarAndBottomNavigationWithNavController()
+    }
+
+    private fun setupPreferredFontSize() {
         val appFontPrefs: SharedPreferences? = getSharedPreferences("AppSettingPrefs", 0)
 
         when (appFontPrefs?.getBoolean("Large", true)) {
             true -> {
                 val themeID: Int = R.style.Theme_BRaVeN_FontLarge
                 setTheme(themeID)
-                Log.wtf("testis", "hehehe")
             }
             else -> {
                 val themeID: Int = R.style.Theme_BRaVeN
                 setTheme(themeID)
-                Log.wtf("testis", "else")
             }
         }
-
-        super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        initiateLightOrDarkMode()
-        setupToolbarAndBottomNavigationWithNavController()
     }
 
     private fun initiateLightOrDarkMode() {
@@ -66,7 +68,15 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.homeFragment,
+                R.id.exploreFragment,
+                R.id.postCreateFragment,
+                R.id.userProfileFragment,
+                R.id.aboutFragment
+            )
+        )
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.toolbar.setOnMenuItemClickListener {

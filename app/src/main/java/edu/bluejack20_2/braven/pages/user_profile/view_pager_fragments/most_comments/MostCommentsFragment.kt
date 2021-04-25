@@ -10,7 +10,7 @@ import edu.bluejack20_2.braven.databinding.FragmentUserProfileMostCommentsBindin
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MostCommentsFragment(val userId: String) : Fragment() {
+class MostCommentsFragment(val userId: String? = null) : Fragment() {
     private var _binding: FragmentUserProfileMostCommentsBinding? = null
 
     val binding get() = _binding!!
