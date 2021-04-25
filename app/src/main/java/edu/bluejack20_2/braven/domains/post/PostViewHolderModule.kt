@@ -1,15 +1,12 @@
 package edu.bluejack20_2.braven.domains.post
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.NavGraphDirections
-import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
@@ -57,8 +54,11 @@ class PostViewHolderModule @Inject constructor(
 
             post.reference.addSnapshotListener { updatedPost, _ ->
                 updatedPost?.let {
-                    updateButtonsIcon(it)
-                    updateButtonsText(it, post)
+                    updateButtonsIcon(updatedPost)
+                    updateButtonsText(updatedPost)
+
+                    binding.like.setOnClickListener { onLike(updatedPost, post) }
+                    binding.dislike.setOnClickListener { onDislike(updatedPost, post) }
                 }
             }
         }
@@ -76,35 +76,17 @@ class PostViewHolderModule @Inject constructor(
                 val isLiked = likers.contains(user.uid)
                 val isDisliked = dislikers.contains(user.uid)
 
-                binding.like.visibility = if (isLiked) View.VISIBLE else View.GONE
-                binding.unlike.visibility = if (!isLiked) View.VISIBLE else View.GONE
-
-                binding.dislike.visibility = if (isDisliked) View.VISIBLE else View.GONE
-                binding.undislike.visibility = if (!isDisliked) View.VISIBLE else View.GONE
+                if (isLiked) {
+                    binding.likeDislikeButtonsGroup.check(binding.like.id)
+                } else if (isDisliked) {
+                    binding.likeDislikeButtonsGroup.check(binding.dislike.id)
+                }
             }
         }
 
-        private fun updateButtonsText(
-            updatedPost: DocumentSnapshot,
-            post: DocumentSnapshot
-        ) {
-            listOf(binding.like, binding.unlike).forEach {
-                it.text = fragment.getString(
-                    R.string.like,
-                    updatedPost.getLong("likersCount") ?: 0
-                )
-
-                it.setOnClickListener { onLike(updatedPost, post) }
-            }
-
-            listOf(binding.dislike, binding.undislike).forEach {
-                it.text = fragment.getString(
-                    R.string.dislike,
-                    updatedPost.getLong("dislikersCount") ?: 0
-                )
-
-                it.setOnClickListener { onDislike(updatedPost, post) }
-            }
+        private fun updateButtonsText(post: DocumentSnapshot) {
+            binding.like.text = (post.getLong("likersCount") ?: 0).toString()
+            binding.dislike.text = (post.getLong("dislikersCount") ?: 0).toString()
         }
 
         private fun onLike(updatedPost: DocumentSnapshot?, post: DocumentSnapshot) {
@@ -135,8 +117,8 @@ class PostViewHolderModule @Inject constructor(
             }
         }
 
-        private fun onDislike(updatedPost: DocumentSnapshot?, post: DocumentSnapshot) {
-            val dislikers = (updatedPost?.get("dislikers") as? List<*>)
+        private fun onDislike(updatedPost: DocumentSnapshot, post: DocumentSnapshot) {
+            val dislikers = (updatedPost.get("dislikers") as? List<*>)
                 ?.mapNotNull { it as? String }
                 ?: emptyList()
 

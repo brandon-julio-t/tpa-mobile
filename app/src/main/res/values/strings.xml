@@ -30,8 +30,6 @@
     <string name="upload">Upload</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="poster_information">%s • %s</string>
-    <string name="like">Like (%d)</string>
-    <string name="dislike">Dislike (%d)</string>
     <string name="personal_data">%s (%s) • %s</string>
     <string name="body">Body</string>
     <string name="update">Update</string>
@@ -67,4 +65,5 @@
     <string name="update_profile_picture">Update Profile Picture</string>
     <string name="preview_image">Preview Image</string>
     <string name="click_here_to_upload_your_profile_picture">Click here to upload your Profile Picture...</string>
+    <string name="zero">0</string>
 </resources>

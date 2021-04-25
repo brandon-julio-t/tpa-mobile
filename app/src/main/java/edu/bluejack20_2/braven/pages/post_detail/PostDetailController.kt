@@ -40,7 +40,7 @@ class PostDetailController @Inject constructor(
         query.addSnapshotListener { post, _ ->
             post?.let {
                 updateButtonsIcon(binding, it)
-                updateButtonsText(binding, fragment, it)
+                updateButtonsText(binding, it)
                 updateButtonsEventListener(binding, post)
             }
         }
@@ -58,21 +58,18 @@ class PostDetailController @Inject constructor(
         binding: FragmentPostDetailBinding,
         post: DocumentSnapshot
     ) {
-        listOf(binding.like, binding.unlike).forEach {
-            it.setOnClickListener {
-                val likers = (post.get("likers") as? List<*>)
-                    ?.mapNotNull { it as? String }
-                    ?: emptyList()
+        binding.like.setOnClickListener {
+            val likers = (post.get("likers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
 
-                authenticationService.getUser()?.let { auth ->
-                    val isLiked = likers.contains(auth.uid)
-                    if (isLiked) {
-                        postService.unlikeAndDislikePost(post)
-                    } else {
-                        postService.likePost(post)
-                    }
+            authenticationService.getUser()?.let { auth ->
+                val isLiked = likers.contains(auth.uid)
+                if (isLiked) {
+                    postService.unlikeAndDislikePost(post)
+                } else {
+                    postService.likePost(post)
                 }
-
             }
         }
     }
@@ -81,20 +78,18 @@ class PostDetailController @Inject constructor(
         binding: FragmentPostDetailBinding,
         post: DocumentSnapshot
     ) {
-        listOf(binding.dislike, binding.undislike).forEach {
-            it.setOnClickListener {
-                val dislikers = (post.get("dislikers") as? List<*>)
-                    ?.mapNotNull { it as? String }
-                    ?: emptyList()
+        binding.dislike.setOnClickListener {
+            val dislikers = (post.get("dislikers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
 
-                authenticationService.getUser()?.let { auth ->
-                    val isDisliked = dislikers.contains(auth.uid)
+            authenticationService.getUser()?.let { auth ->
+                val isDisliked = dislikers.contains(auth.uid)
 
-                    if (isDisliked) {
-                        postService.unlikeAndDislikePost(post)
-                    } else {
-                        postService.dislikePost(post)
-                    }
+                if (isDisliked) {
+                    postService.unlikeAndDislikePost(post)
+                } else {
+                    postService.dislikePost(post)
                 }
             }
         }
@@ -208,31 +203,19 @@ class PostDetailController @Inject constructor(
             val isLiked = likers.contains(user.uid)
             val isDisliked = dislikers.contains(user.uid)
 
-            binding.like.visibility = if (isLiked) View.VISIBLE else View.GONE
-            binding.unlike.visibility = if (!isLiked) View.VISIBLE else View.GONE
-
-            binding.dislike.visibility = if (isDisliked) View.VISIBLE else View.GONE
-            binding.undislike.visibility = if (!isDisliked) View.VISIBLE else View.GONE
+            if (isLiked) {
+                binding.likeDislikeButtonsGroup.check(binding.like.id)
+            } else if (isDisliked) {
+                binding.likeDislikeButtonsGroup.check(binding.dislike.id)
+            }
         }
     }
 
     private fun updateButtonsText(
         binding: FragmentPostDetailBinding,
-        fragment: PostDetailFragment,
         post: DocumentSnapshot
     ) {
-        listOf(binding.like, binding.unlike).forEach {
-            it.text = fragment.getString(
-                R.string.like,
-                post.getLong("likersCount") ?: 0
-            )
-        }
-
-        listOf(binding.dislike, binding.undislike).forEach {
-            it.text = fragment.getString(
-                R.string.dislike,
-                post.getLong("dislikersCount") ?: 0
-            )
-        }
+        binding.like.text = (post.getLong("likersCount") ?: 0).toString()
+        binding.dislike.text = (post.getLong("dislikersCount") ?: 0).toString()
     }
 }
