@@ -1,18 +1,12 @@
 package edu.bluejack20_2.braven.domains.following
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseUser
-import edu.bluejack20_2.braven.R
-import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.databinding.ItemFollowingBinding
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.pages.user_profile.UserProfileFragment
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class FollowingAdapter(

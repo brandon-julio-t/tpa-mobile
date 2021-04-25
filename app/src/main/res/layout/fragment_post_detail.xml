@@ -101,36 +101,37 @@
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@id/like_dislike_buttons_group"
                 android:contentDescription="@string/thumbnail"
                 app:layout_constraintEnd_toEndOf="@+id/description"
                 app:layout_constraintStart_toStartOf="@+id/description"
                 app:layout_constraintTop_toBottomOf="@+id/description" />
 
-            <Button
-                android:id="@+id/like"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/like_dislike_buttons_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/like"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                app:icon="@drawable/ic_baseline_thumb_up_24"
-                app:layout_constraintEnd_toStartOf="@+id/dislike"
-                app:layout_constraintStart_toStartOf="@+id/thumbnail"
-                app:layout_constraintTop_toBottomOf="@+id/thumbnail" />
+                app:layout_constraintEnd_toEndOf="@id/thumbnail"
+                app:layout_constraintStart_toStartOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
+                app:singleSelection="true">
 
-            <Button
-                android:id="@+id/dislike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/dislike"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                app:icon="@drawable/ic_baseline_thumb_down_24"
-                app:layout_constraintEnd_toEndOf="@+id/thumbnail"
-                app:layout_constraintStart_toEndOf="@+id/like"
-                app:layout_constraintTop_toBottomOf="@+id/thumbnail"
-                app:layout_constraintTop_toTopOf="@+id/like" />
+                <Button
+                    android:id="@+id/like"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zero"
+                    app:icon="@drawable/ic_baseline_thumb_up_24" />
+
+                <Button
+                    android:id="@+id/dislike"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zero"
+                    app:icon="@drawable/ic_baseline_thumb_down_24" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <TextView
                 android:id="@+id/comment_as"
@@ -141,7 +142,7 @@
                 android:textAppearance="?attr/textAppearanceCaption"
                 app:layout_constraintEnd_toEndOf="@+id/thumbnail"
                 app:layout_constraintStart_toStartOf="@+id/thumbnail"
-                app:layout_constraintTop_toBottomOf="@+id/like" />
+                app:layout_constraintTop_toBottomOf="@+id/like_dislike_buttons_group" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/comment_layout"

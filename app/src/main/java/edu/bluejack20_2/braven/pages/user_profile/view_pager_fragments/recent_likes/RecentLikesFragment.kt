@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileRecentLikesBinding
 import javax.inject.Inject

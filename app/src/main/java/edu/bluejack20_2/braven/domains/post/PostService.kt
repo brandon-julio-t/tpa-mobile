@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.post
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
@@ -26,9 +25,17 @@ class PostService @Inject constructor(
 
     fun getAllFollowingsPosts(user: DocumentSnapshot): Query {
         val followings = user.get("followings").let {
+            val default = listOf("forever alone")
+
             var list = it as? List<*>
-            list = list?.mapNotNull { e -> e as? String }
-            return@let list ?: emptyList()
+            list ?: return@let default
+            list = list.mapNotNull { e -> e as? String }
+
+            if (list.isEmpty()) {
+                list = default
+            }
+
+            list
         }
 
         return repository.getAllFollowingsPosts(followings)

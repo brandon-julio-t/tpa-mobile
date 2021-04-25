@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.notification.notification_like
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -12,13 +11,15 @@ import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 
 class NotificationLikeFirestorePagingAdapter(
-    private val fragment: Fragment,
     private val userService: UserService,
     private val authenticationService: AuthenticationService,
     private val notificationService: NotificationService,
     private val postService: PostService,
+    private val fragment: Fragment,
+    private val timestampService: TimestampService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ) : FirestorePagingAdapter<DocumentSnapshot, NotificationLikeViewHolder>(options) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationLikeViewHolder {
@@ -33,7 +34,8 @@ class NotificationLikeFirestorePagingAdapter(
             userService,
             notificationService,
             postService,
-            fragment
+            fragment,
+            timestampService
         )
     }
 

@@ -6,7 +6,4 @@ import androidx.lifecycle.ViewModel
 class PostEditViewModel : ViewModel() {
     val thumbnail: MutableLiveData<ByteArray> by lazy { MutableLiveData<ByteArray>(ByteArray(0)) }
 
-    fun reset() {
-        thumbnail.value = ByteArray(0)
-    }
 }

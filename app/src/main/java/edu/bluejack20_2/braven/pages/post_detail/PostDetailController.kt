@@ -10,42 +10,122 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentPostDetailBinding
-import edu.bluejack20_2.braven.domains.comment.CommentFirestorePagingAdapter
+import edu.bluejack20_2.braven.domains.comment.CommentFirestorePagingAdapterModule
 import edu.bluejack20_2.braven.domains.comment.CommentService
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FailedRequestListenerFactory
-import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
 import edu.bluejack20_2.braven.modules.GlideApp
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class PostDetailController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val userService: UserService,
     private val postService: PostService,
-    private val commentService: CommentService
+    private val commentService: CommentService,
+    private val timestampService: TimestampService,
+    private val commentFirestorePagingAdapterModule: CommentFirestorePagingAdapterModule,
+    private val notificationService: NotificationService
 ) {
     fun bind(fragment: PostDetailFragment) {
         val binding = fragment.binding
 
         val query = postService.getPostById(fragment.args.postId)
 
-        query.addSnapshotListener { it, _ ->
-                binding.like.text = fragment.getString(
-                    R.string.like,
-                    it?.getLong("likersCount") ?: 0
-                )
-                binding.dislike.text = fragment.getString(
-                    R.string.dislike,
-                    it?.getLong("dislikersCount") ?: 0
-                )
-            }
-
         query.get().addOnSuccessListener {
             bindEvents(binding, fragment, it)
             bindUIs(binding, fragment, it)
+        }
+
+        query.addSnapshotListener { post, _ ->
+            post?.let {
+                updateButtonsIcon(binding, it)
+                updateButtonsText(binding, it)
+                updateButtonsEventListener(binding, post)
+            }
+        }
+    }
+
+    private fun updateButtonsEventListener(
+        binding: FragmentPostDetailBinding,
+        post: DocumentSnapshot
+    ) {
+        onLike(binding, post)
+        onDislike(binding, post)
+    }
+
+    private fun onLike(
+        binding: FragmentPostDetailBinding,
+        post: DocumentSnapshot
+    ) {
+        binding.like.setOnClickListener {
+            val likers = (post.get("likers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
+
+            authenticationService.getUser()?.let { auth ->
+                val isLiked = likers.contains(auth.uid)
+                if (isLiked) {
+                    postService.unlikeAndDislikePost(post)
+                    notificationService.deleteNotificationLike(
+                        auth,
+                        post.get("userId").toString(),
+                        post.id
+                    )
+
+                } else {
+                    postService.likePost(post)
+                    notificationService.deleteNotificationDislike(
+                        auth,
+                        post["userId"].toString(),
+                        post.id
+                    )
+                    notificationService.addNotificationLike(
+                        auth,
+                        post["userId"].toString(),
+                        post.id
+                    )
+                }
+            }
+        }
+    }
+
+    private fun onDislike(
+        binding: FragmentPostDetailBinding,
+        post: DocumentSnapshot
+    ) {
+        binding.dislike.setOnClickListener {
+            val dislikers = (post.get("dislikers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
+
+            authenticationService.getUser()?.let { auth ->
+                val isDisliked = dislikers.contains(auth.uid)
+
+                if (isDisliked) {
+                    postService.unlikeAndDislikePost(post)
+                    notificationService.deleteNotificationDislike(
+                        auth,
+                        post["userId"].toString(),
+                        post.id
+                    )
+                } else {
+                    postService.dislikePost(post)
+                    notificationService.deleteNotificationLike(
+                        auth,
+                        post["userId"].toString(),
+                        post.id
+                    )
+                    notificationService.addNotificationDislike(
+                        auth,
+                        post["userId"].toString(),
+                        post.id
+                    )
+                }
+            }
         }
     }
 
@@ -73,14 +153,10 @@ class PostDetailController @Inject constructor(
     ) {
         val user = authenticationService.getUser()
         val username = user?.displayName.toString()
-        val createdAt = (post["timestamp"] as? Timestamp)?.toDate().toString()
-        val commentsAdapter = CommentFirestorePagingAdapter(
+        val createdAt = (post["timestamp"] as? Timestamp)?.let { timestampService.prettyTime(it) }
+        val commentsAdapter = commentFirestorePagingAdapterModule.Adapter(
             fragment,
-            userService,
-            FirestorePagingAdapterOptionsFactory(
-                fragment,
-                commentService.getAllCommentsByPost(post)
-            ).create()
+            commentService.getAllCommentsByPost(post)
         )
 
         userService.getUserById(post["userId"].toString()).get().addOnSuccessListener {
@@ -120,26 +196,6 @@ class PostDetailController @Inject constructor(
             )
             .into(binding.thumbnail)
 
-        binding.like.setOnClickListener {
-            postService.likePost(post).addOnSuccessListener {
-                Snackbar.make(
-                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Post liked",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
-
-        binding.dislike.setOnClickListener {
-            postService.dislikePost(post).addOnSuccessListener {
-                Snackbar.make(
-                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Post disliked",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
-
         binding.commentAs.text = fragment.getString(
             R.string.comment_as,
             username
@@ -161,10 +217,39 @@ class PostDetailController @Inject constructor(
         }
 
         binding.comments.layoutManager =
-            object : LinearLayoutManager(fragment.requireActivity(), VERTICAL, false) {
+            object : LinearLayoutManager(fragment.requireActivity()) {
                 override fun canScrollVertically(): Boolean = false
             }
 
         binding.comments.adapter = commentsAdapter
+    }
+
+    private fun updateButtonsIcon(binding: FragmentPostDetailBinding, post: DocumentSnapshot) {
+        authenticationService.getUser()?.let { user ->
+            val likers = (post.get("likers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
+
+            val dislikers = (post.get("dislikers") as? List<*>)
+                ?.mapNotNull { it as? String }
+                ?: emptyList()
+
+            val isLiked = likers.contains(user.uid)
+            val isDisliked = dislikers.contains(user.uid)
+
+            if (isLiked) {
+                binding.likeDislikeButtonsGroup.check(binding.like.id)
+            } else if (isDisliked) {
+                binding.likeDislikeButtonsGroup.check(binding.dislike.id)
+            }
+        }
+    }
+
+    private fun updateButtonsText(
+        binding: FragmentPostDetailBinding,
+        post: DocumentSnapshot
+    ) {
+        binding.like.text = (post.getLong("likersCount") ?: 0).toString()
+        binding.dislike.text = (post.getLong("dislikersCount") ?: 0).toString()
     }
 }

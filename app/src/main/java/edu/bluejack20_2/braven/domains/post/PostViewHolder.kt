@@ -58,15 +58,8 @@ class PostViewHolder(
                 ).show()
             }
 
-            binding.like.text = fragment.getString(
-                R.string.like,
-                updatedPost?.getLong("likersCount") ?: 0
-            )
-
-            binding.dislike.text = fragment.getString(
-                R.string.dislike,
-                updatedPost?.getLong("dislikersCount") ?: 0
-            )
+            binding.like.text = (updatedPost?.getLong("likersCount") ?: 0).toString()
+            binding.dislike.text = (updatedPost?.getLong("dislikersCount") ?: 0).toString()
 
             binding.like.setOnClickListener {
                 val likers = (updatedPost?.get("likers") as? List<*>)

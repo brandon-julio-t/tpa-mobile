@@ -11,6 +11,7 @@ import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 
 class NotificationCommentFirestorePagingAdapter(
     private val fragment: Fragment,
@@ -18,6 +19,7 @@ class NotificationCommentFirestorePagingAdapter(
     private val authenticationService: AuthenticationService,
     private val notificationService: NotificationService,
     private val postService: PostService,
+    private val timestampService: TimestampService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ): FirestorePagingAdapter<DocumentSnapshot, NotificationCommentViewHolder>(options) {
     override fun onCreateViewHolder(
@@ -34,7 +36,8 @@ class NotificationCommentFirestorePagingAdapter(
             userService,
             notificationService,
             postService,
-            fragment
+            fragment,
+            timestampService
         )
 
     override fun onBindViewHolder(

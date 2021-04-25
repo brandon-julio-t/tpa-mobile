@@ -30,20 +30,20 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:contentDescription="@string/thumbnail"
             app:civ_border_color="#C1C1C1"
             app:civ_border_width="0.5dp"
             app:layout_constraintBottom_toBottomOf="@+id/created_at"
             app:layout_constraintEnd_toStartOf="@+id/poster_display_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.041" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/poster_display_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/personal_data"
             android:textAppearance="?attr/textAppearanceSubtitle2"
@@ -97,45 +97,33 @@
             app:layout_constraintTop_toTopOf="@+id/poster_display_name"
             app:srcCompat="@drawable/logo" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/like_dislike_buttons_group"
+            app:layout_constraintEnd_toEndOf="@id/thumbnail"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintEnd_toEndOf="@+id/category"
-            app:layout_constraintStart_toStartOf="@+id/category"
-            app:layout_constraintTop_toBottomOf="@+id/category">
+            android:layout_marginVertical="16dp"
+            app:layout_constraintStart_toStartOf="@id/category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:singleSelection="true"
+            app:layout_constraintTop_toBottomOf="@id/category">
 
             <Button
                 android:id="@+id/like"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="0dp"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_weight="1"
-                android:drawablePadding="32dp"
-                android:text="@string/like"
+                android:text="@string/zero"
                 app:icon="@drawable/ic_baseline_thumb_up_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/dislike"
-                app:layout_constraintStart_toStartOf="@+id/category"
-                app:layout_constraintTop_toBottomOf="@+id/category" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
                 android:id="@+id/dislike"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="0dp"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_weight="1"
-                android:text="@string/dislike"
-                app:icon="@drawable/ic_baseline_thumb_down_24"
-                app:layout_constraintBottom_toBottomOf="@+id/like"
-                app:layout_constraintEnd_toEndOf="@+id/thumbnail"
-                app:layout_constraintStart_toEndOf="@+id/like"
-                app:layout_constraintTop_toTopOf="@+id/like" />
-        </LinearLayout>
-
+                android:text="@string/zero"
+                app:icon="@drawable/ic_baseline_thumb_down_24" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

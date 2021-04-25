@@ -2,9 +2,9 @@ package edu.bluejack20_2.braven.pages.user_profile_edit
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.text.Editable
 import android.util.Log
 import android.view.View
+import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import edu.bluejack20_2.braven.R
@@ -20,19 +20,19 @@ class UserProfileEditController @Inject constructor(
 ) {
 
     private lateinit var fragment: UserProfileEditFragment
-    private var user: FirebaseUser? = null
+    private var auth: FirebaseUser? = null
 
 
-    fun bind(fragment: UserProfileEditFragment){
+    fun bind(fragment: UserProfileEditFragment) {
         this.fragment = fragment
         val viewModel = fragment.viewModel
 
-        user = authenticationService.getUser()
-        fragment.binding.usernameEditText.setText(user?.displayName.toString())
+        auth = authenticationService.getUser()
+        fragment.binding.usernameEditText.setText(auth?.displayName.toString())
 
-        fragment.viewModel.profilePicture.observe(fragment.viewLifecycleOwner){
+        fragment.viewModel.profilePicture.observe(fragment.viewLifecycleOwner) {
 
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 fragment.binding.previewProfileImage.visibility = View.GONE
                 return@observe
             }
@@ -48,21 +48,31 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.uploadButton.setOnClickListener {
-            Log.wtf("isi fragment profile picture", fragment.viewModel.profilePicture.value.toString() )
             if(fragment.viewModel.profilePicture.value?.isEmpty() == true){
                 val chooserIntent = imageMediaService.createIntent()
                 fragment.thumbnailChooserActivityLauncher.launch(chooserIntent)
             } else{
                 val profilePicture = fragment.viewModel.profilePicture.value?: ByteArray(0)
-                user?.let { it1 -> userService.updateProfilePicture(profilePicture) }
+                auth?.let { it1 -> userService.updateProfilePicture(profilePicture) }
             }
         }
 
         fragment.binding.updateButton.setOnClickListener {
-            val username = fragment.binding.usernameEditText.text
-            userService.updateProfile(user?.uid.toString(), username.toString())
-//            user?.let { it1 -> userService.updateProfile(it1.uid, username.toString()) }
+            val username = fragment.binding.usernameEditText.text.toString()
+            val biography = fragment.binding.biographyEditText.text.toString()
+            val password = fragment.binding.passwordEditText.text.toString()
 
+            auth?.let { user ->
+                SafetyNet.getClient(fragment.requireActivity())
+                    .verifyWithRecaptcha("6Le5xrUaAAAAACrndJTA0nwjgx8S2_g0YJE07Nhg")
+                    .addOnSuccessListener { response ->
+                        if (response.tokenResult?.isNotEmpty() == true) {
+                            userService.updateProfile(username, biography, password)
+                        }
+                    }
+                    .addOnFailureListener { e -> Log.wtf("hehe", e.toString()) }
+
+            }
         }
 
 

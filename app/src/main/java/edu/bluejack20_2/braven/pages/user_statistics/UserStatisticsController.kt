@@ -6,14 +6,12 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.databinding.FragmentUserStatisticsBinding
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import java.time.LocalDateTime
 import java.time.Month
 import java.time.OffsetDateTime
-import java.time.temporal.Temporal
 import java.util.*
 import javax.inject.Inject
 

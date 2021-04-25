@@ -8,13 +8,15 @@ import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class NotificationAllController @Inject constructor(
     private val userService: UserService,
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
-    private val notificationService: NotificationService
+    private val notificationService: NotificationService,
+    private val timestampService: TimestampService
 ) {
 
     fun bind(fragment: NotificationAllFragment){
@@ -33,6 +35,7 @@ class NotificationAllController @Inject constructor(
             authenticationService,
             postService,
             notificationService,
+            timestampService,
             FirestorePagingAdapterOptionsFactory(fragment, query!!).create()
         )
 

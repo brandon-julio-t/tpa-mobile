@@ -6,7 +6,4 @@ import androidx.lifecycle.ViewModel
 class UserProfileEditViewModel: ViewModel() {
     val profilePicture =  MutableLiveData(ByteArray(0))
 
-    fun reset() {
-        profilePicture.value = ByteArray(0)
-    }
 }

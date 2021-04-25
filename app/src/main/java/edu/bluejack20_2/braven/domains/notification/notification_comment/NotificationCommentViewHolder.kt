@@ -13,6 +13,7 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.explore.ExploreFragmentDirections
 import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 
 class NotificationCommentViewHolder(
     private val binding: ItemNotificationCommentBinding,
@@ -20,7 +21,8 @@ class NotificationCommentViewHolder(
     private val userService: UserService,
     private val notifcationService: NotificationService,
     private val postService: PostService,
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val timestampService: TimestampService
 
     ): RecyclerView.ViewHolder(binding.root){
 
@@ -30,7 +32,7 @@ class NotificationCommentViewHolder(
                 val user = authenticationService.getUser()
                 val postId = it.get("postId").toString()
                 val friendId = it.get("friendId").toString()
-                val time = (it?.get("time") as? Timestamp)?.toDate().toString()
+                val time = timestampService.prettyTime(it?.get("time") as Timestamp)
 
                 userService.getUserById(friendId).addSnapshotListener { friend, _ ->
                     binding.usernameText.text = "${friend!!.getString("displayName")} Commented On Your Post !"

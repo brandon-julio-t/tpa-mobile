@@ -14,6 +14,7 @@ import edu.bluejack20_2.braven.domains.notification.notification_comment.Notific
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 
 class NotificationAllFirestorePagingAdapter(
     private val fragment: Fragment,
@@ -21,6 +22,7 @@ class NotificationAllFirestorePagingAdapter(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
     private val notificationService: NotificationService,
+    private val timestampService: TimestampService,
     options: FirestorePagingOptions<DocumentSnapshot>
 ): FirestorePagingAdapter<DocumentSnapshot, NotificationAllViewHolder>(options)  {
 
@@ -37,7 +39,8 @@ class NotificationAllFirestorePagingAdapter(
             authenticationService,
             postService,
             notificationService,
-            fragment
+            fragment,
+            timestampService
         )
     }
 

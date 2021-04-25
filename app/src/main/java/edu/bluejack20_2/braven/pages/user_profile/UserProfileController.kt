@@ -10,7 +10,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
-import edu.bluejack20_2.braven.NavGraphDirections
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService

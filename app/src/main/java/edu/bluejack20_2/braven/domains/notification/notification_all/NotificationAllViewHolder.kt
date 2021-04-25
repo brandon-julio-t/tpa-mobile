@@ -15,6 +15,7 @@ import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 
 class NotificationAllViewHolder(
     private val binding: ItemNotificationAllBinding,
@@ -22,7 +23,8 @@ class NotificationAllViewHolder(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
     private val notificationService: NotificationService,
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val timestampService: TimestampService
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(documentSnapshot: DocumentSnapshot){
@@ -32,7 +34,7 @@ class NotificationAllViewHolder(
 
             val user = authenticationService.getUser()
             val friendId = it.get("friendId").toString()
-            val time = (it?.get("time") as? Timestamp)?.toDate().toString()
+            val time = timestampService.prettyTime(it?.get("time") as Timestamp)
             val type = it.get("type").toString()
 
             userService.getUserById(friendId).addSnapshotListener{ friend, _ ->
