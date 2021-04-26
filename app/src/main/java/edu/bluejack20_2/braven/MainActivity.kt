@@ -14,6 +14,9 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
+import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
+import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
+import edu.bluejack20_2.braven.pages.user_profile.UserProfileFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
@@ -70,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.loginFragment,
                 R.id.homeFragment,
                 R.id.exploreFragment,
                 R.id.postCreateFragment,

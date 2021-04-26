@@ -70,15 +70,18 @@ class UserRepository @Inject constructor() {
     }
 
     fun save(user: FirebaseUser): Task<Void> {
+        val lastLogin = user.metadata?.lastSignInTimestamp
+        val createdAt = user.metadata?.creationTimestamp
+
         val data = hashMapOf(
             "displayName" to user.displayName?.toString(),
             "fullName" to user.displayName?.toString(),
             "email" to user.email?.toString(),
             "photoUrl" to user.photoUrl?.toString(),
             "isEmailVerified" to user.isEmailVerified,
-            "createdAt" to Timestamp(Date(user.metadata?.creationTimestamp ?: 0)),
-            "lastLoginAt" to Timestamp(Date(user.metadata?.lastSignInTimestamp ?: 0)),
-            "userId" to user.uid
+            "userId" to user.uid,
+            "createdAt" to if (createdAt != null) Timestamp(Date(createdAt)) else FieldValue.serverTimestamp(),
+            "lastLoginAt" to if (lastLogin != null) Timestamp(Date(lastLogin)) else FieldValue.serverTimestamp(),
         )
 
         return db.document(user.uid).set(data, SetOptions.merge())

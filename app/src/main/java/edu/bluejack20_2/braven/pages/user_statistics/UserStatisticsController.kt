@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.pages.user_statistics
 
-import android.util.Log
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
@@ -230,9 +229,8 @@ class UserStatisticsController @Inject constructor(
                     binding.postsInAYearChart
                     binding.postsInAYearChart.data = BarData(dataSet)
                     binding.postsInAYearChart.xAxis.valueFormatter = object : ValueFormatter() {
-                        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-                            return Month.of(value.toInt()).toString()
-                        }
+                        override fun getAxisLabel(value: Float, axis: AxisBase?) =
+                            Month.of(value.toInt()).toString()
                     }
                     binding.postsInAYearChart.invalidate()
                 }
@@ -240,13 +238,13 @@ class UserStatisticsController @Inject constructor(
     }
 
     private fun handlePostCategoryChart() {
-        val categoryData = mutableMapOf<String, Float>()
-
         authenticationService.getUser()?.let { user ->
             postService.getAllPostsByUser(user.uid).get().addOnSuccessListener { posts ->
+                val categoryData = mutableMapOf<String, Float>()
+
                 posts.documents.forEach { post ->
                     post.getString("category")?.let { category ->
-                        categoryData[category] = (categoryData[category] ?: 0f) + 1f
+                        categoryData[category] = categoryData.getOrDefault(category, 0f) + 1f
                     }
                 }
 
@@ -258,7 +256,6 @@ class UserStatisticsController @Inject constructor(
                 val dataSet = PieDataSet(entries, "Post Categories")
                 dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
 
-                binding.postCategoriesChart
                 binding.postCategoriesChart.data = PieData(dataSet)
                 binding.postCategoriesChart.data.setValueFormatter(PercentFormatter())
                 binding.postCategoriesChart.invalidate()

@@ -19,7 +19,8 @@ class FollowersUserProfileFragment : Fragment() {
     @Inject lateinit var controller: FollowersUserProfileController
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFollowersUserProfileBinding.inflate(inflater, container, false)
