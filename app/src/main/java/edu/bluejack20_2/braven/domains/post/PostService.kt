@@ -25,16 +25,12 @@ class PostService @Inject constructor(
 
     fun getAllFollowingsPosts(user: DocumentSnapshot): Query {
         val followings = user.get("followings").let {
-            val default = listOf("forever alone")
+            val default = listOf(authenticationService.getUser()?.uid.toString())
 
             var list = it as? List<*>
             list ?: return@let default
             list = list.mapNotNull { e -> e as? String }
-
-            if (list.isEmpty()) {
-                list = default
-            }
-
+            list = list.union(default).toList()
             list
         }
 

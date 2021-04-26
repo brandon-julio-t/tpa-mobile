@@ -12,7 +12,7 @@ class MostCommentsController @Inject constructor(
 ) {
     fun bind(fragment: MostCommentsFragment) {
         val binding = fragment.binding
-        val query = postService.getAllPostsByUser(fragment.userId)
+        val query = postService.getAllPostsByUser(fragment.userId!!)
             .orderBy("commentsCount", Query.Direction.DESCENDING)
             .orderBy("timestamp", Query.Direction.DESCENDING)
 

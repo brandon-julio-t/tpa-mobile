@@ -75,7 +75,6 @@ class SettingFragment : Fragment() {
         }
 
         binding.switchSize.setOnClickListener{
-
             sharedPrefsEdit?.putBoolean("Large", !isLarge!!)
             sharedPrefsEdit?.apply()
             requireActivity().recreate()
@@ -84,9 +83,6 @@ class SettingFragment : Fragment() {
         binding.buttonLogout.setOnClickListener {
             authenticationService.logout(it)
         }
-
-
-
     }
 
 }
