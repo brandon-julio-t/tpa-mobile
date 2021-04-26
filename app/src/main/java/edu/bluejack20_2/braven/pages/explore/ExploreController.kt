@@ -12,6 +12,7 @@ import edu.bluejack20_2.braven.databinding.ItemPostBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.post.PostViewHolder
+import edu.bluejack20_2.braven.domains.post.PostViewHolderModule
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.TimestampService
@@ -22,7 +23,8 @@ class ExploreController @Inject constructor(
     private val postService: PostService,
     private val notificationService: NotificationService,
     private val authenticationService: AuthenticationService,
-    private val timestampService: TimestampService
+    private val timestampService: TimestampService,
+    private val postViewHolderModule: PostViewHolderModule
 ) {
     private lateinit var binding: FragmentExploreBinding
     private lateinit var viewModel: ExploreViewModel
@@ -109,18 +111,14 @@ class ExploreController @Inject constructor(
                 override fun canScrollVertically() = false
             }
 
-        binding.exploreRecycleview.adapter = object : RecyclerView.Adapter<PostViewHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder =
-                PostViewHolder(
+        binding.exploreRecycleview.adapter = object : RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+                postViewHolderModule.ViewHolder(
                     ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                    fragment,
-                    userService,
-                    postService,
-                    authenticationService,
-                    notificationService
+                    fragment
                 )
 
-            override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+            override fun onBindViewHolder(holder: PostViewHolderModule.ViewHolder, position: Int) {
                 viewModel.posts.value?.get(position)?.let { holder.bind(it) }
             }
 

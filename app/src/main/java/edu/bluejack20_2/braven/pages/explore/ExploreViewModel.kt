@@ -47,10 +47,23 @@ class ExploreViewModel @Inject constructor(
             val hasDescription = doc.getString("description")
                 ?.contains(description.value.toString(), true) == true
 
-            // divided by 1000 to convert milliseconds to seconds
+            doc.getString("userId")?.let { id ->
+                userService.getUserById(id).get().addOnSuccessListener { user ->
+                    val hasUsername = user.getString("displayName")
+                        ?.contains(username.value.toString(), true) == true
+
+                    if (!hasUsername) {
+                        _posts.value = _posts.value?.toMutableList()?.also {
+                            it.remove(doc)
+                        }
+                    }
+                }
+            }
 
             val startDate = startDate.value ?: 0
             val endDate = endDate.value ?: 0
+
+            // divided by 1000 to convert milliseconds to seconds
 
             val isAfter = doc.getTimestamp("timestamp")?.seconds ?: 0 >= (startDate / 1000)
             val isBefore = doc.getTimestamp("timestamp")?.seconds ?: 0 <= (endDate / 1000)

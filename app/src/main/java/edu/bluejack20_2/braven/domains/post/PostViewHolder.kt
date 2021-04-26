@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.domains.post
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
