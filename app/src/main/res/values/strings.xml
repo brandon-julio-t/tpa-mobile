@@ -66,4 +66,7 @@
     <string name="preview_image">Preview Image</string>
     <string name="click_here_to_upload_your_profile_picture">Click here to upload your Profile Picture...</string>
     <string name="zero">0</string>
+    <string name="like_in_a_week">Likes in a Week</string>
+    <string name="comment_in_a_week">Comment in a Week</string>
+    <string name="follow_in_a_week">Follow in a Week</string>
 </resources>
