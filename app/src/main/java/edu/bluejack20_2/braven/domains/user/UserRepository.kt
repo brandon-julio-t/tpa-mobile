@@ -78,6 +78,7 @@ class UserRepository @Inject constructor() {
             "isEmailVerified" to user.isEmailVerified,
             "createdAt" to Timestamp(Date(user.metadata?.creationTimestamp ?: 0)),
             "lastLoginAt" to Timestamp(Date(user.metadata?.lastSignInTimestamp ?: 0)),
+            "userId" to user.uid
         )
 
         return db.document(user.uid).set(data, SetOptions.merge())

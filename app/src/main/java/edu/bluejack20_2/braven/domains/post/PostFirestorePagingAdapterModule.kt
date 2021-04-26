@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.post
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ class PostFirestorePagingAdapterModule @Inject constructor(private val postViewH
                 ),
                 fragment
             )
+
 
         override fun onBindViewHolder(
             holder: PostViewHolderModule.ViewHolder,

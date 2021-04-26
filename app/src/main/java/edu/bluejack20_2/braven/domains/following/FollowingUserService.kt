@@ -7,7 +7,7 @@ class FollowingUserService @Inject constructor() {
 
     private val db = FirebaseFirestore.getInstance().collection("users")
 
-    fun getAllUserFollowing(id: String) = db.document(id)
+    fun getAllUserFollowing(listOfString : List<String>) = db.whereIn("userId", listOfString)
 
     fun getUserByUserId(id: String) = db.document(id)
 

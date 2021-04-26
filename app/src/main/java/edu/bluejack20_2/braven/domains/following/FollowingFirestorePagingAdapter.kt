@@ -5,17 +5,49 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.databinding.ItemFollowersBinding
 import edu.bluejack20_2.braven.databinding.ItemFollowingBinding
+import edu.bluejack20_2.braven.domains.followers.FollowersUserViewHolder
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
-class FollowingAdapter(
+class FollowingFirestorePagingAdapter(
     private val followingList: List<*>,
     private val userServices: FollowingUserService,
     private val userService: UserService,
-    private val authenticationService: AuthenticationService
-    ) : RecyclerView.Adapter<FollowingUserViewHolder>() {
+    private val authenticationService: AuthenticationService,
+    private val loginId: String,
+    private val notificationService: NotificationService,
+    options: FirestorePagingOptions<DocumentSnapshot>
+    ) : FirestorePagingAdapter<DocumentSnapshot, FollowingUserViewHolder>(options) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowingUserViewHolder =
+        FollowingUserViewHolder(
+            ItemFollowingBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+            followingList,
+            userServices,
+            userService,
+            authenticationService,
+            loginId,
+            notificationService
+        )
+
+    override fun onBindViewHolder(
+        holder: FollowingUserViewHolder,
+        position: Int,
+        model: DocumentSnapshot
+    ) = holder.bind(model)
+
+
+    /*
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -84,27 +116,5 @@ class FollowingAdapter(
 
     override fun getItemCount(): Int = followingList.size
 
-
-
-//    private fun actionButtonUnFollowState(
-//        fragment: UserProfileFragment,
-//        binding: FragmentUserProfileBinding,
-//        currentUser: FirebaseUser?,
-//        user: Map<String, Any>
-//    ) {
-//        binding.action.text = fragment.getString(R.string.unfollow)
-//        binding.action.setOnClickListener {
-//            userService.unFollow(currentUser, user).addOnSuccessListener {
-//                Snackbar.make(
-//                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-//                    "User un-followed",
-//                    Snackbar.LENGTH_LONG
-//                ).show()
-//
-//                binding.action.text = fragment.getString(R.string.follow)
-//            }
-//        }
-//    }
-
-
+*/
 }

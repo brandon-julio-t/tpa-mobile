@@ -16,11 +16,17 @@ class UserService @Inject constructor(private val repository: UserRepository) {
     fun follow(me: FirebaseUser?, you: String): Task<Void> =
         repository.follow(me?.uid.toString(), you)
 
+    fun follow(me: String, you: Map<*, *>): Task<Void> =
+        repository.follow(me, you["id"].toString())
+
     fun unFollow(me: FirebaseUser?, you: Map<*, *>): Task<Void> =
         repository.unFollow(me?.uid.toString(), you["id"].toString())
 
     fun unFollow(me: FirebaseUser?, you: String): Task<Void> =
         repository.unFollow(me?.uid.toString(), you)
+
+    fun unFollow(me: String, you: Map<*, *>): Task<Void> =
+        repository.unFollow(me, you["id"].toString())
 
     fun updateProfile(username: String, biography: String, password: String) =
         repository.updateProfile(username, biography, password) {
