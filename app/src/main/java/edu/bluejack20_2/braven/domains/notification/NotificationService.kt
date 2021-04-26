@@ -1,6 +1,7 @@
 package edu.bluejack20_2.braven.domains.notification
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
@@ -13,6 +14,24 @@ class NotificationService @Inject constructor(){
 
     private val firestore = FirebaseFirestore.getInstance()
     private val db = FirebaseFirestore.getInstance().collection("notification")
+
+    /* STATISTIC FOLLOW */
+    fun getAllNotificationFollowByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+        getNotificationFollow(userId)
+            .whereGreaterThanOrEqualTo("time", start)
+            .whereLessThanOrEqualTo("time", end)
+
+    /* STATISTIC LIKE */
+    fun getAllNotificationLikeByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+        getNotificationLike(userId)
+            .whereGreaterThanOrEqualTo("time", start)
+            .whereLessThanOrEqualTo("time", end)
+
+    /* STATISTIC COMMENT */
+    fun getAllNotificationCommentByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+        getNotificationComment(userId)
+            .whereGreaterThanOrEqualTo("time", start)
+            .whereLessThanOrEqualTo("time", end)
 
     /* NOTIFICATION ALL */
 

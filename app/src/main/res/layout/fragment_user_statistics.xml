@@ -76,10 +76,74 @@
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/post_categories"
                 app:layout_constraintStart_toStartOf="@+id/post_categories"
                 app:layout_constraintTop_toBottomOf="@+id/post_categories" />
+
+
+            <TextView
+                android:id="@+id/text_like_in_a_week"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/like_in_a_week"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="@+id/post_categories_chart"
+                app:layout_constraintStart_toStartOf="@+id/post_categories_chart"
+                app:layout_constraintTop_toBottomOf="@+id/post_categories_chart" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/like_in_a_week_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_like_in_a_week"
+                app:layout_constraintStart_toStartOf="@+id/text_like_in_a_week"
+                app:layout_constraintTop_toBottomOf="@+id/text_like_in_a_week" />
+
+
+            <TextView
+                android:id="@+id/text_comment_in_a_week"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/comment_in_a_week"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="@+id/like_in_a_week_chart"
+                app:layout_constraintStart_toStartOf="@+id/like_in_a_week_chart"
+                app:layout_constraintTop_toBottomOf="@+id/like_in_a_week_chart" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/comment_in_a_week_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_comment_in_a_week"
+                app:layout_constraintStart_toStartOf="@+id/text_comment_in_a_week"
+                app:layout_constraintTop_toBottomOf="@+id/text_comment_in_a_week" />
+
+
+
+
+            <TextView
+                android:id="@+id/text_follow_in_a_week"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/follow_in_a_week"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toEndOf="@+id/comment_in_a_week_chart"
+                app:layout_constraintStart_toStartOf="@+id/comment_in_a_week_chart"
+                app:layout_constraintTop_toBottomOf="@+id/comment_in_a_week_chart" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/follow_in_a_week_chart"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_follow_in_a_week"
+                app:layout_constraintStart_toStartOf="@+id/text_follow_in_a_week"
+                app:layout_constraintTop_toBottomOf="@+id/text_follow_in_a_week" />
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </ScrollView>

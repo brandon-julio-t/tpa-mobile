@@ -7,16 +7,18 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.Timestamp
 import edu.bluejack20_2.braven.databinding.FragmentUserStatisticsBinding
+import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.TimestampService
-import java.time.Month
-import java.time.YearMonth
+import java.time.*
+import java.util.*
 import javax.inject.Inject
 
 class UserStatisticsController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val postService: PostService,
+    private val notificationService: NotificationService,
     private val timestampService: TimestampService
 ) {
     lateinit var binding: FragmentUserStatisticsBinding
@@ -27,6 +29,141 @@ class UserStatisticsController @Inject constructor(
         handlePostsInAMonth()
         handlePostsInAYear()
         handlePostCategoryChart()
+        handleLikeInAWeek()
+        handleCommentInAWeek()
+        handleFollowInAWeek()
+    }
+
+    private fun handleFollowInAWeek(){
+        authenticationService.getUser()?.let { user ->
+            val now = Timestamp.now()
+            val nowInstant = now.toDate().toInstant()
+            val zoneId = TimeZone.getDefault().toZoneId()
+
+            val start = LocalDateTime.ofInstant(nowInstant, zoneId)
+                .minusWeeks(1)
+                .toInstant(OffsetDateTime.ofInstant(nowInstant, zoneId).offset).let {
+                    Timestamp(Date.from(it))
+                }
+
+            notificationService.getAllNotificationFollowByUserBetweenTimestamp(user.uid, start, now).get()
+                .addOnSuccessListener { likes ->
+                    val data = likes.documents
+                        .groupBy { like ->
+                            like.getTimestamp("time")?.let {
+                                LocalDateTime.ofInstant(
+                                    it.toDate().toInstant(),
+                                    zoneId
+                                ).dayOfWeek
+                            }
+                        }.mapValues { it.value.size }
+                        .map{ BarEntry(it.key!!.value.toFloat() ?: 0f, it.value.toFloat()) }
+
+                    val dataSet = BarDataSet(data, "comments in a week").also {
+                        it.colors = ColorTemplate.MATERIAL_COLORS.toList()
+                    }
+
+                    binding.followInAWeekChart.let{
+                        it.data = BarData(dataSet)
+                        it.xAxis.valueFormatter = object : ValueFormatter() {
+                            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                                return DayOfWeek.of(value.toInt()).toString()
+                            }
+                        }
+                        it.description.text = "Follow Chart"
+                        it.invalidate()
+                    }
+
+                }
+        }
+    }
+
+    private fun handleCommentInAWeek(){
+        authenticationService.getUser()?.let { user ->
+            val now = Timestamp.now()
+            val nowInstant = now.toDate().toInstant()
+            val zoneId = TimeZone.getDefault().toZoneId()
+
+            val start = LocalDateTime.ofInstant(nowInstant, zoneId)
+                .minusWeeks(1)
+                .toInstant(OffsetDateTime.ofInstant(nowInstant, zoneId).offset).let {
+                    Timestamp(Date.from(it))
+                }
+
+            notificationService.getAllNotificationCommentByUserBetweenTimestamp(user.uid, start, now).get()
+                .addOnSuccessListener { likes ->
+                    val data = likes.documents
+                        .groupBy { like ->
+                            like.getTimestamp("time")?.let {
+                                LocalDateTime.ofInstant(
+                                    it.toDate().toInstant(),
+                                    zoneId
+                                ).dayOfWeek
+                            }
+                        }.mapValues { it.value.size }
+                        .map{ BarEntry(it.key!!.value.toFloat() ?: 0f, it.value.toFloat()) }
+
+                    val dataSet = BarDataSet(data, "comments in a week").also {
+                        it.colors = ColorTemplate.MATERIAL_COLORS.toList()
+                    }
+
+                    binding.commentInAWeekChart.let{
+                        it.data = BarData(dataSet)
+                        it.xAxis.valueFormatter = object : ValueFormatter() {
+                            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                                return DayOfWeek.of(value.toInt()).toString()
+                            }
+                        }
+                        it.description.text = "Comment Chart"
+                        it.invalidate()
+                    }
+
+                }
+        }
+    }
+
+    private fun handleLikeInAWeek(){
+        authenticationService.getUser()?.let { user ->
+            val now = Timestamp.now()
+            val nowInstant = now.toDate().toInstant()
+            val zoneId = TimeZone.getDefault().toZoneId()
+
+            val start = LocalDateTime.ofInstant(nowInstant, zoneId)
+                .minusWeeks(1)
+                .toInstant(OffsetDateTime.ofInstant(nowInstant, zoneId).offset).let {
+                    Timestamp(Date.from(it))
+                }
+
+            notificationService.getAllNotificationLikeByUserBetweenTimestamp(user.uid, start, now).get()
+                .addOnSuccessListener { likes ->
+                    val data = likes.documents
+                        .groupBy { like ->
+                            like.getTimestamp("time")?.let {
+                                LocalDateTime.ofInstant(
+                                    it.toDate().toInstant(),
+                                    zoneId
+                                ).dayOfWeek
+                            }
+                        }.mapValues { it.value.size }
+                        .map{ BarEntry(it.key!!.value.toFloat() ?: 0f, it.value.toFloat()) }
+
+                    val dataSet = BarDataSet(data, "likes in a week").also {
+                        it.colors = ColorTemplate.MATERIAL_COLORS.toList()
+                    }
+
+                    binding.likeInAWeekChart.let{
+                        it.data = BarData(dataSet)
+                        it.xAxis.valueFormatter = object : ValueFormatter() {
+                            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                                return DayOfWeek.of(value.toInt()).toString()
+                            }
+                        }
+                        it.description.text = "Likes Chart"
+                        it.invalidate()
+                    }
+
+                }
+        }
     }
 
     private fun handlePostsInAMonth() {
