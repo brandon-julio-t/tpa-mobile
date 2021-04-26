@@ -29,7 +29,7 @@ class UserService @Inject constructor(private val repository: UserRepository) {
         repository.unFollow(me, you["id"].toString())
 
     fun updateProfile(username: String, biography: String, password: String) =
-        repository.updateProfile(username, biography, password) {
+        repository.updateProfile(username, biography, password)?.addOnSuccessListener {
             FirebaseAuth.getInstance().currentUser?.let { save(it) }
         }
 

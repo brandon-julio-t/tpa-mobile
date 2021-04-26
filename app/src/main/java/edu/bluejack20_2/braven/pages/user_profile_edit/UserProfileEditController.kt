@@ -68,6 +68,14 @@ class UserProfileEditController @Inject constructor(
                     .addOnSuccessListener { response ->
                         if (response.tokenResult?.isNotEmpty() == true) {
                             userService.updateProfile(username, biography, password)
+                                ?.addOnSuccessListener {
+                                    Snackbar.make(
+                                        fragment.requireActivity()
+                                            .findViewById(R.id.coordinatorLayout),
+                                        "Profile updated!",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
                         }
                     }
                     .addOnFailureListener { e -> Log.wtf("hehe", e.toString()) }
