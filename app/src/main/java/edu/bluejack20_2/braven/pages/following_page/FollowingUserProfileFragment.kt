@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentFollowingUserProfileBinding
 import javax.inject.Inject
@@ -16,9 +17,10 @@ class FollowingUserProfileFragment : Fragment() {
     val binding get() = _binding!!
     val userId = arguments?.getString("auth")
 
+    val args: FollowingUserProfileFragmentArgs by navArgs()
+
     @Inject
     lateinit var controller: FollowingUserProfileController
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

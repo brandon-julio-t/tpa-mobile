@@ -15,6 +15,9 @@ import edu.bluejack20_2.braven.databinding.FragmentUserProfileBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.pages.explore.ExploreFragmentDirections
+import edu.bluejack20_2.braven.pages.followers_page.FollowersUserProfileFragmentDirections
+import edu.bluejack20_2.braven.pages.home.HomeFragmentDirections
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_comments.MostCommentsFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_likes.MostLikesFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_likes.RecentLikesFragment
@@ -32,6 +35,7 @@ class UserProfileController @Inject constructor(
         val binding = fragment.binding
         val query = userService.getUserById(fragment.args.userId)
 
+        directHomePage(binding)
         directFollowingPage(fragment, binding)
         directFollowersPage(fragment, binding)
         populateData(fragment, binding, query)
@@ -39,6 +43,11 @@ class UserProfileController @Inject constructor(
         setupViewPagerTabs(fragment, binding)
     }
 
+    private fun directHomePage(binding: FragmentUserProfileBinding) {
+        binding.postsCount.setOnClickListener {
+            it.findNavController().navigate(UserProfileFragmentDirections.toHome())
+        }
+    }
 
     private fun directFollowingPage(
         fragment: UserProfileFragment,
@@ -179,8 +188,7 @@ class UserProfileController @Inject constructor(
     ) {
         binding.action.text = fragment.getString(R.string.edit_profile)
         binding.action.setOnClickListener {
-
-            fragment.findNavController().navigate(R.id.userProfileToUserProfileEdit)
+            fragment.findNavController().navigate(R.id.userProfileToProfileEdit)
         }
     }
 

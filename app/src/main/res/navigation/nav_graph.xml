@@ -86,7 +86,7 @@
             android:id="@+id/userProfileToFollowersPage"
             app:destination="@id/followersUserProfileFragment" />
         <action
-            android:id="@+id/userProfileToUserProfileEdit"
+            android:id="@+id/userProfileToProfileEdit"
             app:destination="@id/userProfileEditFragment" />
     </fragment>
     <fragment
@@ -116,7 +116,7 @@
     <fragment
         android:id="@+id/followingUserProfileFragment"
         android:name="edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragment"
-        android:label="fragment_following_user_profile"
+        android:label="@string/followings"
         tools:layout="@layout/fragment_following_user_profile">
         <argument
             android:name="auth"
@@ -125,7 +125,7 @@
     <fragment
         android:id="@+id/followersUserProfileFragment"
         android:name="edu.bluejack20_2.braven.pages.followers_page.FollowersUserProfileFragment"
-        android:label="FollowersUserProfileFragment">
+        android:label="@string/followers">
         <argument
             android:name="auth"
             app:argType="string" />
@@ -141,7 +141,7 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="edu.bluejack20_2.braven.pages.notification.NotificationFragment"
-        android:label="fragment_notification"
+        android:label="@string/notification"
         tools:layout="@layout/fragment_notification" >
         <action
             android:id="@+id/action_notificationFragment_to_userProfileFragment"

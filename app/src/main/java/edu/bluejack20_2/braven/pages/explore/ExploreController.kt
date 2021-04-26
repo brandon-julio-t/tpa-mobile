@@ -1,37 +1,130 @@
 package edu.bluejack20_2.braven.pages.explore
 
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.bluejack20_2.braven.domains.explore.ExploreFirestorePagingAdapter
-import edu.bluejack20_2.braven.domains.explore.ExploreService
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.MaterialDatePicker
+import edu.bluejack20_2.braven.databinding.FragmentExploreBinding
+import edu.bluejack20_2.braven.databinding.ItemPostBinding
+import edu.bluejack20_2.braven.domains.notification.NotificationService
+import edu.bluejack20_2.braven.domains.post.PostService
+import edu.bluejack20_2.braven.domains.post.PostViewHolder
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.factories.FirestorePagingAdapterOptionsFactory
+import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class ExploreController @Inject constructor(
-    private val exploreService: ExploreService,
     private val userService: UserService,
+    private val postService: PostService,
+    private val notificationService: NotificationService,
+    private val authenticationService: AuthenticationService,
     private val timestampService: TimestampService
 ) {
+    private lateinit var binding: FragmentExploreBinding
+    private lateinit var viewModel: ExploreViewModel
 
     fun bind(fragment: ExploreFragment) {
-        val binding = fragment.binding
+        this.binding = fragment.binding
+        this.viewModel = fragment.viewModel
 
-        binding.exploreRecycleview.layoutManager = LinearLayoutManager(
-            fragment.requireActivity(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-
-        binding.exploreRecycleview.adapter = ExploreFirestorePagingAdapter(
-            fragment,
-            userService,
-            timestampService,
-            FirestorePagingAdapterOptionsFactory(
-                fragment.viewLifecycleOwner,
-                exploreService.getAllPosts()
-            ).create()
-        )
+        handleViewModel(fragment)
+        handleUI(fragment)
     }
 
+    private fun handleViewModel(fragment: ExploreFragment) {
+        binding.viewModel = viewModel
+
+        viewModel.posts.observe(fragment.viewLifecycleOwner, {
+            Log.wtf("hehe", it.size.toString())
+            binding.exploreRecycleview.adapter?.notifyDataSetChanged()
+        })
+
+        viewModel.category.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+        viewModel.title.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+        viewModel.description.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+        viewModel.username.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+        viewModel.startDate.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+        viewModel.endDate.observe(fragment.viewLifecycleOwner, { viewModel.applyFilter() })
+    }
+
+    private fun handleUI(fragment: ExploreFragment) {
+        binding.toggleFilter.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.reset()
+
+            listOf(
+                binding.search,
+                binding.category,
+                binding.title,
+                binding.description,
+                binding.username,
+                binding.startDate,
+                binding.endDate
+            ).forEach { it.editText?.setText("") }
+
+            if (isChecked) {
+                binding.filterContainer.visibility = View.VISIBLE
+                binding.search.visibility = View.GONE
+            } else {
+                binding.filterContainer.visibility = View.GONE
+                binding.search.visibility = View.VISIBLE
+            }
+        }
+
+        binding.startDate.editText?.setOnClickListener {
+            MaterialDatePicker.Builder.datePicker().build().let { picker ->
+                picker.addOnPositiveButtonClickListener { viewModel.startDate.value = it }
+                picker.show(fragment.requireActivity().supportFragmentManager, "start-picker")
+                picker.addOnPositiveButtonClickListener {
+                    binding.startDate.editText?.setText(
+                        timestampService.formatMilliseconds(
+                            it,
+                            "d MMM y"
+                        )
+                    )
+                }
+            }
+        }
+
+        binding.endDate.editText?.setOnClickListener {
+            MaterialDatePicker.Builder.datePicker().build().let { picker ->
+                picker.addOnPositiveButtonClickListener { viewModel.endDate.value = it }
+                picker.show(fragment.requireActivity().supportFragmentManager, "end-picker")
+                picker.addOnPositiveButtonClickListener {
+                    binding.endDate.editText?.setText(
+                        timestampService.formatMilliseconds(
+                            it,
+                            "d MMM y"
+                        )
+                    )
+                }
+            }
+        }
+
+        binding.exploreRecycleview.layoutManager =
+            object : LinearLayoutManager(fragment.requireActivity()) {
+                override fun canScrollVertically() = false
+            }
+
+        binding.exploreRecycleview.adapter = object : RecyclerView.Adapter<PostViewHolder>() {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder =
+                PostViewHolder(
+                    ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    fragment,
+                    userService,
+                    postService,
+                    authenticationService,
+                    notificationService
+                )
+
+            override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+                viewModel.posts.value?.get(position)?.let { holder.bind(it) }
+            }
+
+            override fun getItemCount() = viewModel.posts.value?.size ?: 0
+        }
+    }
 }
