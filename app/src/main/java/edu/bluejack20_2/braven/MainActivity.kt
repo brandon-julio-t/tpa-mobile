@@ -2,7 +2,6 @@ package edu.bluejack20_2.braven
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +11,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
-import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
-import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
-import edu.bluejack20_2.braven.pages.user_profile.UserProfileFragmentDirections
+import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.VolleyFirebaseMessagingService
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,6 +28,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var authenticationService: AuthenticationService
 
+    @Inject
+    lateinit var volleyFirebaseMessagingService: VolleyFirebaseMessagingService
+
+    @Inject
+    lateinit var userService: UserService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setupPreferredFontSize()
         initiateLightOrDarkMode()
@@ -36,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        updateFcmToken()
         setupToolbarAndBottomNavigationWithNavController()
     }
 
@@ -63,6 +70,17 @@ class MainActivity : AppCompatActivity() {
             }
             false -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+    }
+
+    private fun updateFcmToken() {
+        Firebase.messaging.token.addOnSuccessListener { token ->
+            authenticationService.getUser()?.let { user ->
+                userService.updateFCMToken(user.uid, token)
+//                    .addOnSuccessListener {
+//                        volleyFirebaseMessagingService.sendNotificationTo("testing", "test", token)
+//                    }
             }
         }
     }

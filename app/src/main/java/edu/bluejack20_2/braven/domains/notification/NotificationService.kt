@@ -7,16 +7,19 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.FirebaseStorage
 import javax.inject.Inject
 
-class NotificationService @Inject constructor(){
+class NotificationService @Inject constructor() {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val db = FirebaseFirestore.getInstance().collection("notification")
 
     /* STATISTIC FOLLOW */
-    fun getAllNotificationFollowByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
+    fun getAllNotificationFollowByUserBetweenTimestamp(
+        userId: String,
+        start: Timestamp,
+        end: Timestamp
+    ) =
         getNotificationFollow(userId)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
@@ -46,13 +49,13 @@ class NotificationService @Inject constructor(){
 
     fun addNotificationFollow(me: FirebaseUser?, you: Map<*, *>): Task<Void> {
         val data = hashMapOf(
-            "userId"  to you["id"].toString(),
+            "userId" to you["id"].toString(),
             "friendId" to me?.uid.toString(),
             "time" to FieldValue.serverTimestamp(),
             "type" to "follow"
         )
-        return firestore.runBatch{
-            db.add(data).addOnSuccessListener {}
+        return firestore.runBatch {
+            db.add(data).addOnSuccessListener { }
         }
     }
 

@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.user
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
@@ -33,7 +34,9 @@ class UserRepository @Inject constructor() {
         db.document(yourId).update("followers", FieldValue.arrayRemove(myId))
     }
 
-    fun update(userId: String, data: Map<String, *>) = db.document(userId).update(data)
+    fun update(userId: String, data: Map<String, *>): Task<Void> {
+        return db.document(userId).update(data)
+    }
 
     fun updateProfile(
         username: String,
