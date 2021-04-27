@@ -32,11 +32,9 @@ class FollowingFirestorePagingAdapter(
                 parent,
                 false
             ),
-            followingList,
             userServices,
             userService,
             authenticationService,
-            loginId,
             notificationService
         )
 

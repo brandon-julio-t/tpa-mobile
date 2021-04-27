@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentFollowingUserProfileBinding
+import edu.bluejack20_2.braven.pages.followers_page.FollowersUserProfileViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,7 +19,8 @@ class FollowingUserProfileFragment : Fragment() {
     val binding get() = _binding!!
     val userId = arguments?.getString("auth")
 
-    val args: FollowingUserProfileFragmentArgs by navArgs()
+
+    val viewModel : FollowingUserProfileViewModel by viewModels()
 
     @Inject
     lateinit var controller: FollowingUserProfileController

@@ -41,6 +41,8 @@
     <string name="most_comments">Komentar Terbanyak</string>
     <string name="most_likes">Suka Terbanyak</string>
     <string name="my_statistics">Statistik Saya</string>
+    <string name="no_followers_text">Tidak Ada Pengikut</string>
+    <string name="no_followings_text">Tidak Ada yang Diikuti</string>
     <string name="notification">Notifikasi</string>
     <string name="password">Kata Sandi</string>
     <string name="personal_data">%s (%s) • %s</string>

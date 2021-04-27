@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.FragmentFollowersUserProfileBinding
 import javax.inject.Inject
@@ -15,6 +17,8 @@ class FollowersUserProfileFragment : Fragment() {
     private var _binding: FragmentFollowersUserProfileBinding? = null
     val binding get() = _binding!!
     val userId = arguments?.getString("auth")
+
+    val viewModel : FollowersUserProfileViewModel by viewModels()
 
     @Inject lateinit var controller: FollowersUserProfileController
 

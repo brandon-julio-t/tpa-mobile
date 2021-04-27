@@ -40,6 +40,8 @@
     <string name="most_comments">Most Comments</string>
     <string name="most_likes">Most Likes</string>
     <string name="my_statistics">My Statistics</string>
+    <string name="no_followers_text">No Followers</string>
+    <string name="no_followings_text">No Followings</string>
     <string name="notification">Notification</string>
     <string name="password">Password</string>
     <string name="personal_data">%s (%s) • %s</string>
