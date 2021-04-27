@@ -1,7 +1,14 @@
 package edu.bluejack20_2.braven
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +18,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack20_2.braven.databinding.ActivityMainBinding
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.services.AndroidNotificationService
 import edu.bluejack20_2.braven.services.AuthenticationService
-import edu.bluejack20_2.braven.services.VolleyFirebaseMessagingService
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,9 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var authenticationService: AuthenticationService
-
-    @Inject
-    lateinit var volleyFirebaseMessagingService: VolleyFirebaseMessagingService
 
     @Inject
     lateinit var userService: UserService
@@ -42,8 +46,23 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        updateFcmToken()
+        setNotification()
         setupToolbarAndBottomNavigationWithNavController()
+    }
+
+    private fun setNotification() {
+        val intent = Intent(this, AndroidNotificationService::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val tenSecondsInMillis = 1000 * 10
+
+        alarmManager.setInexactRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + tenSecondsInMillis,
+            AlarmManager.INTERVAL_HALF_DAY,
+            pendingIntent
+        )
     }
 
     private fun setupPreferredFontSize() {
@@ -70,17 +89,6 @@ class MainActivity : AppCompatActivity() {
             }
             false -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
-    }
-
-    private fun updateFcmToken() {
-        Firebase.messaging.token.addOnSuccessListener { token ->
-            authenticationService.getUser()?.let { user ->
-                userService.updateFCMToken(user.uid, token)
-//                    .addOnSuccessListener {
-//                        volleyFirebaseMessagingService.sendNotificationTo("testing", "test", token)
-//                    }
             }
         }
     }

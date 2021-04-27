@@ -28,9 +28,6 @@ class UserService @Inject constructor(private val repository: UserRepository) {
     fun unFollow(me: String, you: Map<*, *>): Task<Void> =
         repository.unFollow(me, you["id"].toString())
 
-    fun updateFCMToken(userId: String, token: String) =
-        repository.update(userId, hashMapOf("fcmToken" to token))
-
     fun updateProfile(username: String, biography: String, password: String) =
         repository.updateProfile(username, biography, password)?.addOnSuccessListener {
             FirebaseAuth.getInstance().currentUser?.let { save(it) }
