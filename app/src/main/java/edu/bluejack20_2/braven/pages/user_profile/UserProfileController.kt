@@ -204,11 +204,12 @@ class UserProfileController @Inject constructor(
     ) {
         val userId = fragment.args.userId
 
+
         val pages = listOf(
-            Pair("Recent Posts", RecentPostsFragment(userId)),
-            Pair("Recent Likes", RecentLikesFragment(userId)),
-            Pair("Most Comments", MostCommentsFragment(userId)),
-            Pair("Most Likes", MostLikesFragment(userId))
+            fragment.getString(R.string.recent_posts) to RecentPostsFragment(userId),
+            fragment.getString(R.string.recent_likes) to RecentLikesFragment(userId),
+            fragment.getString(R.string.most_comments) to MostCommentsFragment(userId),
+            fragment.getString(R.string.most_likes) to MostLikesFragment(userId)
         )
 
         binding.viewPager.adapter = object : FragmentStateAdapter(fragment) {

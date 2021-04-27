@@ -2,6 +2,7 @@ package edu.bluejack20_2.braven.pages.notification
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentNotificationBinding
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.notification.view_pager_fragments.all_notification.NotificationAllFragment
@@ -23,10 +24,10 @@ class NotificationController @Inject constructor() {
     private fun setupViewPagerTabs(binding: FragmentNotificationBinding, fragment: NotificationFragment){
 
         val pages = listOf(
-            Pair("Notification", NotificationAllFragment()),
-            Pair("Following", NotificationFollowingFragment()),
-            Pair("Likes", NotificationLikeFragment()),
-            Pair("Comment", NotificationCommentFragment())
+            fragment.getString(R.string.notification) to NotificationAllFragment(),
+            fragment.getString(R.string.followings) to NotificationFollowingFragment(),
+            fragment.getString(R.string.likes) to NotificationLikeFragment(),
+            fragment.getString(R.string.comments) to NotificationCommentFragment()
         )
 
         binding.viewPager.adapter = object : FragmentStateAdapter(fragment){
