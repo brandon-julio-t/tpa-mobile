@@ -104,7 +104,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.exploreFragment,
                 R.id.postCreateFragment,
                 R.id.userProfileFragment,
-                R.id.aboutFragment
+                R.id.aboutFragment,
+                R.id.settingFragment
             )
         )
 

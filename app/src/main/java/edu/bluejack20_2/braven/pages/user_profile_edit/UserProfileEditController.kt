@@ -5,23 +5,25 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.View
 import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.ImageMediaService
+import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class UserProfileEditController @Inject constructor(
     private val imageMediaService: ImageMediaService,
     private val authenticationService: AuthenticationService,
-    private val userService: UserService
+    private val userService: UserService,
+    private val timestampService: TimestampService
 ) {
 
     private lateinit var fragment: UserProfileEditFragment
     private var auth: FirebaseUser? = null
-
 
     fun bind(fragment: UserProfileEditFragment) {
         this.fragment = fragment
@@ -48,12 +50,29 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.uploadButton.setOnClickListener {
-            if(fragment.viewModel.profilePicture.value?.isEmpty() == true){
+            if (fragment.viewModel.profilePicture.value?.isEmpty() == true) {
                 val chooserIntent = imageMediaService.createIntent()
                 fragment.thumbnailChooserActivityLauncher.launch(chooserIntent)
-            } else{
-                val profilePicture = fragment.viewModel.profilePicture.value?: ByteArray(0)
+            } else {
+                val profilePicture = fragment.viewModel.profilePicture.value ?: ByteArray(0)
                 auth?.let { it1 -> userService.updateProfilePicture(profilePicture) }
+            }
+        }
+
+        fragment.binding.dateOfBirthEditText.setOnClickListener {
+            MaterialDatePicker.Builder.datePicker().build().let { picker ->
+                picker.addOnPositiveButtonClickListener {
+                    viewModel.dateOfBirthTimestamp = timestampService.millisecondsToTimestamp(it)
+                }
+                picker.show(fragment.requireActivity().supportFragmentManager, "dob-picker")
+                picker.addOnPositiveButtonClickListener {
+                    fragment.binding.dateOfBirthEditText.setText(
+                        timestampService.formatMilliseconds(
+                            it,
+                            TimestampService.PRETTY_SHORT
+                        )
+                    )
+                }
             }
         }
 
@@ -67,7 +86,12 @@ class UserProfileEditController @Inject constructor(
                     .verifyWithRecaptcha("6Le5xrUaAAAAACrndJTA0nwjgx8S2_g0YJE07Nhg")
                     .addOnSuccessListener { response ->
                         if (response.tokenResult?.isNotEmpty() == true) {
-                            userService.updateProfile(username, biography, password)
+                            userService.updateProfile(
+                                username,
+                                viewModel.dateOfBirthTimestamp,
+                                biography,
+                                password
+                            )
                                 ?.addOnSuccessListener {
                                     Snackbar.make(
                                         fragment.requireActivity()

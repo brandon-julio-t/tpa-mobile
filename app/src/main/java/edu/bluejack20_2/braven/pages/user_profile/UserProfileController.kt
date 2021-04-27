@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.user_profile
 
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
@@ -8,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
@@ -21,13 +23,15 @@ import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.most_like
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_likes.RecentLikesFragment
 import edu.bluejack20_2.braven.pages.user_profile.view_pager_fragments.recent_posts.RecentPostsFragment
 import edu.bluejack20_2.braven.services.AuthenticationService
+import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class UserProfileController @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val userService: UserService,
     private val postService: PostService,
-    private val notificationService: NotificationService
+    private val notificationService: NotificationService,
+    private val timestampService: TimestampService
 ) {
     fun bind(fragment: UserProfileFragment) {
         val binding = fragment.binding
@@ -76,17 +80,21 @@ class UserProfileController @Inject constructor(
             it?.data?.let { user ->
                 binding.displayName.text = user["displayName"].toString()
 
+                val dateOfBirth = (user["dateOfBirth"] as? Timestamp)?.let { dob ->
+                    timestampService.formatTimestamp(dob, TimestampService.PRETTY_LONG)
+                }
+
                 binding.personalData.text = fragment.getString(
                     R.string.personal_data,
                     user["fullName"].toString(),
-                    (user["dateOfBirth"] ?: "Birth date not specified").toString(),
+                    (dateOfBirth
+                        ?: fragment.getString(R.string.date_of_birth_not_specified)).toString(),
                     user["email"].toString()
                 )
 
-                if(user["biography"] == null || user["biography"].toString().equals("")){
+                if (user["biography"] == null || user["biography"].toString().equals("")) {
                     binding.Biography.visibility = View.GONE
-                }
-                else{
+                } else {
                     binding.Biography.text = user["biography"].toString()
                 }
 
@@ -203,7 +211,6 @@ class UserProfileController @Inject constructor(
         binding: FragmentUserProfileBinding
     ) {
         val userId = fragment.args.userId
-
 
         val pages = listOf(
             fragment.getString(R.string.recent_posts) to RecentPostsFragment(userId),

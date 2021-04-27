@@ -21,6 +21,11 @@ class TimestampService @Inject constructor() {
         return SimpleDateFormat(format, locale).format(calendar.time)
     }
 
+    fun formatTimestamp(timestamp: Timestamp, format: String) =
+        SimpleDateFormat(format, locale).format(timestamp.toDate())
+
+    fun millisecondsToTimestamp(ms: Long) = Timestamp(Date(ms))
+
     fun minusWeeks(timestamp: Timestamp, weeks: Long): Timestamp =
         processTimestamp(timestamp, LocalDateTime::minusWeeks, weeks)
 
@@ -52,4 +57,9 @@ class TimestampService @Inject constructor() {
 
     fun getMonthValue(timestamp: Timestamp) =
         LocalDateTime.ofInstant(timestamp.toDate().toInstant(), zoneId).month.value
+
+    companion object FORMATS {
+        const val PRETTY_SHORT = "d MMM y"
+        const val PRETTY_LONG = "d MMMM y"
+    }
 }
