@@ -2,35 +2,38 @@
     <!-- Base application theme. -->
     <style name="Theme.BRaVeN" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/very_light_gray2</item>
+        <item name="colorPrimaryVariant">@color/very_light_gray</item>
         <item name="colorOnPrimary">@color/primary_strong</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary</item>
         <item name="colorOnSecondary">@color/primary_strong</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Background -->
-        <item name="android:windowBackground">@color/dark_gray</item>
+        <item name="android:windowBackground">@color/lighter_dark_gray</item>
 
         <!-- card -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- top bar -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
 
+        <!-- Bottom Navigation -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
         <!-- Customize your theme here. -->
     </style>
 
     <style name="following_button" parent="Theme.BRaVeN">
-        <item name="android:backgroundTint">@color/mainBackground</item>
+        <item name="android:backgroundTint">@color/black</item>
         <item name="android:textColor">@color/secondary</item>
     </style>
 
     <style name="follow_button" parent="Theme.BRaVeN">
         <item name="android:backgroundTint">@color/secondary</item>
-        <item name="android:textColor">@color/mainBackground</item>
+        <item name="android:textColor">@color/primary_medium</item>
     </style>
 
 <!--    CARD    -->
@@ -41,8 +44,8 @@
 
     <style name="ThemeOverlay.App.Card" parent="">
         <item name="colorPrimary">@color/white</item>
-        <item name="colorSurface">@color/lighter_dark_gray</item>
-        <item name="colorOnSurface">@color/lighter_dark_gray</item>
+        <item name="colorSurface">@color/dark_gray</item>
+        <item name="colorOnSurface">@color/dark_gray</item>
     </style>
 
 
@@ -53,9 +56,32 @@
     </style>
 
     <style name="ThemeOverlay.App.Toolbar" parent="">
-        <item name="colorPrimary">@color/primary_strong</item>
-        <item name="colorPrimaryVariant">@color/primary_strong</item>
-        <item name="colorOnPrimary">@color/secondary</item>
+        <item name="colorPrimary">@color/more_darker_gray</item>
+        <item name="colorPrimaryVariant">@color/more_darker_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+
+    <!--   Category Style -->
+    <style name="category_style">
+        <item name="android:background">@color/more_darker_gray</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceSubtitle2</item>
+        <item name="android:textColor">@color/secondary2</item>
+    </style>
+
+
+    <!-- Bottom Navigation -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/very_light_gray3</item>
+        <item name="colorOnPrimary">@color/very_light_gray3</item>
     </style>
 
 
