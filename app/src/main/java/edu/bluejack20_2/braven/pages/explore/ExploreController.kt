@@ -84,7 +84,7 @@ class ExploreController @Inject constructor(
                     binding.startDate.editText?.setText(
                         timestampService.formatMilliseconds(
                             it,
-                            "d MMM y"
+                            TimestampService.PRETTY_SHORT
                         )
                     )
                 }
@@ -99,7 +99,7 @@ class ExploreController @Inject constructor(
                     binding.endDate.editText?.setText(
                         timestampService.formatMilliseconds(
                             it,
-                            "d MMM y"
+                            TimestampService.PRETTY_SHORT
                         )
                     )
                 }

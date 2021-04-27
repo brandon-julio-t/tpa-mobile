@@ -1,6 +1,7 @@
 package edu.bluejack20_2.braven.domains.user
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
@@ -28,8 +29,8 @@ class UserService @Inject constructor(private val repository: UserRepository) {
     fun unFollow(me: String, you: Map<*, *>): Task<Void> =
         repository.unFollow(me, you["id"].toString())
 
-    fun updateProfile(username: String, biography: String, password: String) =
-        repository.updateProfile(username, biography, password)?.addOnSuccessListener {
+    fun updateProfile(username: String, dateOfBirth: Timestamp?, biography: String, password: String) =
+        repository.updateProfile(username, dateOfBirth, biography, password)?.addOnSuccessListener {
             FirebaseAuth.getInstance().currentUser?.let { save(it) }
         }
 

@@ -40,15 +40,12 @@ class UserRepository @Inject constructor() {
 
     fun updateProfile(
         username: String,
+        dateOfBirth: Timestamp?,
         biography: String,
         password: String
     ): Task<MutableList<Void>>? {
         return FirebaseAuth.getInstance().currentUser?.let { user ->
-            val tasks = mutableListOf(db.document(user.uid).update("biography", biography))
-
-            if (password.isNotBlank()) {
-                tasks.add(user.updatePassword(password))
-            }
+            val tasks = mutableListOf<Task<Void>>()
 
             if (username.isNotBlank()) {
                 tasks.add(
@@ -57,6 +54,17 @@ class UserRepository @Inject constructor() {
                     )
                 )
             }
+
+            dateOfBirth?.let { tasks.add(db.document(user.uid).update("dateOfBirth", it)) }
+
+            if (biography.isNotBlank()) {
+                tasks.add(db.document(user.uid).update("biography", biography))
+            }
+
+            if (password.isNotBlank()) {
+                tasks.add(user.updatePassword(password))
+            }
+
 
             Tasks.whenAllSuccess(tasks)
         }
