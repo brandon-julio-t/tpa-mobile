@@ -4,13 +4,59 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/primary_strong</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/primary_strong</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/dark_gray</item>
+
+        <!-- card -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- top bar -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="following_button" parent="Theme.BRaVeN">
+        <item name="android:backgroundTint">@color/mainBackground</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="follow_button" parent="Theme.BRaVeN">
+        <item name="android:backgroundTint">@color/secondary</item>
+        <item name="android:textColor">@color/mainBackground</item>
+    </style>
+
+<!--    CARD    -->
+
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Card</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Card" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSurface">@color/lighter_dark_gray</item>
+        <item name="colorOnSurface">@color/lighter_dark_gray</item>
+    </style>
+
+
+    <!--    TOP BAR -->
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorPrimary">@color/primary_strong</item>
+        <item name="colorPrimaryVariant">@color/primary_strong</item>
+        <item name="colorOnPrimary">@color/secondary</item>
+    </style>
+
+
 </resources>

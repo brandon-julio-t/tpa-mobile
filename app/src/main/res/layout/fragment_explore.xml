@@ -43,10 +43,12 @@
 
                 <ToggleButton
                     android:id="@+id/toggle_filter"
+                    style="@style/following_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:drawableStart="@drawable/ic_baseline_filter_list_24"
+                    android:drawableTint="@color/mainBackground"
                     android:text="@string/advanced_filter"
                     android:textOff="@string/advanced_filter"
                     android:textOn="@string/advanced_filter"

@@ -122,7 +122,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/zero"
-                    app:icon="@drawable/ic_baseline_thumb_up_24" />
+                    android:textColor="@color/secondary2"
+                    app:icon="@drawable/ic_baseline_thumb_up_24"
+                    app:iconTint="@color/secondary2" />
 
                 <Button
                     android:id="@+id/dislike"
@@ -130,7 +132,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/zero"
-                    app:icon="@drawable/ic_baseline_thumb_down_24" />
+                    android:textColor="@color/primary_strong"
+                    app:icon="@drawable/ic_baseline_thumb_down_24"
+                    app:iconTint="@color/primary_strong" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <TextView
@@ -165,11 +169,13 @@
 
             <Button
                 android:id="@+id/post_comment"
+                style="@style/following_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/post_comment"
                 app:icon="@drawable/ic_baseline_publish_24"
+                app:iconTint="@color/secondary2"
                 app:layout_constraintEnd_toEndOf="@+id/comment_layout"
                 app:layout_constraintTop_toBottomOf="@+id/comment_layout" />
 

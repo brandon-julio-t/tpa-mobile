@@ -36,7 +36,7 @@ class NotificationCommentViewHolder(
                 val time = timestampService.prettyTime(it?.get("time") as Timestamp)
 
                 userService.getUserById(friendId).addSnapshotListener { friend, _ ->
-                    val sourceText = "<b>${friend!!.getString("displayName")}</b> started following you !"
+                    val sourceText = "<b>${friend!!.getString("displayName")}</b> Commented on Your Post !"
                     binding.usernameText.text = Html.fromHtml(sourceText)
 
                     friend!!.get("photoUrl")?.let { url ->

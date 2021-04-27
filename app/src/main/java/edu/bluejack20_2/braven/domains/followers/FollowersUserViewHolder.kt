@@ -59,6 +59,7 @@ class FollowersUserViewHolder(
                                         }
 
                                         notificationService.deleteNotificationFollow(authenticationService.getUser()!!.uid, friend?.id)
+
                                     }
                                 }
                                 false -> {

@@ -114,7 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
+                android:textColor="@color/secondary2"
                 app:icon="@drawable/ic_baseline_thumb_up_24"
+                app:iconTint="@color/secondary2"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
@@ -123,7 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
-                app:icon="@drawable/ic_baseline_thumb_down_24" />
+                android:textColor="@color/primary_strong"
+                app:icon="@drawable/ic_baseline_thumb_down_24"
+                app:iconTint="@color/primary_strong" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

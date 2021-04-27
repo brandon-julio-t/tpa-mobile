@@ -5,7 +5,8 @@
         android:id="@+id/notificationFragment"
         android:icon="@drawable/ic_baseline_notifications_active_24"
         android:title="@string/notification"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/userStatisticsFragment"
         android:title="@string/my_statistics" />

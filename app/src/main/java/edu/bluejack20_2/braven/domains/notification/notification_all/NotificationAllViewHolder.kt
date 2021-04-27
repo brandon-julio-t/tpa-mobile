@@ -103,7 +103,7 @@ class NotificationAllViewHolder(
                 }
             }
             "comment" -> {
-                val sourceText = "<b>${friend!!.getString("displayName")}</b> started following you !"
+                val sourceText = "<b>${friend!!.getString("displayName")}</b> Commented on Your Post !"
                 binding.descText.text = Html.fromHtml(sourceText)
             }
         }
