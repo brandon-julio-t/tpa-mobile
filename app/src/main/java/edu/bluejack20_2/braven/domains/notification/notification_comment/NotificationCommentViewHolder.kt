@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.notification.notification_comment
 
+import android.text.Html
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,8 @@ class NotificationCommentViewHolder(
                 val time = timestampService.prettyTime(it?.get("time") as Timestamp)
 
                 userService.getUserById(friendId).addSnapshotListener { friend, _ ->
-                    binding.usernameText.text = "${friend!!.getString("displayName")} Commented On Your Post !"
+                    val sourceText = "<b>${friend!!.getString("displayName")}</b> started following you !"
+                    binding.usernameText.text = Html.fromHtml(sourceText)
 
                     friend!!.get("photoUrl")?.let { url ->
                         Glide.with(binding.root)

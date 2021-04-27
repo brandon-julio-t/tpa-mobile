@@ -3,11 +3,13 @@ package edu.bluejack20_2.braven.domains.following
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.databinding.FragmentFollowingUserProfileBinding
 import edu.bluejack20_2.braven.databinding.ItemFollowersBinding
 import edu.bluejack20_2.braven.databinding.ItemFollowingBinding
 import edu.bluejack20_2.braven.domains.followers.FollowersUserViewHolder
@@ -16,6 +18,7 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class FollowingFirestorePagingAdapter(
+    private val fragment: Fragment,
     private val followingList: List<*>,
     private val userServices: FollowingUserService,
     private val userService: UserService,
@@ -27,6 +30,7 @@ class FollowingFirestorePagingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowingUserViewHolder =
         FollowingUserViewHolder(
+            fragment,
             ItemFollowingBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

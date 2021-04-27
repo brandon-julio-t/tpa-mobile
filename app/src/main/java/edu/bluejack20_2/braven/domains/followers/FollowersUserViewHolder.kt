@@ -4,15 +4,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemFollowersBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
+import edu.bluejack20_2.braven.pages.following_page.FollowingUserProfileFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class FollowersUserViewHolder(
+    private val fragment: Fragment,
     private val binding: ItemFollowersBinding,
     private val userServices: FollowersUserService,
     private val userService: UserService,
@@ -69,6 +73,17 @@ class FollowersUserViewHolder(
                                 }
                             }
                         }
+                    }
+                }
+
+                listOf(
+                    binding.cardLayout
+                ).forEach {
+                    it.setOnClickListener {
+                        fragment.findNavController()
+                            .navigate(
+                                FollowingUserProfileFragmentDirections.toUserProfile(friend!!.id)
+                            )
                     }
                 }
 

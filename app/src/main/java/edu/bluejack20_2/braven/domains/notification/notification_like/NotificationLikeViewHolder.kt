@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.notification.notification_like
 
+import android.text.Html
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -39,14 +40,27 @@ class NotificationLikeViewHolder(
                 when(it?.get("like").toString()){
                     "yes" -> {
                         when(user!!.uid == friendId){
-                            true -> binding.descText.text = "You Liked Your Post !"
-                            else -> binding.descText.text = "${data!!.getString("displayName")} Liked Your Post !"
+                            true -> {
+                                val sourceText = "<b>You</b> Liked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
+                            else -> {
+                                val sourceText = "<b>${data!!.getString("displayName")}</b> Liked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
+
                         }
                     }
                     "no" -> {
                         when(user!!.uid == friendId){
-                            true -> binding.descText.text = "You Disliked Your Post !"
-                            else -> binding.descText.text = "${data!!.getString("displayName")} Disliked Your Post !"
+                            true -> {
+                                val sourceText = "<b>You</b> Disliked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
+                            else -> {
+                                val sourceText = "<b>${data!!.getString("displayName")}</b> Disiked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
                         }
                     }
 

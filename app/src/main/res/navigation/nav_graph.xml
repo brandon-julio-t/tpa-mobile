@@ -121,6 +121,9 @@
         <argument
             android:name="auth"
             app:argType="string" />
+        <action
+            android:id="@+id/action_followingUserProfileFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/followersUserProfileFragment"
@@ -129,6 +132,9 @@
         <argument
             android:name="auth"
             app:argType="string" />
+        <action
+            android:id="@+id/action_followersUserProfileFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
 
     <action

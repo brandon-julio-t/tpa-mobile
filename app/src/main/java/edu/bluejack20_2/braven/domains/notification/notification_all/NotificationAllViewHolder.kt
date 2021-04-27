@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.notification.notification_all
 
+import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -69,26 +70,41 @@ class NotificationAllViewHolder(
     fun initNameText(type: String, friend: DocumentSnapshot?, it: Map<String, Any>, user: FirebaseUser?, friendId: String){
         when(type){
             "follow" -> {
-                binding.descText.text = "${friend!!.get("displayName").toString()} started following you !"
+                val sourceText = "<b>${friend!!.get("displayName").toString()}</b> started following you !"
+                binding.descText.text = Html.fromHtml(sourceText)
             }
             "like" -> {
                 when(it?.get("like").toString()){
                     "yes" -> {
+
                         when(user!!.uid == friendId){
-                            true -> binding.descText.text = "You Liked Your Post !"
-                            else -> binding.descText.text = "${friend!!.getString("displayName")} Liked Your Post !"
+                            true -> {
+                                val sourceText = "<b>You</b> Liked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
+                            else -> {
+                                val sourceText = "<b>${friend!!.getString("displayName")}</b> Liked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
                         }
                     }
                     "no" -> {
                         when(user!!.uid == friendId){
-                            true -> binding.descText.text = "You Disliked Your Post !"
-                            else -> binding.descText.text = "${friend!!.getString("displayName")} Disliked Your Post !"
+                            true -> {
+                                val sourceText = "<b>You</b> Disliked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
+                            else -> {
+                                val sourceText = "<b>${friend!!.getString("displayName")}</b> Disiked Your Post !"
+                                binding.descText.text = Html.fromHtml(sourceText)
+                            }
                         }
                     }
                 }
             }
             "comment" -> {
-                binding.descText.text = "${friend!!.getString("displayName")} Commented On Your Post !"
+                val sourceText = "<b>${friend!!.getString("displayName")}</b> started following you !"
+                binding.descText.text = Html.fromHtml(sourceText)
             }
         }
     }

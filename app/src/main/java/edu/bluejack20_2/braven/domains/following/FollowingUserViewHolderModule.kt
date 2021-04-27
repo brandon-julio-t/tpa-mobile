@@ -26,6 +26,7 @@ class FollowingUserViewHolderModule @Inject constructor(
     ) : RecyclerView.ViewHolder(binding.root){
         fun bind(document: DocumentSnapshot){
             FollowingUserViewHolder(
+                fragment,
                 binding,
                 followingUserService,
                 userService,

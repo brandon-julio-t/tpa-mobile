@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.user_profile
 
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -81,6 +82,14 @@ class UserProfileController @Inject constructor(
                     (user["dateOfBirth"] ?: "Birth date not specified").toString(),
                     user["email"].toString()
                 )
+
+                if(user["biography"] == null || user["biography"].toString().equals("")){
+                    binding.Biography.visibility = View.GONE
+                }
+                else{
+                    binding.Biography.text = user["biography"].toString()
+                }
+
 
                 val photoUrl = user["photoUrl"]
                 if (!(photoUrl as? String).isNullOrEmpty()) {

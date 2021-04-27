@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.notification.notification_following
 
+import android.text.Html
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,8 @@ class NotificationFollowingViewHolder(
             userService.getUserById(followersId!!).addSnapshotListener { friend, _ ->
 
                     if (friend != null) {
-                        binding.notificationFollowingUsernameText.text = "${friend.get("displayName").toString()} started following you !"
+                        val sourceText = "<b>${friend.get("displayName").toString()}</b> started following you !"
+                        binding.notificationFollowingUsernameText.text = Html.fromHtml(sourceText)
                     }
                     friend!!.get("photoUrl")?.let { url ->
                         Glide.with(binding.root)

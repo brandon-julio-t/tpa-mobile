@@ -16,6 +16,7 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
 
 class FollowersFirestorePagingAdapter(
+    private val fragment: Fragment,
     private val userServices: FollowersUserService,
     private val userService: UserService,
     private val authenticationService: AuthenticationService,
@@ -27,6 +28,7 @@ class FollowersFirestorePagingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowersUserViewHolder =
         FollowersUserViewHolder(
+            fragment,
             ItemFollowersBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
