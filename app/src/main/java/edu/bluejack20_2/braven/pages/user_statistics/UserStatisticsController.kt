@@ -65,11 +65,13 @@ class UserStatisticsController @Inject constructor(
 
                     binding.followInAWeekChart.let{
                         it.data = BarData(dataSet)
+                        /*
                         it.xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                                 return DayOfWeek.of(value.toInt()).toString()
                             }
                         }
+                        */
                         it.description.text = "Follow Chart"
                         it.invalidate()
                     }
@@ -109,11 +111,13 @@ class UserStatisticsController @Inject constructor(
 
                     binding.commentInAWeekChart.let{
                         it.data = BarData(dataSet)
+                        /*
                         it.xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                                 return DayOfWeek.of(value.toInt()).toString()
                             }
                         }
+                        */
                         it.description.text = "Comment Chart"
                         it.invalidate()
                     }
@@ -153,11 +157,13 @@ class UserStatisticsController @Inject constructor(
 
                     binding.likeInAWeekChart.let{
                         it.data = BarData(dataSet)
+                        /*
                         it.xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                                 return DayOfWeek.of(value.toInt()).toString()
                             }
                         }
+                        */
                         it.description.text = "Likes Chart"
                         it.invalidate()
                     }

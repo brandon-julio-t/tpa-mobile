@@ -111,12 +111,14 @@ class NotificationAllViewHolder(
                 binding.titlePostText.visibility = View.GONE
             }
             "like" -> {
+                binding.titlePostText.visibility = View.VISIBLE
                 val postId = it.get("postId").toString()
                 postService.getPostById(postId).addSnapshotListener { data, _ ->
                     binding.titlePostText.text = "Post Title : ${data!!.getString("title")}"
                 }
             }
             "comment" -> {
+                binding.titlePostText.visibility = View.VISIBLE
                 val postId = it.get("postId").toString()
                 postService.getPostById(postId).addSnapshotListener { data, _ ->
                     binding.titlePostText.text = "Post Title : ${data!!.getString("title")}"
@@ -134,6 +136,7 @@ class NotificationAllViewHolder(
                 binding.actionFollow.visibility = View.GONE
             }
             "follow" -> {
+                binding.actionFollow.visibility = View.VISIBLE
                 if (user != null) {
                     userService.getUserById(user.uid).get().addOnSuccessListener { userData ->
                         val friendFollowing = userData?.get("followings") as? List<*>

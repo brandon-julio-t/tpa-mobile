@@ -17,7 +17,7 @@ import edu.bluejack20_2.braven.R
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
-            FirebaseFirestore.getInstance().document(user.uid).update("fcmToken", token)
+            FirebaseFirestore.getInstance().document("users/${user.uid}").update("fcmToken", token)
         }
     }
 

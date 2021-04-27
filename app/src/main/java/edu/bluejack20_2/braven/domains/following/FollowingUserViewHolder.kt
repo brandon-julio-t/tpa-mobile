@@ -14,11 +14,9 @@ import edu.bluejack20_2.braven.services.AuthenticationService
 
 class FollowingUserViewHolder(
     private val binding: ItemFollowingBinding,
-    private val followingList: List<*>,
     private val userServices: FollowingUserService,
     private val userService: UserService,
     private val authenticationService: AuthenticationService,
-    private val loginId: String,
     private val notificationService: NotificationService,
 ):RecyclerView.ViewHolder(binding.root) {
 
