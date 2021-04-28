@@ -112,7 +112,6 @@
                 android:text="@string/upload_thumbnail"
                 android:textAppearance="?attr/textAppearanceButton"
                 app:icon="@drawable/ic_baseline_image_24"
-                app:iconTint="@color/secondary2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/thumbnailPreview" />
@@ -126,7 +125,6 @@
                 android:text="@string/submit"
                 android:textAppearance="?attr/textAppearanceButton"
                 app:icon="@drawable/ic_baseline_publish_24"
-                app:iconTint="@color/secondary2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/upload" />
