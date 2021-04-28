@@ -13,17 +13,24 @@ class HomeController @Inject constructor(
     private val userService: UserService,
     private val postFirestorePagingAdapterModule: PostFirestorePagingAdapterModule
 ) {
+    private lateinit var adapter: PostFirestorePagingAdapterModule.Adapter
+
     fun bind(fragment: HomeFragment) {
         val binding = fragment.binding
-        binding.posts.layoutManager = LinearLayoutManager(fragment.requireActivity())
+
+        binding.posts.setRefreshListener { adapter.refresh() }
+
+        binding.posts.setLayoutManager(LinearLayoutManager(fragment.requireActivity()))
+
         authenticationService.getUser()?.let { auth ->
             userService.getUserById(auth.uid).get().addOnSuccessListener { user ->
-                binding.posts.adapter = postFirestorePagingAdapterModule.Adapter(
+                adapter = postFirestorePagingAdapterModule.Adapter(
                     fragment,
                     postService.getAllFollowingsPosts(user)
                 )
+
+                binding.posts.adapter = adapter
             }
         }
     }
-
 }

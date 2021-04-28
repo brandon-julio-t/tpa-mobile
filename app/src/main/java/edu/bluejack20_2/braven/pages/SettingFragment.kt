@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.pages
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentSettingBinding
 import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
@@ -17,10 +15,13 @@ import javax.inject.Inject
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
-//    private var viewText: Array<View>? = null
-    @Inject lateinit var authenticationService: AuthenticationService
+
+    @Inject
+    lateinit var authenticationService: AuthenticationService
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
@@ -36,15 +37,12 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val appSettingPrefs: SharedPreferences? = activity?.getSharedPreferences(
-            "AppSettingPrefs",
-            0
-        )
-        val sharedPrefsEdit: SharedPreferences.Editor? = appSettingPrefs?.edit()
-        val isNightModeOn: Boolean? = appSettingPrefs?.getBoolean("NightMode", false)
-        val isLarge: Boolean? = appSettingPrefs?.getBoolean("Large", false)
+        val appSettingPrefs = activity?.getSharedPreferences("AppSettingPrefs", 0)
+        val sharedPrefsEdit = appSettingPrefs?.edit()
+        val isNightModeOn = appSettingPrefs?.getBoolean("NightMode", false)
+        val isLarge = appSettingPrefs?.getBoolean("Large", false)
 
-        when(isNightModeOn){
+        when (isNightModeOn) {
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.switchDark.isChecked = true

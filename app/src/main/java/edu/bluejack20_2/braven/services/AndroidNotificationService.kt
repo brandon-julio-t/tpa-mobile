@@ -20,7 +20,6 @@ class AndroidNotificationService : BroadcastReceiver() {
                 .setContentText("Continue your journey at BRaVeN!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-
         val notificationManager = NotificationManagerCompat.from(context)
 
         val channel = NotificationChannel(

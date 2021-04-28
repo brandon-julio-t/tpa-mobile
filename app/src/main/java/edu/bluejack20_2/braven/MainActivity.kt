@@ -55,11 +55,9 @@ class MainActivity : AppCompatActivity() {
         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val tenSecondsInMillis = 1000 * 10
-
         alarmManager.setInexactRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + tenSecondsInMillis,
+            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
             AlarmManager.INTERVAL_HALF_DAY,
             pendingIntent
         )

@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.pages.explore
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,12 +16,7 @@ class ExploreViewModel @Inject constructor(
     private val userService: UserService
 ) : ViewModel() {
     private val _originalPosts: MutableLiveData<List<DocumentSnapshot>> by lazy {
-        MutableLiveData<List<DocumentSnapshot>>().also {
-            exploreService.getAllPosts().get().addOnSuccessListener {
-                _originalPosts.value = it.documents
-                _posts.value = it.documents
-            }
-        }
+        MutableLiveData<List<DocumentSnapshot>>().also { refresh() }
     }
 
     private val _posts = MutableLiveData<List<DocumentSnapshot>>()
@@ -35,6 +29,13 @@ class ExploreViewModel @Inject constructor(
     val username = MutableLiveData("")
     val startDate = MutableLiveData(0L)
     val endDate = MutableLiveData(0L)
+
+    fun refresh() {
+        exploreService.getAllPosts().get().addOnSuccessListener {
+            _originalPosts.value = it.documents
+            _posts.value = it.documents
+        }
+    }
 
     fun applyFilter() {
         _posts.value = _originalPosts.value?.filter { doc ->
@@ -77,12 +78,11 @@ class ExploreViewModel @Inject constructor(
                 isInPeriod = isBefore
             }
 
-//            return@filter hasCategory && hasTitle && hasDescription && isInPeriod
             return@filter hasCategory && hasTitle && hasDescription && isInPeriod
         } ?: emptyList()
     }
 
-    fun reset() {
+    fun resetFiler() {
         listOf(category, title, description, username).forEach { it.value = "" }
         listOf(startDate, endDate).forEach { it.value = 0L }
     }
