@@ -1,6 +1,5 @@
 package edu.bluejack20_2.braven.pages.explore
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
 import edu.bluejack20_2.braven.databinding.FragmentExploreBinding
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
-import edu.bluejack20_2.braven.domains.notification.NotificationService
-import edu.bluejack20_2.braven.domains.post.PostService
-import edu.bluejack20_2.braven.domains.post.PostViewHolder
 import edu.bluejack20_2.braven.domains.post.PostViewHolderModule
-import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.TimestampService
 import javax.inject.Inject
 
 class ExploreController @Inject constructor(
-    private val userService: UserService,
-    private val postService: PostService,
-    private val notificationService: NotificationService,
-    private val authenticationService: AuthenticationService,
     private val timestampService: TimestampService,
     private val postViewHolderModule: PostViewHolderModule
 ) {
@@ -41,7 +31,6 @@ class ExploreController @Inject constructor(
         binding.viewModel = viewModel
 
         viewModel.posts.observe(fragment.viewLifecycleOwner, {
-            Log.wtf("hehe", it.size.toString())
             binding.exploreRecycleview.adapter?.notifyDataSetChanged()
         })
 
@@ -55,7 +44,7 @@ class ExploreController @Inject constructor(
 
     private fun handleUI(fragment: ExploreFragment) {
         binding.toggleFilter.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.reset()
+            viewModel.resetFiler()
 
             listOf(
                 binding.search,
@@ -106,20 +95,24 @@ class ExploreController @Inject constructor(
             }
         }
 
-        binding.exploreRecycleview.layoutManager =
-            object : LinearLayoutManager(fragment.requireActivity()) {
-                override fun canScrollVertically() = false
-            }
+        binding.exploreRecycleview.layoutManager = object :
+            LinearLayoutManager(fragment.requireActivity()) {
+            override fun canScrollVertically() = false
+        }
 
-        binding.exploreRecycleview.adapter = object : RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-                postViewHolderModule.ViewHolder(
-                    ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                    fragment
-                )
+        binding.exploreRecycleview.adapter =
+            object : RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
+                override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+                    postViewHolderModule.ViewHolder(
+                        ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                        fragment
+                    )
 
-            override fun onBindViewHolder(holder: PostViewHolderModule.ViewHolder, position: Int) {
-                viewModel.posts.value?.get(position)?.let { holder.bind(it) }
+                override fun onBindViewHolder(
+                    holder: PostViewHolderModule.ViewHolder,
+                    position: Int
+                ) {
+                    viewModel.posts.value?.get(position)?.let { holder.bind(it) }
             }
 
             override fun getItemCount() = viewModel.posts.value?.size ?: 0
