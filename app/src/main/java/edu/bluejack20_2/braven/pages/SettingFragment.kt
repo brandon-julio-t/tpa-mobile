@@ -79,9 +79,6 @@ class SettingFragment : Fragment() {
             requireActivity().recreate()
         }
 
-        binding.buttonLogout.setOnClickListener {
-            authenticationService.logout(it)
-        }
     }
 
 }

@@ -45,6 +45,7 @@ class PostViewHolder(
         binding.title.text = post["title"].toString()
         binding.category.text = post["category"].toString()
 
+
         val storageReference = postService.getStorageReference(post["thumbnailId"].toString())
         GlideApp.with(binding.root).load(storageReference).into(binding.thumbnail)
 

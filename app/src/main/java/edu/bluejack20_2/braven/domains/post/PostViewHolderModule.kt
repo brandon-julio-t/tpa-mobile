@@ -29,6 +29,7 @@ class PostViewHolderModule @Inject constructor(
         fun bind(post: DocumentSnapshot) {
             binding.title.text = post["title"].toString()
             binding.category.text = post["category"].toString()
+            binding.descText.text = post["description"].toString()
             binding.createdAt.text = (post["timestamp"] as? Timestamp)?.let {
                 timestampService.prettyTime(it)
             }
