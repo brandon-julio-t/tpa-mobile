@@ -5,27 +5,38 @@
     android:layout_marginVertical="4dp"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/poster_profile_picture"
         android:layout_width="64dp"
-        android:layout_height="0dp"
-        android:clickable="true"
+        android:layout_height="64dp"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
-        android:contentDescription="@string/profile_picture"
-        android:scaleType="fitStart"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:civ_border_color="#C1C1C1"
+        app:civ_border_width="0.5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/poster_display_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/poster_profile_picture"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:clickable="true"-->
+<!--        android:layout_marginHorizontal="8dp"-->
+<!--        android:layout_marginVertical="8dp"-->
+<!--        android:contentDescription="@string/profile_picture"-->
+<!--        android:scaleType="fitStart"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/poster_display_name"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/logo" />-->
 
     <TextView
         android:id="@+id/poster_display_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:layout_marginEnd="8dp"
         android:text="@string/personal_data"
         android:textAppearance="?attr/textAppearanceSubtitle2"
         app:layout_constraintLeft_toRightOf="@+id/poster_profile_picture"
@@ -47,7 +58,7 @@
         android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:text="@string/body"
         android:textAppearance="?attr/textAppearanceBody1"

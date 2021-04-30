@@ -11,7 +11,7 @@
     <string name="body">Body</string>
     <string name="category">Category</string>
     <string name="click_here_to_upload_your_profile_picture">Click here to upload your Profile Picture...</string>
-    <string name="comment">Comment</string>
+    <string name="comment">Write Comment</string>
     <string name="comment_as">Comment as %s</string>
     <string name="comment_in_a_week">Comment in a Week</string>
     <string name="comments">Comments</string>
@@ -49,7 +49,7 @@
     <string name="personal_data">%s (%s) • %s</string>
     <string name="post_categories">Post Categories</string>
     <string name="post_category">Post Category</string>
-    <string name="post_comment">Post Comment</string>
+    <string name="post_comment">Add</string>
     <string name="post_create">Create Post</string>
     <string name="post_detail">Post Detail</string>
     <string name="post_edit">Post Edit</string>

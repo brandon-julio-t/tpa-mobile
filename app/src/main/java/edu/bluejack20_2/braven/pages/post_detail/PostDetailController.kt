@@ -182,7 +182,7 @@ class PostDetailController @Inject constructor(
         }
 
         binding.title.text = post["title"].toString()
-        binding.createdAt.text = createdAt
+//        binding.createdAt.text = createdAt
         binding.category.text = post["category"].toString()
         binding.description.text = post["description"].toString()
 
@@ -200,6 +200,10 @@ class PostDetailController @Inject constructor(
             R.string.comment_as,
             username
         )
+
+        Glide.with(fragment)
+            .load(user?.photoUrl.toString())
+            .into(binding.posterProfilePictureComment)
 
         binding.postComment.setOnClickListener {
             val comment = binding.comment.text.toString()

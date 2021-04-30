@@ -50,7 +50,7 @@
     <string name="personal_data">%s (%s) • %s</string>
     <string name="post_categories">Kategori Posting</string>
     <string name="post_category">Kategori Posting</string>
-    <string name="post_comment">Kirim Komentar</string>
+    <string name="post_comment">Tambahkan</string>
     <string name="post_create">Buat Posting</string>
     <string name="post_detail">Detail Posting</string>
     <string name="post_edit">Edit Posting</string>
