@@ -177,7 +177,7 @@ class PostDetailController @Inject constructor(
             binding.editPost.visibility = View.VISIBLE
             binding.editPost.setOnClickListener {
                 fragment.findNavController()
-                    .navigate(PostDetailFragmentDirections.postDetailToPostEdit(post["id"].toString()))
+                    .navigate(PostDetailFragmentDirections.postDetailToPostEdit(post.id))
             }
         }
 
