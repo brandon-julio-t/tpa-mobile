@@ -127,9 +127,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
-                android:textColor="@color/primary_strong"
+                android:textColor="@color/dislikeButton"
                 app:icon="@drawable/ic_baseline_thumb_down_24"
-                app:iconTint="@color/primary_strong" />
+                app:iconTint="@color/dislikeButton" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView

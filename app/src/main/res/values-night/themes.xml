@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Background -->
-        <item name="android:windowBackground">@color/lighter_dark_gray</item>
+        <item name="android:windowBackground">@color/background_blue</item>
 
         <!-- card -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
@@ -27,7 +27,7 @@
     </style>
 
     <style name="following_button" parent="Theme.BRaVeN">
-        <item name="android:backgroundTint">@color/black</item>
+        <item name="android:backgroundTint">@color/dark_blue</item>
         <item name="android:textColor">@color/secondary</item>
     </style>
 
