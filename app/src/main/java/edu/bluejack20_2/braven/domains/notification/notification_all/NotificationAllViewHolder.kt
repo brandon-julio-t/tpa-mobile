@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemNotificationAllBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -70,7 +71,7 @@ class NotificationAllViewHolder(
     fun initNameText(type: String, friend: DocumentSnapshot?, it: Map<String, Any>, user: FirebaseUser?, friendId: String){
         when(type){
             "follow" -> {
-                val sourceText = "<b>${friend!!.get("displayName").toString()}</b> started following you !"
+                val sourceText = fragment.getString(R.string.follow_text, "<b>${friend!!.getString("displayName")}</b>")
                 binding.descText.text = Html.fromHtml(sourceText)
             }
             "like" -> {
@@ -79,11 +80,11 @@ class NotificationAllViewHolder(
 
                         when(user!!.uid == friendId){
                             true -> {
-                                val sourceText = "<b>You</b> Liked Your Post !"
+                                val sourceText = fragment.getString(R.string.like_text, "<b>You </b>");
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                             else -> {
-                                val sourceText = "<b>${friend!!.getString("displayName")}</b> Liked Your Post !"
+                                val sourceText = fragment.getString(R.string.like_text, "<b>${friend!!.getString("displayName")}</b>")
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                         }
@@ -91,11 +92,11 @@ class NotificationAllViewHolder(
                     "no" -> {
                         when(user!!.uid == friendId){
                             true -> {
-                                val sourceText = "<b>You</b> Disliked Your Post !"
+                                val sourceText = fragment.getString(R.string.dislike_text, "<b>You </b>");
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                             else -> {
-                                val sourceText = "<b>${friend!!.getString("displayName")}</b> Disiked Your Post !"
+                                val sourceText = fragment.getString(R.string.dislike_text, "<b>${friend!!.getString("displayName")}</b>")
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                         }
@@ -103,7 +104,7 @@ class NotificationAllViewHolder(
                 }
             }
             "comment" -> {
-                val sourceText = "<b>${friend!!.getString("displayName")}</b> Commented on Your Post !"
+                val sourceText = fragment.getString(R.string.comment_text, "<b>${friend!!.getString("displayName")}</b>")
                 binding.descText.text = Html.fromHtml(sourceText)
             }
         }
@@ -130,14 +131,16 @@ class NotificationAllViewHolder(
                 binding.titlePostText.visibility = View.VISIBLE
                 val postId = it.get("postId").toString()
                 postService.getPostById(postId).addSnapshotListener { data, _ ->
-                    binding.titlePostText.text = "Post Title : ${data!!.getString("title")}"
+                    val sourceText = fragment.getString(R.string.title_post, "${data!!.get("title").toString()}")
+                    binding.titlePostText.text = sourceText
                 }
             }
             "comment" -> {
                 binding.titlePostText.visibility = View.VISIBLE
                 val postId = it.get("postId").toString()
                 postService.getPostById(postId).addSnapshotListener { data, _ ->
-                    binding.titlePostText.text = "Post Title : ${data!!.getString("title")}"
+                    val sourceText = fragment.getString(R.string.title_post, "${data!!.get("title").toString()}")
+                    binding.titlePostText.text = sourceText
                 }
             }
         }
@@ -208,10 +211,10 @@ class NotificationAllViewHolder(
 
     /* Button Activity */
     fun unFollowActivity(user: FirebaseUser, followersId: String) {
-        binding.actionFollow.text = "Following"
+        binding.actionFollow.text = fragment.getString(R.string.following)
         binding.actionFollow.setOnClickListener {
             userService.unFollow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = "Follow"
+                binding.actionFollow.text = fragment.getString(R.string.follow)
             }
             if (user != null) {
                 notificationService.deleteNotificationFollow(user.uid, followersId)
@@ -220,10 +223,10 @@ class NotificationAllViewHolder(
     }
 
     fun followActivity(user: FirebaseUser, followersId: String) {
-        binding.actionFollow.text = "Follow"
+        binding.actionFollow.text = fragment.getString(R.string.follow)
         binding.actionFollow.setOnClickListener {
             userService.follow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = "Following"
+                binding.actionFollow.text = fragment.getString(R.string.following)
             }
             notificationService.addNotificationFollow(user, followersId)
         }

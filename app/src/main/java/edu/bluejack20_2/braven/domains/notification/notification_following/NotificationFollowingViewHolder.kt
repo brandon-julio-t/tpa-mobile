@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemNotificationFollowingBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
@@ -35,7 +36,7 @@ class NotificationFollowingViewHolder(
             userService.getUserById(followersId!!).addSnapshotListener { friend, _ ->
 
                     if (friend != null) {
-                        val sourceText = "<b>${friend.get("displayName").toString()}</b> started following you !"
+                        val sourceText = fragment.getString(R.string.follow_text, "<b>${friend!!.getString("displayName")}</b>")
                         binding.notificationFollowingUsernameText.text = Html.fromHtml(sourceText)
                     }
                     friend!!.get("photoUrl")?.let { url ->
@@ -77,14 +78,12 @@ class NotificationFollowingViewHolder(
         }
     }
 
-
-
     private fun unFollowActivity(user: FirebaseUser, followersId: String){
 
-        binding.actionFollow.text = "Following"
+        binding.actionFollow.text = fragment.getString(R.string.following)
         binding.actionFollow.setOnClickListener {
             userService.unFollow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = "Follow"
+                binding.actionFollow.text = fragment.getString(R.string.follow)
             }
             if (user != null) {
                 notifcationService.deleteNotificationFollow(user.uid, followersId)
@@ -93,10 +92,11 @@ class NotificationFollowingViewHolder(
     }
 
     private fun followActivity(user: FirebaseUser, followersId: String){
-        binding.actionFollow.text = "Follow"
+        val sourceText = fragment.getString(R.string.follow)
+        binding.actionFollow.text = sourceText
         binding.actionFollow.setOnClickListener {
             userService.follow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = "Following"
+                binding.actionFollow.text = fragment.getString(R.string.following)
             }
             notifcationService.addNotificationFollow(user, followersId)
         }
