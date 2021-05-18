@@ -33,7 +33,8 @@ class CommentService @Inject constructor(
             "timestamp" to Timestamp.now()
         )
 
-        postService.incrementCommentsCount( post["id"].toString())
+        postService.incrementCommentsCount(post.id)
+
         return repository.save(data).continueWithTask {
             it.addOnSuccessListener { comment ->
                 notificationService.addNotificationComment(user, post,  post.id, comment.id)
