@@ -24,6 +24,7 @@
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
         <!-- Customize your theme here. -->
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
     </style>
 
     <style name="following_button" parent="Theme.BRaVeN">
@@ -83,6 +84,23 @@
         <item name="colorPrimary">@color/very_light_gray3</item>
         <item name="colorOnPrimary">@color/very_light_gray3</item>
     </style>
+
+    <style name="Theme.App" parent="Theme.BRaVeN">
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
+    </style>
+
+    <style name="Widget.App.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TabLayout</item>
+        <item name="tabTextAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TabLayout" parent="">
+        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorSurface">@color/dark_blue</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+
 
 
 </resources>
