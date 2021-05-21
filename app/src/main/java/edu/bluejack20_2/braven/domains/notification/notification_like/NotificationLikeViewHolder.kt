@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemNotificationLikeBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -41,11 +42,11 @@ class NotificationLikeViewHolder(
                     "yes" -> {
                         when(user!!.uid == friendId){
                             true -> {
-                                val sourceText = "<b>You</b> Liked Your Post !"
+                                val sourceText = fragment.getString(R.string.like_text, "<b>You </b>");
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                             else -> {
-                                val sourceText = "<b>${data!!.getString("displayName")}</b> Liked Your Post !"
+                                val sourceText = fragment.getString(R.string.like_text, "<b>${data!!.getString("displayName")}</b>")
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
 
@@ -54,11 +55,11 @@ class NotificationLikeViewHolder(
                     "no" -> {
                         when(user!!.uid == friendId){
                             true -> {
-                                val sourceText = "<b>You</b> Disliked Your Post !"
+                                val sourceText = fragment.getString(R.string.dislike_text, "<b>You </b>");
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                             else -> {
-                                val sourceText = "<b>${data!!.getString("displayName")}</b> Disiked Your Post !"
+                                val sourceText = fragment.getString(R.string.dislike_text, "<b>${data!!.getString("displayName")}</b>")
                                 binding.descText.text = Html.fromHtml(sourceText)
                             }
                         }
@@ -76,7 +77,8 @@ class NotificationLikeViewHolder(
 
             binding.timeText.text = time
             postService.getPostById(postId).addSnapshotListener { data, _ ->
-                binding.postTitleText.text = "Post Title : ${data!!.getString("title")}"
+                val sourceText = fragment.getString(R.string.title_post, "${data!!.get("title").toString()}")
+                binding.postTitleText.text = sourceText
             }
 
             binding.cardLayout.setOnClickListener {

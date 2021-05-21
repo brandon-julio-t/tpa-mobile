@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemNotificationCommentBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -36,7 +37,7 @@ class NotificationCommentViewHolder(
                 val time = timestampService.prettyTime(it?.get("time") as Timestamp)
 
                 userService.getUserById(friendId).addSnapshotListener { friend, _ ->
-                    val sourceText = "<b>${friend!!.getString("displayName")}</b> Commented on Your Post !"
+                    val sourceText = fragment.getString(R.string.comment_text, "<b>${friend!!.getString("displayName")}</b>")
                     binding.usernameText.text = Html.fromHtml(sourceText)
 
                     friend!!.get("photoUrl")?.let { url ->
@@ -48,7 +49,8 @@ class NotificationCommentViewHolder(
                 }
 
                 postService.getPostById(postId).get().addOnSuccessListener {
-                    binding.titlePostText.text = "Title Post : ${it.get("title").toString()}"
+                    val sourceText = fragment.getString(R.string.title_post, "${it.get("title").toString()}")
+                    binding.titlePostText.text = sourceText
                 }
 
                 binding.cardLayout.setOnClickListener {
