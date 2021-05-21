@@ -84,6 +84,7 @@ class PostRepository @Inject constructor(
         val document = db.document(postId)
         it.update(document, "likers", FieldValue.arrayRemove(userId))
         it.update(document, "dislikers", FieldValue.arrayRemove(userId))
+        userService.removeLikedPost(userId, document)
     }.addOnSuccessListener {
         db.document(postId).get().addOnSuccessListener { post -> updateLikersDislikersCount(post) }
     }

@@ -49,6 +49,7 @@ class PostService @Inject constructor(
             "title" to title,
             "description" to description,
             "category" to category,
+            "commentsCount" to 0,
             "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
             "timestamp" to FieldValue.serverTimestamp()
@@ -69,6 +70,7 @@ class PostService @Inject constructor(
             "title" to title,
             "description" to description,
             "category" to category,
+            "commentsCount" to 0,
             "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
         )
