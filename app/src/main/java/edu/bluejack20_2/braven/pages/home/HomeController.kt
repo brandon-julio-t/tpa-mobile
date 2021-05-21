@@ -19,12 +19,12 @@ class HomeController @Inject constructor(
     private val postFirestorePagingAdapterModule: PostFirestorePagingAdapterModule,
     private val postViewHolderModule: PostViewHolderModule
 ) {
-    private lateinit var adapter: PostFirestorePagingAdapterModule.Adapter
+    private lateinit var adapter: RecyclerView.Adapter<PostViewHolderModule.ViewHolder>
 
     fun bind(fragment: HomeFragment) {
         val binding = fragment.binding
 
-        binding.posts.setRefreshListener { adapter.refresh() }
+//        binding.posts.setRefreshListener { adapter.refresh() }
 
         binding.posts.setLayoutManager(LinearLayoutManager(fragment.requireActivity()))
 
@@ -42,7 +42,7 @@ class HomeController @Inject constructor(
                 postService.getAllFollowingsPosts(user).get().addOnSuccessListener { query ->
                     val posts = query.documents.filter { followings.contains(it.data?.get("userId")) }
 
-                    binding.posts.adapter = object:
+                    adapter = object:
                         RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
                         override fun onCreateViewHolder(
                             parent: ViewGroup,
@@ -63,6 +63,8 @@ class HomeController @Inject constructor(
 
                         override fun getItemCount() = posts.size
                     }
+
+                    binding.posts.adapter = adapter
                 }
 
 //                adapter = postFirestorePagingAdapterModule.Adapter(
