@@ -106,4 +106,5 @@
     <string name="sb_post_updated">Post Updated !</string>
     <string name="sb_comment_posted">Comment Posted !</string>
     <string name="sb_post_created">Post Created !</string>
+    <string name="no_posts">No Posts</string>
 </resources>

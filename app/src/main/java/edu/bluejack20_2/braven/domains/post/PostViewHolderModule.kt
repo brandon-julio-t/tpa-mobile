@@ -34,6 +34,8 @@ class PostViewHolderModule @Inject constructor(
                 timestampService.prettyTime(it)
             }
 
+            binding.likeDislikeButtonsGroup.clearChecked()
+
             binding.cardLayout.setOnClickListener {
                 fragment.findNavController().navigate(
                     NavGraphDirections.toPostDetail(post.id)
