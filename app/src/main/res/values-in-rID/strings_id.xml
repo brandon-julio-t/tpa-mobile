@@ -98,8 +98,8 @@
     <string name="post_liked">Postingan disukai</string>
     <string name="post_undisliked">Postingan tidak tidak disukai</string>
     <string name="post_disliked">Post tidak disukai</string>
-    <string name="sb_profile_selected">Profil Photo Dipilih</string>
-    <string name="sb_profile_updated">Profile terupdate!</string>
+    <string name="sb_profile_selected">Profil foto Dipilih</string>
+    <string name="sb_profile_updated">Profil terupdate!</string>
     <string name="sb_user_followed">Mengikuti Pengguna !</string>
     <string name="sb_user_unfollowed">Batal Mengikuti Pengguna !</string>
     <string name="sb_thumbnail_selected">Thumbnail dipilih !</string>
