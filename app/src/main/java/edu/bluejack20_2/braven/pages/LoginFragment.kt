@@ -82,7 +82,6 @@ class LoginFragment : Fragment() {
                 }
         } catch (e: IllegalArgumentException) {
             // user already signed in
-            Log.wtf("hehe", e.toString())
             authenticationService.persist()
             findNavController().navigate(NavGraphDirections.toHome())
         }

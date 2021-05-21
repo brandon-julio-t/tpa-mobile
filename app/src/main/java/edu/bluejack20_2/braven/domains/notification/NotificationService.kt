@@ -20,31 +20,31 @@ class NotificationService @Inject constructor() {
         start: Timestamp,
         end: Timestamp
     ) =
-        getNotificationFollow(userId)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow").orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* STATISTIC LIKE */
     fun getAllNotificationLikeByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
-        getNotificationLike(userId)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "like").orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* STATISTIC COMMENT */
     fun getAllNotificationCommentByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
-        getNotificationComment(userId)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* NOTIFICATION ALL */
 
     fun getNotificationAll(userId: String): Query =
-        db.whereEqualTo("userId", userId).orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereNotEqualTo("friendId", userId).orderBy("time", Query.Direction.DESCENDING).orderBy("friendId", Query.Direction.DESCENDING)
 
     /* NOTIFICATION FOLLOW */
 
     fun getNotificationFollow(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow").orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
 
 
     fun addNotificationFollow(me: FirebaseUser?, you: Map<*, *>): Task<Void> {
@@ -82,7 +82,7 @@ class NotificationService @Inject constructor() {
     /* NOTIFICATION LIKE */
 
     fun getNotificationLike(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "like").orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "like").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
 
     fun addNotificationLike(me: FirebaseUser?, you: String, postId: String): Task<Void> {
         val data = hashMapOf(
@@ -135,7 +135,7 @@ class NotificationService @Inject constructor() {
     /* NOTIFICATION COMMENT */
 
     fun getNotificationComment(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
 
     fun addNotificationComment(me: FirebaseUser?, post: DocumentSnapshot, postId: String, commentId: String): Task<Void> {
         val data = hashMapOf(

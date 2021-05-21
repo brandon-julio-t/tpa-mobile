@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         alarmManager.setInexactRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
-            AlarmManager.INTERVAL_HALF_DAY,
+            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
         )
     }

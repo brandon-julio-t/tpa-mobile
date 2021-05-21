@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.FragmentFollowersUserProfileBinding
 import edu.bluejack20_2.braven.databinding.FragmentFollowingUserProfileBinding
 import edu.bluejack20_2.braven.databinding.ItemFollowingBinding
@@ -51,20 +52,21 @@ class FollowingUserViewHolder(
                         binding.action.visibility = View.INVISIBLE
 
                     false -> {
-                        binding.action.text = "Following"
+                        binding.action.text = fragment.getString(R.string.following)
                         binding.action.setOnClickListener {
                             userService.unFollow(userIdLogin, friendData!!).addOnSuccessListener {
-                                binding.action.text = "Follow"
+                                binding.action.text = fragment.getString(R.string.followings)
                             }
                             notificationService.deleteNotificationFollow(userIdLogin, friend?.id)
                         }
 
                         followers?.contains(userIdLogin)?.let {
                             if(!it){
-                                binding.action.text = "Follow"
+                                val sourceText = fragment.getString(R.string.followings)
+                                binding.action.text = sourceText
                                 binding.action.setOnClickListener {
                                     userService.follow(userIdLogin, friendData).addOnSuccessListener {
-                                        binding.action.text = "following"
+                                        binding.action.text = fragment.getString(R.string.following)
                                     }
 
                                     notificationService.addNotificationFollow(authenticationService.getUser(), friend?.id)

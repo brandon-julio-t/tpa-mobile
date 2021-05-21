@@ -161,7 +161,7 @@ class UserProfileController @Inject constructor(
             userService.follow(currentUser, user).addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "User followed",
+                    fragment.getString(R.string.sb_user_followed),
                     Snackbar.LENGTH_LONG
                 ).show()
 
@@ -183,7 +183,7 @@ class UserProfileController @Inject constructor(
             userService.unFollow(currentUser, user).addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "User un-followed",
+                    fragment.getString(R.string.sb_user_unfollowed),
                     Snackbar.LENGTH_LONG
                 ).show()
 

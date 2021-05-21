@@ -211,7 +211,7 @@ class PostDetailController @Inject constructor(
             commentService.createComment(post, user, comment).addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Comment posted",
+                    fragment.getString(R.string.sb_comment_posted),
                     Snackbar.LENGTH_LONG
                 ).show()
 

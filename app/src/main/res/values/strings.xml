@@ -87,4 +87,22 @@
     <string name="dislike_text">%s Disliked Your Post !</string>
     <string name="title_post">Post Title : %s</string>
     <string name="following">Following</string>
+    <string name="save">Save</string>
+    <string name="click_save">Click here to Save it...</string>
+    <string name="validator_title">Title must not be empty</string>
+    <string name="validator_description">Description must not be empty</string>
+    <string name="validator_category">Category must not be empty</string>
+    <string name="validator_ok">ok</string>
+    <string name="post_unliked">Post un-liked</string>
+    <string name="post_liked">Post liked</string>
+    <string name="post_undisliked">Post un-disliked</string>
+    <string name="post_disliked">Post disliked</string>
+    <string name="sb_profile_selected">Profile Picture Selected</string>
+    <string name="sb_profile_updated">Profile updated!</string>
+    <string name="sb_user_followed">User Followed !</string>
+    <string name="sb_user_unfollowed">User Un-followed !</string>
+    <string name="sb_thumbnail_selected">Thumbnail selected !</string>
+    <string name="sb_post_updated">Post Updated !</string>
+    <string name="sb_comment_posted">Comment Posted !</string>
+    <string name="sb_post_created">Post Created !</string>
 </resources>

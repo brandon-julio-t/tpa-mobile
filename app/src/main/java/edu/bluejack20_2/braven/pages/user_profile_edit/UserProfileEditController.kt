@@ -94,9 +94,8 @@ class UserProfileEditController @Inject constructor(
                             )
                                 ?.addOnSuccessListener {
                                     Snackbar.make(
-                                        fragment.requireActivity()
-                                            .findViewById(R.id.coordinatorLayout),
-                                        "Profile updated!",
+                                        fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                                        fragment.getString(R.string.sb_profile_updated),
                                         Snackbar.LENGTH_LONG
                                     ).show()
                                 }
@@ -120,12 +119,12 @@ class UserProfileEditController @Inject constructor(
             )
 
 
-            fragment.binding.uploadButton.text = "Save"
-            fragment.binding.hintUpdateText.text = "Click here to Save it..."
+            fragment.binding.uploadButton.text = fragment.getString(R.string.save)
+            fragment.binding.hintUpdateText.text = fragment.getString(R.string.click_save)
 
             Snackbar.make(
                 fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                "Profile Picture Selected",
+                fragment.getString(R.string.sb_profile_selected),
                 Snackbar.LENGTH_LONG
             ).show()
         }

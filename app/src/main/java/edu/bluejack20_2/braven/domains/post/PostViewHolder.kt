@@ -99,8 +99,8 @@ class PostViewHolder(
                     }
 
                     val notification =
-                        if (isLiked) "Post un-liked"
-                        else "Post liked"
+                        if (isLiked) fragment.getString(R.string.post_unliked)
+                        else fragment.getString(R.string.post_liked)
 
                     Snackbar.make(
                         fragment.requireActivity().findViewById(R.id.coordinatorLayout),
@@ -123,8 +123,9 @@ class PostViewHolder(
 
                 action.addOnSuccessListener {
                     val notification =
-                        if (isDisliked) "Post un-disliked"
-                        else "Post disliked"
+                        if (isDisliked) fragment.getString(R.string.post_undisliked)
+                        else fragment.getString(R.string.post_disliked)
+
 
                     if(isDisliked){
                         notificationService.deleteNotificationDislike(

@@ -48,7 +48,7 @@ class PostCreateController @Inject constructor(
             val category = fragment.binding.category.editText?.text.toString()
             val thumbnail = fragment.viewModel.thumbnail.value ?: ByteArray(0)
 
-            val (message, ok) = postValidator.validate(title, description, category)
+            val (message, ok) = postValidator.validate(title, description, category, fragment)
             if (!ok) {
                 return@setOnClickListener Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
@@ -67,7 +67,7 @@ class PostCreateController @Inject constructor(
             ).addOnSuccessListener {
                 Snackbar.make(
                     fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                    "Post created",
+                    fragment.getString(R.string.sb_post_created),
                     Snackbar.LENGTH_LONG
                 ).show()
 
@@ -91,7 +91,7 @@ class PostCreateController @Inject constructor(
 
             Snackbar.make(
                 fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                "Thumbnail selected",
+                fragment.getString(R.string.sb_thumbnail_selected),
                 Snackbar.LENGTH_LONG
             ).show()
         }

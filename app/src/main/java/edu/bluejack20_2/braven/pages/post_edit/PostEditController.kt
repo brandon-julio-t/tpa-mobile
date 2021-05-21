@@ -61,7 +61,7 @@ class PostEditController @Inject constructor(
                     val category = binding.category.editText?.text.toString()
                     val thumbnail = viewModel.thumbnail.value ?: ByteArray(0)
 
-                    val (message, ok) = postValidator.validate(title, description, category)
+                    val (message, ok) = postValidator.validate(title, description, category, fragment)
                     if (!ok) {
                         return@setOnClickListener Snackbar.make(
                             fragment.requireActivity().findViewById(R.id.coordinatorLayout),
@@ -82,7 +82,7 @@ class PostEditController @Inject constructor(
                     ).addOnSuccessListener {
                         Snackbar.make(
                             fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                            "Post Updated",
+                            fragment.getString(R.string.sb_post_updated),
                             Snackbar.LENGTH_LONG
                         ).show()
 
@@ -104,7 +104,7 @@ class PostEditController @Inject constructor(
 
             Snackbar.make(
                 fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                "Thumbnail selected",
+                fragment.getString(R.string.sb_thumbnail_selected),
                 Snackbar.LENGTH_LONG
             ).show()
         }

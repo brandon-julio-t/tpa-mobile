@@ -83,7 +83,7 @@ class NotificationFollowingViewHolder(
         binding.actionFollow.text = fragment.getString(R.string.following)
         binding.actionFollow.setOnClickListener {
             userService.unFollow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = fragment.getString(R.string.follow)
+                binding.actionFollow.text = fragment.getString(R.string.followings)
             }
             if (user != null) {
                 notifcationService.deleteNotificationFollow(user.uid, followersId)
@@ -92,7 +92,7 @@ class NotificationFollowingViewHolder(
     }
 
     private fun followActivity(user: FirebaseUser, followersId: String){
-        val sourceText = fragment.getString(R.string.follow)
+        val sourceText = fragment.getString(R.string.followings)
         binding.actionFollow.text = sourceText
         binding.actionFollow.setOnClickListener {
             userService.follow(user, followersId).addOnSuccessListener {

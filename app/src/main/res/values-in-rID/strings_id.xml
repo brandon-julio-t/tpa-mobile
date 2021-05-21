@@ -14,7 +14,7 @@
     <string name="click_here_to_upload_your_profile_picture">Klik di sini untuk mengunggah Gambar Profil Anda...</string>
     <string name="comment">Komentar</string>
     <string name="comment_as">Berkomentar sebagai %s</string>
-    <string name="comment_in_a_week">Komentar dalam seminggu</string>
+    <string name="comment_in_a_week">Komentar Post Orang Lain dalam seminggu</string>
     <string name="comments">Komentar</string>
     <string name="create">Membuat</string>
     <string name="created_at">Dibuat di</string>
@@ -30,7 +30,7 @@
     <string name="end_date">Tanggal Akhir</string>
     <string name="explore">Jelajahi</string>
     <string name="follow">Mengikuti</string>
-    <string name="follow_in_a_week">Follow dalam seminggu</string>
+    <string name="follow_in_a_week">Diikuti user dalam seminggu</string>
     <string name="followers">Pengikut</string>
     <string name="followers_count">%d\nPengikut</string>
     <string name="followings">Ikuti</string>
@@ -72,7 +72,7 @@
     <string name="unfollow">Berhenti Mengikuti</string>
     <string name="update">Perbarui</string>
     <string name="update_page_button">Perbarui</string>
-    <string name="update_profile_picture">Perbarui GambarProfil</string>
+    <string name="update_profile_picture">Perbarui Gambar Profil</string>
     <string name="upload">Unggah</string>
     <string name="upload_image_edit">Unggah Gambar</string>
     <string name="upload_thumbnail">Unggah Gambar Mini</string>
@@ -88,4 +88,22 @@
     <string name="dislike_text">%s Tidak Menyukai Post Anda !</string>
     <string name="title_post">Judul Post : %s</string>
     <string name="following">Mengikuti</string>
+    <string name="save">Simpan</string>
+    <string name="click_save">Klik di sini untuk simpan...</string>
+    <string name="validator_title">Judul tidak boleh kosong !</string>
+    <string name="validator_description">Deskripsi tidak boleh kosong !</string>
+    <string name="validator_category">Kategori tidak boleh kosong !</string>
+    <string name="validator_ok">oke</string>
+    <string name="post_unliked">Postingan tidak disukai</string>
+    <string name="post_liked">Postingan disukai</string>
+    <string name="post_undisliked">Postingan tidak tidak disukai</string>
+    <string name="post_disliked">Post tidak disukai</string>
+    <string name="sb_profile_selected">Profil Photo Dipilih</string>
+    <string name="sb_profile_updated">Profile terupdate!</string>
+    <string name="sb_user_followed">Mengikuti Pengguna !</string>
+    <string name="sb_user_unfollowed">Batal Mengikuti Pengguna !</string>
+    <string name="sb_thumbnail_selected">Thumbnail dipilih !</string>
+    <string name="sb_post_updated">Postingan Diupdate !</string>
+    <string name="sb_comment_posted">Komen di Kirim !</string>
+    <string name="sb_post_created">Postingan Dibuat !</string>
 </resources>
