@@ -4,75 +4,70 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
-import edu.bluejack20_2.braven.domains.post.PostFirestorePagingAdapterModule
-import edu.bluejack20_2.braven.domains.post.PostService
 import edu.bluejack20_2.braven.domains.post.PostViewHolderModule
-import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 class HomeController @Inject constructor(
-    private val authenticationService: AuthenticationService,
-    private val postService: PostService,
-    private val userService: UserService,
-    private val postFirestorePagingAdapterModule: PostFirestorePagingAdapterModule,
     private val postViewHolderModule: PostViewHolderModule
 ) {
-    private lateinit var adapter: RecyclerView.Adapter<PostViewHolderModule.ViewHolder>
+    private val posts = mutableListOf<DocumentSnapshot>()
 
     fun bind(fragment: HomeFragment) {
         val binding = fragment.binding
-
-//        binding.posts.setRefreshListener { adapter.refresh() }
+        val viewModel = fragment.viewModel
 
         binding.posts.setLayoutManager(LinearLayoutManager(fragment.requireActivity()))
 
-        authenticationService.getUser()?.let { auth ->
-            userService.getUserById(auth.uid).get().addOnSuccessListener { user ->
-                val followings = user.get("followings").let {
-                    val default = listOf(authenticationService.getUser()?.uid.toString())
+        binding.posts.adapter = object :
+            RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ) = postViewHolderModule.ViewHolder(
+                ItemPostBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                fragment
+            )
 
-                    var list = (it as? List<*>)
-                    list = list?.mapNotNull { e -> e as? String }
-                    list = list?.union(default)?.toList()
-                    list ?: emptyList()
-                }
+            override fun onBindViewHolder(
+                holder: PostViewHolderModule.ViewHolder,
+                position: Int
+            ) = holder.bind(posts[position])
 
-                postService.getAllFollowingsPosts(user).get().addOnSuccessListener { query ->
-                    val posts = query.documents.filter { followings.contains(it.data?.get("userId")) }
+            override fun getItemCount() = posts.size
+        }
 
-                    adapter = object:
-                        RecyclerView.Adapter<PostViewHolderModule.ViewHolder>() {
-                        override fun onCreateViewHolder(
-                            parent: ViewGroup,
-                            viewType: Int
-                        ) = postViewHolderModule.ViewHolder(
-                            ItemPostBinding.inflate(
-                                LayoutInflater.from(parent.context),
-                                parent,
-                                false
-                            ),
-                            fragment
-                        )
+        binding.posts.setRefreshListener { viewModel.refresh() }
 
-                        override fun onBindViewHolder(
-                            holder: PostViewHolderModule.ViewHolder,
-                            position: Int
-                        ) = holder.bind(posts[position])
+        binding.posts.setupMoreListener({ overallItemsCount, itemsBeforeMore, maxLastVisiblePosition ->
+            val data = viewModel.posts.value ?: emptyList()
+            var counter = 0
 
-                        override fun getItemCount() = posts.size
-                    }
+            for (i in maxLastVisiblePosition until data.size) {
+                posts.add(data[i])
 
-                    binding.posts.adapter = adapter
-                }
+                counter++
+                if (counter >= 10) break
+            }
+        }, 10)
 
-//                adapter = postFirestorePagingAdapterModule.Adapter(
-//                    fragment,
-//                    postService.getAllFollowingsPosts(user)
-//                )
-//
-//                binding.posts.adapter = adapter
+        viewModel.posts.observe(fragment.viewLifecycleOwner) {
+            posts.clear()
+
+            var counter = 0
+
+            for (element in it) {
+                posts.add(element)
+
+                counter++
+                if (counter >= 10) break
+
+                binding.posts.adapter.notifyDataSetChanged()
             }
         }
     }
