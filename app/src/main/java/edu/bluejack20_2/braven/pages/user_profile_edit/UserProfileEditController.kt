@@ -7,6 +7,7 @@ import android.view.View
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.domains.user.UserService
@@ -30,7 +31,25 @@ class UserProfileEditController @Inject constructor(
         val viewModel = fragment.viewModel
 
         auth = authenticationService.getUser()
+        auth?.let { userService.getUserById(it.uid).get().addOnSuccessListener {
+            if (it != null) {
+
+                val biography = it.get("biography")
+                if(biography != null){
+                    fragment.binding.biographyEditText.setText(biography.toString())
+                }
+
+                val dafeOfBirth = it.get("dateOfBirth")
+                if(dafeOfBirth != null){
+                    val date = (dafeOfBirth as? Timestamp)?.let { dob ->
+                        timestampService.formatTimestamp(dob, TimestampService.PRETTY_LONG)
+                    }
+                    fragment.binding.dateOfBirthEditText.setText(date)
+                }
+            }
+        } }
         fragment.binding.usernameEditText.setText(auth?.displayName.toString())
+
 
         fragment.viewModel.profilePicture.observe(fragment.viewLifecycleOwner) {
 
