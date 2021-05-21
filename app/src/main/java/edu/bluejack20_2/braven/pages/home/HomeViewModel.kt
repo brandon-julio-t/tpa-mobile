@@ -20,14 +20,9 @@ class HomeViewModel @Inject constructor(
         MutableLiveData<List<DocumentSnapshot>>().also { refresh() }
     }
 
-    private val _paginated = MutableLiveData<List<DocumentSnapshot>>()
-
-    var page = 1
     val posts: LiveData<List<DocumentSnapshot>> = _posts
 
     fun refresh() {
-        page = 1
-
         authenticationService.getUser()?.let { auth ->
             userService.getUserById(auth.uid).get().addOnSuccessListener { user ->
                 val followings = user.get("followings").let {
@@ -41,23 +36,7 @@ class HomeViewModel @Inject constructor(
 
                 postService.getAllFollowingsPosts(user).get().addOnSuccessListener { query ->
                     _posts.value = query.documents.filter { followings.contains(it.data?.get("userId")) }
-
-                    refreshPagination()
                 }
-            }
-        }
-    }
-
-    private fun refreshPagination() {
-        var counter = 0
-        val posts = _posts.value ?: emptyList()
-        for (i in page until posts.size) {
-            _paginated.value = _paginated.value?.plus(posts[i])
-
-            counter++
-
-            if (counter >= 10) {
-                break
             }
         }
     }

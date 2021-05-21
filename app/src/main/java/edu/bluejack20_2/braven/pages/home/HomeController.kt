@@ -66,9 +66,9 @@ class HomeController @Inject constructor(
 
                 counter++
                 if (counter >= 10) break
-
-                binding.posts.adapter.notifyDataSetChanged()
             }
+
+            binding.posts.adapter.notifyDataSetChanged()
         }
     }
 }
