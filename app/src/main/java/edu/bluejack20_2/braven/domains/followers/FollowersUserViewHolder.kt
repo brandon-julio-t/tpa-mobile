@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.domains.followers
 
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -50,7 +51,19 @@ class FollowersUserViewHolder(
                         binding.action.visibility = View.INVISIBLE
 
                     false -> {
-                        friendFollowing?.contains(authenticationService.getUser()!!.uid.toString())?.let{
+                        if (friendFollowing == null) {
+                            val sourceText = fragment.getString(R.string.followings)
+                            binding.action.text = sourceText
+                            binding.action.setOnClickListener {
+                                userService.follow(userIdLogin, friendData!!).addOnSuccessListener {
+                                    binding.action.text = fragment.getString(R.string.following)
+                                }
+
+                                notificationService.addNotificationFollow(authenticationService.getUser(), friend.id)
+                            }
+                        }
+
+                        friendFollowing?.contains(authenticationService.getUser()!!.uid)?.let{
                             when(it){
                                 true -> {
                                     binding.action.text = fragment.getString(R.string.following)

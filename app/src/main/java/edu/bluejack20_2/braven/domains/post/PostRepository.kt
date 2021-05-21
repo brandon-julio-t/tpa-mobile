@@ -28,8 +28,8 @@ class PostRepository @Inject constructor(
             return db.whereIn("userId", listOf("grmekagmarklmflawmeioqjiofmkvfkanreuhfiaovmkl"))
                 .orderBy("timestamp", Query.Direction.DESCENDING)
         }
-        return db.whereIn("userId", followings)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
+
+        return db.orderBy("timestamp", Query.Direction.DESCENDING)
     }
 
     fun save(
