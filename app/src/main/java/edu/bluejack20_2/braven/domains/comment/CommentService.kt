@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.post.PostService
@@ -30,7 +31,7 @@ class CommentService @Inject constructor(
             "body" to comment,
             "postId" to  post.id,
             "userId" to user?.uid.toString(),
-            "timestamp" to Timestamp.now()
+            "timestamp" to FieldValue.serverTimestamp()
         )
 
         postService.incrementCommentsCount(post.id)
