@@ -89,6 +89,7 @@
     <string name="following">Following</string>
     <string name="save">Save</string>
     <string name="click_save">Click here to Save it...</string>
+    <string name="validator_username">Username must not be empty</string>
     <string name="validator_title">Title must not be empty</string>
     <string name="validator_description">Description must not be empty</string>
     <string name="validator_category">Category must not be empty</string>

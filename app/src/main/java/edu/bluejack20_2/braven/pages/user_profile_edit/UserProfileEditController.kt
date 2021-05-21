@@ -9,6 +9,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.services.AuthenticationService
@@ -40,6 +41,7 @@ class UserProfileEditController @Inject constructor(
                 }
 
                 val dafeOfBirth = it.get("dateOfBirth")
+                viewModel.dateOfBirthTimestamp = dafeOfBirth as Timestamp
                 if(dafeOfBirth != null){
                     val date = (dafeOfBirth as? Timestamp)?.let { dob ->
                         timestampService.formatTimestamp(dob, TimestampService.PRETTY_LONG)
@@ -96,33 +98,54 @@ class UserProfileEditController @Inject constructor(
         }
 
         fragment.binding.updateButton.setOnClickListener {
-            val username = fragment.binding.usernameEditText.text.toString()
-            val biography = fragment.binding.biographyEditText.text.toString()
-            val password = fragment.binding.passwordEditText.text.toString()
 
-            auth?.let { user ->
-                SafetyNet.getClient(fragment.requireActivity())
-                    .verifyWithRecaptcha("6Le5xrUaAAAAACrndJTA0nwjgx8S2_g0YJE07Nhg")
-                    .addOnSuccessListener { response ->
-                        if (response.tokenResult?.isNotEmpty() == true) {
-                            userService.updateProfile(
-                                username,
-                                viewModel.dateOfBirthTimestamp,
-                                biography,
-                                password
-                            )
-                                ?.addOnSuccessListener {
-                                    Snackbar.make(
-                                        fragment.requireActivity().findViewById(R.id.coordinatorLayout),
-                                        fragment.getString(R.string.sb_profile_updated),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
+            val username = fragment.binding.usernameEditText.text.toString().trim(' ')
+            val biography = fragment.binding.biographyEditText.text.toString().trim(' ')
+            val password = fragment.binding.passwordEditText.text.toString()
+            var user: DocumentSnapshot
+
+            userService.getUserById(auth?.uid!!).get().addOnSuccessListener {
+                user = it;
+
+                if(username == ""){
+                    Snackbar.make(
+                        fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                        fragment.getString(R.string.validator_username),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                else{
+                    if(user.get("displayName") != username || user.get("biography") != biography || user.getTimestamp("dateOfBirth")?.seconds != viewModel.dateOfBirthTimestamp?.seconds){
+                        auth?.let { user ->
+                            SafetyNet.getClient(fragment.requireActivity())
+                                .verifyWithRecaptcha("6Le5xrUaAAAAACrndJTA0nwjgx8S2_g0YJE07Nhg")
+                                .addOnSuccessListener { response ->
+                                    if (response.tokenResult?.isNotEmpty() == true) {
+                                        userService.updateProfile(
+                                            username,
+                                            viewModel.dateOfBirthTimestamp,
+                                            biography,
+                                            password
+                                        )
+                                            ?.addOnSuccessListener {
+                                                Snackbar.make(
+                                                    fragment.requireActivity().findViewById(R.id.coordinatorLayout),
+                                                    fragment.getString(R.string.sb_profile_updated),
+                                                    Snackbar.LENGTH_LONG
+                                                ).show()
+                                            }
+                                    }
                                 }
+                                .addOnFailureListener { e -> Log.wtf("hehe", e.toString()) }
                         }
                     }
-                    .addOnFailureListener { e -> Log.wtf("hehe", e.toString()) }
+                }
 
             }
+
+
+
+
         }
 
 

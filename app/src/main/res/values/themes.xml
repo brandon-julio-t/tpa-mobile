@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.BRaVeN" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
+
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
-
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_strong</item>
-        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorPrimary">@color/gray_blue</item>
+        <item name="colorPrimaryVariant">@color/dark_gray</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondary</item>
@@ -20,6 +20,7 @@
         <!-- card -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
 
+
         <!-- Customize your theme here. -->
     </style>
 
@@ -29,7 +30,7 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/secondary</item>
+<!--        <item name="colorPrimary">@color/secondary</item>-->
         <item name="colorOnPrimary">@color/secondary</item>
     </style>
 

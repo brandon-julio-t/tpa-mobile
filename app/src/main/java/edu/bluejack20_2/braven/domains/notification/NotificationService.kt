@@ -39,7 +39,7 @@ class NotificationService @Inject constructor() {
     /* NOTIFICATION ALL */
 
     fun getNotificationAll(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereNotEqualTo("friendId", userId).orderBy("time", Query.Direction.DESCENDING).orderBy("friendId", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
 
     /* NOTIFICATION FOLLOW */
 

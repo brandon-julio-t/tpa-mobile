@@ -90,6 +90,7 @@
     <string name="following">Mengikuti</string>
     <string name="save">Simpan</string>
     <string name="click_save">Klik di sini untuk simpan...</string>
+    <string name="validator_username">Username tidak boleh kosong !</string>
     <string name="validator_title">Judul tidak boleh kosong !</string>
     <string name="validator_description">Deskripsi tidak boleh kosong !</string>
     <string name="validator_category">Kategori tidak boleh kosong !</string>

@@ -16,12 +16,15 @@
 
     <color name="primary">#344955</color>
     <color name="primary_medium">#2F424C</color>
-    <color name="primary_strong">#232F34</color>
+<!--    <color name="primary_strong">#232F34</color>-->
     <color name="primary_weak">#4A6572</color>
-    <color name="secondary">#F9AA33</color>
-    <color name="secondary2">#EA8C00</color>
+    <color name="secondary">#FFA41A</color>
+    <color name="secondary2">#DC8402</color>
     <color name="dislikeButton">#31A4E4</color>
+    <color name="primary_strong">#3A4F5A</color>
 
+    <color name="gray_blue_ori">#2f424c</color>
+    <color name="gray_blue">#425d6b</color>
     <color name="more_darker_gray">#12212E</color>
     <color name="dark_blue">#12202C</color>
     <color name="darker_gray">#1D2835</color>

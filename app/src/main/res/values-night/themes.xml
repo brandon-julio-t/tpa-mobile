@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondary</item>
-        <item name="colorOnSecondary">@color/primary_strong</item>
+        <item name="colorOnSecondary">@color/darker_gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
@@ -81,8 +81,11 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/very_light_gray3</item>
-        <item name="colorOnPrimary">@color/very_light_gray3</item>
+        <item name="colorPrimary">@color/dark_gray</item>
+        <item name="colorOnPrimary">@color/dislikeButton</item>
+        <item name="colorSecondary">@color/darker_gray</item>
+        <item name="colorOnSecondary">@color/darker_gray</item>
+        <item name="colorOnBackground">@color/darker_gray</item>
     </style>
 
     <style name="Theme.App" parent="Theme.BRaVeN">
