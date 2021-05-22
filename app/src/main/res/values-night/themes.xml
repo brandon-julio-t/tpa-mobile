@@ -82,10 +82,8 @@
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorPrimary">@color/dark_gray</item>
-        <item name="colorOnPrimary">@color/dislikeButton</item>
-        <item name="colorSecondary">@color/darker_gray</item>
-        <item name="colorOnSecondary">@color/darker_gray</item>
-        <item name="colorOnBackground">@color/darker_gray</item>
+        <item name="colorOnPrimary">@color/very_light_gray3</item>
+        <item name="android:background">@color/darker_gray</item>
     </style>
 
     <style name="Theme.App" parent="Theme.BRaVeN">

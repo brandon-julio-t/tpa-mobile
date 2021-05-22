@@ -1,10 +1,12 @@
 package edu.bluejack20_2.braven.domains.notification.notification_following
 
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -15,6 +17,7 @@ import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.notification.NotificationFragmentDirections
 import edu.bluejack20_2.braven.services.AuthenticationService
 import edu.bluejack20_2.braven.services.TimestampService
+
 
 class NotificationFollowingViewHolder(
     private val binding: ItemNotificationFollowingBinding,
@@ -36,14 +39,31 @@ class NotificationFollowingViewHolder(
             userService.getUserById(followersId!!).addSnapshotListener { friend, _ ->
 
                     if (friend != null) {
-                        val sourceText = fragment.getString(R.string.follow_text, "<b>${friend!!.getString("displayName")}</b>")
+                        val sourceText = fragment.getString(
+                            R.string.follow_text, "<b>${
+                                friend!!.getString(
+                                    "displayName"
+                                )
+                            }</b>"
+                        )
                         binding.notificationFollowingUsernameText.text = Html.fromHtml(sourceText)
                     }
-                    friend!!.get("photoUrl")?.let { url ->
+
+                    Log.wtf("tes", friend!!.get("photoUrl").toString())
+
+                    if(friend!!.get("photoUrl") == null){
                         Glide.with(binding.root)
-                            .load(url.toString())
+                            .load(R.drawable.ic_baseline_account_circle_24)
                             .into(binding.profilePictureImage)
                     }
+                    else{
+                        friend!!.get("photoUrl")?.let { url ->
+                            Glide.with(binding.root)
+                                .load(url.toString())
+                                .into(binding.profilePictureImage)
+                        }
+                    }
+
                     binding.time.text = time
 
                 if (user != null) {
@@ -69,7 +89,9 @@ class NotificationFollowingViewHolder(
                     it.setOnClickListener {
                         fragment.findNavController()
                             .navigate(
-                                NotificationFragmentDirections.actionNotificationFragmentToUserProfileFragment(friend.id)
+                                NotificationFragmentDirections.actionNotificationFragmentToUserProfileFragment(
+                                    friend.id
+                                )
                             )
                     }
                 }

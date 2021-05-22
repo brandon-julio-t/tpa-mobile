@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import edu.bluejack20_2.braven.NavGraphDirections
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemPostBinding
 import edu.bluejack20_2.braven.domains.notification.NotificationService
 import edu.bluejack20_2.braven.domains.user.UserService
@@ -45,10 +46,17 @@ class PostViewHolderModule @Inject constructor(
             userService.getUserById(post["userId"].toString()).get().addOnSuccessListener { user ->
                 binding.posterDisplayName.text = user["displayName"].toString()
 
-                user["photoUrl"]?.let { url ->
+                if(user!!.get("photoUrl") == null){
                     Glide.with(binding.root)
-                        .load(url.toString())
+                        .load(R.drawable.ic_baseline_account_circle_24)
                         .into(binding.posterProfilePicture)
+                }
+                else{
+                    user!!.get("photoUrl")?.let { url ->
+                        Glide.with(binding.root)
+                            .load(url.toString())
+                            .into(binding.posterProfilePicture)
+                    }
                 }
             }
 

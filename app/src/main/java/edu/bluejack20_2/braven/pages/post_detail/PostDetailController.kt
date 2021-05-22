@@ -166,11 +166,19 @@ class PostDetailController @Inject constructor(
                 createdAt
             )
 
-            if (it["photoUrl"] != null) {
-                Glide.with(fragment)
-                    .load(it["photoUrl"].toString())
+            if(it!!.get("photoUrl") == null){
+                Glide.with(binding.root)
+                    .load(R.drawable.ic_baseline_account_circle_24)
                     .into(binding.posterProfilePicture)
             }
+            else{
+                it!!.get("photoUrl")?.let { url ->
+                    Glide.with(binding.root)
+                        .load(url.toString())
+                        .into(binding.posterProfilePicture)
+                }
+            }
+
         }
 
         if (authenticationService.getUser()?.uid == post["userId"]) {

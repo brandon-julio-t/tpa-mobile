@@ -33,7 +33,7 @@
     <string name="follow_in_a_week">Diikuti user dalam seminggu</string>
     <string name="followers">Pengikut</string>
     <string name="followers_count">%d\nPengikut</string>
-    <string name="followings">Ikuti</string>
+
     <string name="followings_count">%d\nMengikuti</string>
     <string name="home">Beranda</string>
     <string name="like_in_a_week">Suka dalam seminggu</string>
@@ -88,6 +88,7 @@
     <string name="dislike_text">%s Tidak Menyukai Post Anda !</string>
     <string name="title_post">Judul Post : %s</string>
     <string name="following">Mengikuti</string>
+    <string name="followings">Ikuti</string>
     <string name="save">Simpan</string>
     <string name="click_save">Klik di sini untuk simpan...</string>
     <string name="validator_username">Username tidak boleh kosong !</string>
@@ -103,7 +104,7 @@
     <string name="sb_profile_updated">Profil terupdate!</string>
     <string name="sb_user_followed">Mengikuti Pengguna !</string>
     <string name="sb_user_unfollowed">Batal Mengikuti Pengguna !</string>
-    <string name="sb_thumbnail_selected">Thumbnail dipilih !</string>
+    <string name="sb_thumbnail_selected">Gambar Mini dipilih !</string>
     <string name="sb_post_updated">Postingan Diupdate !</string>
     <string name="sb_comment_posted">Komen di Kirim !</string>
     <string name="sb_post_created">Postingan Dibuat !</string>

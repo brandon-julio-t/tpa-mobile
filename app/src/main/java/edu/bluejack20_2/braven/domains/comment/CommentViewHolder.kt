@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
+import edu.bluejack20_2.braven.R
 import edu.bluejack20_2.braven.databinding.ItemCommentBinding
 import edu.bluejack20_2.braven.domains.user.UserService
 import edu.bluejack20_2.braven.pages.post_detail.PostDetailFragmentDirections
@@ -22,11 +23,19 @@ class CommentViewHolderModule @Inject constructor(
             userService.getUserById(comment["userId"].toString()).get().addOnSuccessListener {
                 binding.posterDisplayName.text = it["displayName"].toString()
 
-                if (it["photoUrl"] != null) {
-                    Glide.with(fragment)
-                        .load(it["photoUrl"].toString())
+                if(it!!.get("photoUrl") == null){
+                    Glide.with(binding.root)
+                        .load(R.drawable.ic_baseline_account_circle_24)
                         .into(binding.posterProfilePicture)
                 }
+                else{
+                    it!!.get("photoUrl")?.let { url ->
+                        Glide.with(binding.root)
+                            .load(url.toString())
+                            .into(binding.posterProfilePicture)
+                    }
+                }
+
             }
 
             binding.body.text = comment["body"].toString()

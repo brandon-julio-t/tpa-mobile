@@ -68,11 +68,19 @@ class NotificationLikeViewHolder(
                 }
 
 
-                data!!.get("photoUrl")?.let { url ->
+                if(data!!.get("photoUrl") == null){
                     Glide.with(binding.root)
-                        .load(url.toString())
+                        .load(R.drawable.ic_baseline_account_circle_24)
                         .into(binding.profilePictureImage)
                 }
+                else{
+                    data!!.get("photoUrl")?.let { url ->
+                        Glide.with(binding.root)
+                            .load(url.toString())
+                            .into(binding.profilePictureImage)
+                    }
+                }
+
             }
 
             binding.timeText.text = time

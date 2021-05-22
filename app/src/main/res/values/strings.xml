@@ -32,7 +32,6 @@
     <string name="follow_in_a_week">Follow in a Week</string>
     <string name="followers">Followers</string>
     <string name="followers_count">%d\nFollowers</string>
-    <string name="followings">Followings</string>
     <string name="followings_count">%d\nFollowings</string>
     <string name="home">Home</string>
     <string name="like_in_a_week">Likes in a Week</string>
@@ -87,6 +86,7 @@
     <string name="dislike_text">%s Disliked Your Post !</string>
     <string name="title_post">Post Title : %s</string>
     <string name="following">Following</string>
+    <string name="followings">Follow</string>
     <string name="save">Save</string>
     <string name="click_save">Click here to Save it...</string>
     <string name="validator_username">Username must not be empty</string>
