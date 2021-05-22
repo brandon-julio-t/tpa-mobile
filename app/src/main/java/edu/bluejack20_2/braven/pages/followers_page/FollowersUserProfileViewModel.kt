@@ -7,32 +7,25 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bluejack20_2.braven.domains.followers.FollowersUserService
-import edu.bluejack20_2.braven.domains.following.FollowingUserService
 import edu.bluejack20_2.braven.domains.user.UserService
-import edu.bluejack20_2.braven.services.AuthenticationService
 import javax.inject.Inject
 
 @HiltViewModel
 class FollowersUserProfileViewModel @Inject constructor(
     private val userService: UserService,
-    private val authenticationService: AuthenticationService,
     private val followersUserService: FollowersUserService
 ): ViewModel(){
-
     private val _originalUsers = MutableLiveData<List<DocumentSnapshot>>()
     private val _users =  MutableLiveData<List<DocumentSnapshot>>()
+
     val users: LiveData<List<DocumentSnapshot>> = _users
     val username = MutableLiveData("")
 
-
     fun beginSearch(){
         _users.value = _originalUsers.value?.filter { doc ->
-            val hasUsername = doc.getString("displayName")
-                ?.contains(username.value.toString(), true) == true
-            hasUsername
+            doc.getString("displayName")?.contains(username.value.toString(), true) == true
         } ?: emptyList()
     }
-
 
     fun reset(){
         username.value = ""
@@ -45,18 +38,15 @@ class FollowersUserProfileViewModel @Inject constructor(
                 val followers = it.get("followers") as List<String>
 
                 _originalUsers.value = listOf()
-                _users.value = listOf()
 
                 followersUserService.getAllUserFollowers(followers).forEach { query ->
                     query.get().addOnSuccessListener { doc ->
-                        _originalUsers.value = _originalUsers.value?.plus(doc) ?: emptyList()
-                        _users.value = users.value?.plus(doc) ?: emptyList()
+                        _originalUsers.value = _originalUsers.value?.plus(doc) ?: listOf(doc)
+                        _users.value = _originalUsers.value
                     }
                 }
             }
 
         }
     }
-
-
 }

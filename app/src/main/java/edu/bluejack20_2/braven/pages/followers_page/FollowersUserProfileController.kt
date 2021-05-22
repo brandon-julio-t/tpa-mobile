@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.followers_page
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,16 +50,7 @@ class FollowersUserProfileController @Inject constructor(
 //            */
 
             followers.clear()
-
-            var counter = 0
-
-            for (element in it) {
-                followers.add(element)
-
-                counter++
-                if (counter >= 10) break
-            }
-
+            followers.addAll(it)
             binding.followersUserRecycleview.adapter.notifyDataSetChanged()
         })
     }
@@ -100,6 +92,10 @@ class FollowersUserProfileController @Inject constructor(
                 counter++
                 if (counter >= 10) break
             }
+
+            val distinct = followers.distinctBy { it.id }
+            followers.clear()
+            followers.addAll(distinct)
         }, 10)
     }
 }

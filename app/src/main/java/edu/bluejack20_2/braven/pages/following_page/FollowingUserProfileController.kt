@@ -102,6 +102,10 @@ class FollowingUserProfileController @Inject constructor(
                 counter++
                 if (counter >= 10) break
             }
+
+            val distinct = followings.distinctBy { it.id }
+            followings.clear()
+            followings.addAll(distinct)
         }, 10)
     }
 }

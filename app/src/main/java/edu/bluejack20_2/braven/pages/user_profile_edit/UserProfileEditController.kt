@@ -41,7 +41,7 @@ class UserProfileEditController @Inject constructor(
                 }
 
                 val dafeOfBirth = it.get("dateOfBirth")
-                viewModel.dateOfBirthTimestamp = dafeOfBirth as Timestamp
+                viewModel.dateOfBirthTimestamp = dafeOfBirth as? Timestamp
                 if(dafeOfBirth != null){
                     val date = (dafeOfBirth as? Timestamp)?.let { dob ->
                         timestampService.formatTimestamp(dob, TimestampService.PRETTY_LONG)
