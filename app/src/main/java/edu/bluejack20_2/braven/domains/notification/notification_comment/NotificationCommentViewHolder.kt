@@ -40,11 +40,19 @@ class NotificationCommentViewHolder(
                     val sourceText = fragment.getString(R.string.comment_text, "<b>${friend!!.getString("displayName")}</b>")
                     binding.usernameText.text = Html.fromHtml(sourceText)
 
-                    friend!!.get("photoUrl")?.let { url ->
+                    if(friend!!.get("photoUrl") == null){
                         Glide.with(binding.root)
-                            .load(url.toString())
+                            .load(R.drawable.ic_baseline_account_circle_24)
                             .into(binding.profilePictureImage)
                     }
+                    else{
+                        friend!!.get("photoUrl")?.let { url ->
+                            Glide.with(binding.root)
+                                .load(url.toString())
+                                .into(binding.profilePictureImage)
+                        }
+                    }
+
                     binding.time.text = time.toString()
                 }
 

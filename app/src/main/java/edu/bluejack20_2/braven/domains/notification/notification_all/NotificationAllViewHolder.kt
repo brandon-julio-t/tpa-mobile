@@ -111,10 +111,17 @@ class NotificationAllViewHolder(
     }
 
     fun initPhotoProfile(friend: DocumentSnapshot?){
-        friend!!.get("photoUrl")?.let { url ->
+        if(friend!!.get("photoUrl") == null){
             Glide.with(binding.root)
-                .load(url.toString())
+                .load(R.drawable.ic_baseline_account_circle_24)
                 .into(binding.profilePictureImage)
+        }
+        else{
+            friend!!.get("photoUrl")?.let { url ->
+                Glide.with(binding.root)
+                    .load(url.toString())
+                    .into(binding.profilePictureImage)
+            }
         }
     }
 
@@ -214,7 +221,7 @@ class NotificationAllViewHolder(
         binding.actionFollow.text = fragment.getString(R.string.following)
         binding.actionFollow.setOnClickListener {
             userService.unFollow(user, followersId).addOnSuccessListener {
-                binding.actionFollow.text = fragment.getString(R.string.follow)
+                binding.actionFollow.text = fragment.getString(R.string.followings)
             }
             if (user != null) {
                 notificationService.deleteNotificationFollow(user.uid, followersId)
@@ -223,7 +230,7 @@ class NotificationAllViewHolder(
     }
 
     fun followActivity(user: FirebaseUser, followersId: String) {
-        binding.actionFollow.text = fragment.getString(R.string.follow)
+        binding.actionFollow.text = fragment.getString(R.string.followings)
         binding.actionFollow.setOnClickListener {
             userService.follow(user, followersId).addOnSuccessListener {
                 binding.actionFollow.text = fragment.getString(R.string.following)
