@@ -109,4 +109,8 @@
     <string name="sb_comment_posted">Komen di Kirim !</string>
     <string name="sb_post_created">Postingan Dibuat !</string>
     <string name="no_posts">Tidak ada postingan</string>
+    <plurals name="fui_error_weak_password" translation_description="Inline error for weak password">
+<!--        <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character.</item>-->
+        <item quantity="other" translation_description="Inline error for weak password">Kata sandi kurang kuat. Gunakan setidaknya 6 karakter.</item>
+    </plurals>
 </resources>

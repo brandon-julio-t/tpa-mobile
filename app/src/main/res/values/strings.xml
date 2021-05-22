@@ -107,4 +107,8 @@
     <string name="sb_comment_posted">Comment Posted !</string>
     <string name="sb_post_created">Post Created !</string>
     <string name="no_posts">No Posts</string>
+    <plurals name="fui_error_weak_password" translation_description="Inline error for weak password">
+        <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character.</item>
+        <item quantity="other" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d characters.</item>
+    </plurals>
 </resources>
