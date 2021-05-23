@@ -27,8 +27,6 @@ class NotificationAllController @Inject constructor(
 
         binding.notificationAllRecycleview.layoutManager = LinearLayoutManager(fragment.requireActivity())
 
-
-
         binding.notificationAllRecycleview.adapter = NotificationAllFirestorePagingAdapter(
             fragment,
             userService,

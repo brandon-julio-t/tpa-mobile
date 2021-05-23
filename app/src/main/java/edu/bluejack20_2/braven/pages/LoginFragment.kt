@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
                         requireActivity().findViewById(R.id.coordinatorLayout),
                         response?.error.toString(),
                         Snackbar.LENGTH_LONG
-                    )
+                    ).show()
                 }
             }
     }
@@ -76,6 +76,7 @@ class LoginFragment : Fragment() {
                     loginActivityLauncher.launch(
                         AuthUI.getInstance()
                             .createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
                             .setAvailableProviders(providers)
                             .build()
                     )

@@ -18,7 +18,7 @@ class CommentService @Inject constructor(
 ) {
     fun getAllCommentsByPost(post: DocumentSnapshot): Query {
         return repository.allByPost(post.id)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
     }
 
     fun createComment(
