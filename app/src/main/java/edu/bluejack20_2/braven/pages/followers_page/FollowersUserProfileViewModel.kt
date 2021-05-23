@@ -49,14 +49,6 @@ class FollowersUserProfileViewModel @Inject constructor(
                     _originalUsers.value = res
                     _users.value = res
                 }
-
-//                followersUserService.getAllUserFollowers(followers).forEach { query ->
-//                    query.get().addOnSuccessListener { doc ->
-//                        _originalUsers.value = _originalUsers.value?.plus(doc) ?: listOf(doc)
-////                        _users.value = _users.value?.plus(doc) ?: listOf(doc)
-//                        _users.value = _originalUsers.value
-//                    }
-//                }
             }
 
         }
