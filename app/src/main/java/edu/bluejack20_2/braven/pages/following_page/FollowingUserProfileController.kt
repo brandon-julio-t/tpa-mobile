@@ -1,5 +1,6 @@
 package edu.bluejack20_2.braven.pages.following_page
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,6 +103,8 @@ class FollowingUserProfileController @Inject constructor(
                 counter++
                 if (counter >= 10) break
             }
+
+            Log.wtf("test", "infinite");
 
             val distinct = followings.distinctBy { it.id }
             followings.clear()

@@ -50,6 +50,7 @@ class PostService @Inject constructor(
             "description" to description,
             "category" to category,
             "commentsCount" to 0,
+            "likersCount" to 0,
             "userId" to authenticationService.getUser()?.uid.toString(),
             "thumbnailId" to UUID.randomUUID().toString(),
             "timestamp" to FieldValue.serverTimestamp()
