@@ -36,7 +36,7 @@ class FollowersUserProfileViewModel @Inject constructor(
     fun refresh(fragment: FollowersUserProfileFragment) {
         val loginId = fragment.requireArguments().getString("auth")
         userService.getUserById(loginId.toString()).get().addOnSuccessListener {
-            if(!(it.get("followers") as List<String>).isEmpty()){
+            if((it.get("followers") as? List<*>)?.isEmpty() == false){
                 val followers = it.get("followers") as List<String>
 
                 _originalUsers.value = listOf()
