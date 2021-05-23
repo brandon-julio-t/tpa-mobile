@@ -51,19 +51,19 @@ class FollowersUserProfileController @Inject constructor(
             followers.clear()
             followers.addAll(it)
 
-            val data = viewModel.users.value ?: emptyList()
-            var counter = 0
-
-            for (element in data) {
-                followers.add(element)
-
-                counter++
-                if (counter >= 10) break
-            }
-
-            val distinct = followers.distinctBy { it.id }
-            followers.clear()
-            followers.addAll(distinct)
+//            val data = viewModel.users.value ?: emptyList()
+//            var counter = 0
+//
+//            for (element in data) {
+//                followers.add(element)
+//
+//                counter++
+//                if (counter >= 10) break
+//            }
+//
+//            val distinct = followers.distinctBy { it.id }
+//            followers.clear()
+//            followers.addAll(distinct)
 
             binding.followersUserRecycleview.adapter.notifyDataSetChanged()
         })

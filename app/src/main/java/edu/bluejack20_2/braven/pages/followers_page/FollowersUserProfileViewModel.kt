@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,13 +41,22 @@ class FollowersUserProfileViewModel @Inject constructor(
 
                 _originalUsers.value = listOf()
 
-                followersUserService.getAllUserFollowers(followers).forEach { query ->
-                    query.get().addOnSuccessListener { doc ->
-                        _originalUsers.value = _originalUsers.value?.plus(doc) ?: listOf(doc)
-//                        _users.value = _users.value?.plus(doc) ?: listOf(doc)
-                        _users.value = _originalUsers.value
-                    }
+                Tasks.whenAllSuccess<DocumentSnapshot>(
+                    followersUserService
+                        .getAllUserFollowers(followers)
+                        .map { e -> e.get() }
+                ).addOnSuccessListener { res ->
+                    _originalUsers.value = res
+                    _users.value = res
                 }
+
+//                followersUserService.getAllUserFollowers(followers).forEach { query ->
+//                    query.get().addOnSuccessListener { doc ->
+//                        _originalUsers.value = _originalUsers.value?.plus(doc) ?: listOf(doc)
+////                        _users.value = _users.value?.plus(doc) ?: listOf(doc)
+//                        _users.value = _originalUsers.value
+//                    }
+//                }
             }
 
         }
