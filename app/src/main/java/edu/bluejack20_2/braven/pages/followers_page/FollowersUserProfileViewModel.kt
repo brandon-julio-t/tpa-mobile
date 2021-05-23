@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bluejack20_2.braven.domains.followers.FollowersUserService
@@ -42,6 +43,7 @@ class FollowersUserProfileViewModel @Inject constructor(
                 followersUserService.getAllUserFollowers(followers).forEach { query ->
                     query.get().addOnSuccessListener { doc ->
                         _originalUsers.value = _originalUsers.value?.plus(doc) ?: listOf(doc)
+//                        _users.value = _users.value?.plus(doc) ?: listOf(doc)
                         _users.value = _originalUsers.value
                     }
                 }

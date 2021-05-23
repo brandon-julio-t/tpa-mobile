@@ -92,20 +92,20 @@ class FollowingUserProfileController @Inject constructor(
                 override fun getItemCount(): Int = followings.size
             }
 
-        binding.followingUserRecycleview.setupMoreListener({ _, _, start ->
-            val data = viewModel.users.value ?: emptyList()
-            var counter = 0
-
-            for (i in start until data.size) {
-                followings.add(data[i])
-
-                counter++
-                if (counter >= 10) break
-            }
-
-            val distinct = followings.distinctBy { it.id }
-            followings.clear()
-            followings.addAll(distinct)
-        }, 10)
+//        binding.followingUserRecycleview.setupMoreListener({ _, _, start ->
+//            val data = viewModel.users.value ?: emptyList()
+//            var counter = 0
+//
+//            for (i in start until data.size) {
+//                followings.add(data[i])
+//
+//                counter++
+//                if (counter >= 10) break
+//            }
+//
+//            val distinct = followings.distinctBy { it.id }
+//            followings.clear()
+//            followings.addAll(distinct)
+//        }, 10)
     }
 }

@@ -44,14 +44,14 @@ class FollowingUserProfileViewModel @Inject constructor(
             if(!(it.get("followings") as List<String>).isEmpty()){
                 val followings = it.get("followings") as List<String>
 
-
                 _originalUsers.value = listOf()
                 _users.value = listOf()
 
                 followingUserService.getAllUserFollowing(followings).forEach { query ->
                     query.get().addOnSuccessListener { doc ->
                         _originalUsers.value = _originalUsers.value?.plus(doc) ?: emptyList()
-                        _users.value = users.value?.plus(doc) ?: emptyList()
+//                        _users.value = users.value?.plus(doc) ?: emptyList()
+                        _users.value = _originalUsers.value
                     }
                 }
             }
