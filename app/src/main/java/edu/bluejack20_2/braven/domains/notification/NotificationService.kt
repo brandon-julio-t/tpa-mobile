@@ -20,34 +20,54 @@ class NotificationService @Inject constructor() {
         start: Timestamp,
         end: Timestamp
     ) =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow").orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow")
+            .orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* STATISTIC LIKE */
-    fun getAllNotificationLikeByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "like").orderBy("time", Query.Direction.DESCENDING)
+    fun getAllNotificationLikeByUserBetweenTimestamp(
+        userId: String,
+        start: Timestamp,
+        end: Timestamp
+    ) =
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "like")
+            .orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* STATISTIC COMMENT */
-    fun getAllNotificationCommentByUserBetweenTimestamp(userId: String, start: Timestamp, end: Timestamp) =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").orderBy("time", Query.Direction.DESCENDING)
+    fun getAllNotificationCommentByUserBetweenTimestamp(
+        userId: String,
+        start: Timestamp,
+        end: Timestamp
+    ) =
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment")
+            .orderBy("time", Query.Direction.DESCENDING)
             .whereGreaterThanOrEqualTo("time", start)
             .whereLessThanOrEqualTo("time", end)
 
     /* NOTIFICATION ALL */
 
     fun getNotificationAll(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId)
+            .orderBy("time", Query.Direction.DESCENDING)
+
 
     /* NOTIFICATION FOLLOW */
 
     fun getNotificationFollow(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "follow")
+            .orderBy("time", Query.Direction.DESCENDING)
+
 
 
     fun addNotificationFollow(me: FirebaseUser?, you: Map<*, *>): Task<Void> {
+        if(you["id"].toString() == me?.uid.toString()){
+            return firestore.runBatch{
+            }
+        }
+
         val data = hashMapOf(
             "userId" to you["id"].toString(),
             "friendId" to me?.uid.toString(),
@@ -60,33 +80,47 @@ class NotificationService @Inject constructor() {
     }
 
     fun addNotificationFollow(me: FirebaseUser?, you: String): Task<Void> {
+        if(you == me?.uid.toString()){
+            return firestore.runBatch{
+            }
+        }
+
         val data = hashMapOf(
-            "userId"  to you,
+            "userId" to you,
             "friendId" to me?.uid.toString(),
             "time" to FieldValue.serverTimestamp(),
             "type" to "follow"
         )
-        return firestore.runBatch{
+        return firestore.runBatch {
             db.add(data).addOnSuccessListener {}
         }
     }
 
-    fun deleteNotificationFollow(myId: String, yourId: String): Task<Void> = firestore.runBatch{
-        var documentReference = db.whereEqualTo("type", "follow").whereEqualTo("userId", yourId).whereEqualTo("friendId", myId).get()
+    fun deleteNotificationFollow(myId: String, yourId: String): Task<Void> = firestore.runBatch {
+        var documentReference = db.whereEqualTo("type", "follow").whereEqualTo("userId", yourId)
+            .whereEqualTo("friendId", myId).get()
             .addOnSuccessListener {
-            for (document in it)
-                document.reference.delete()
-        }
+                for (document in it)
+                    document.reference.delete()
+            }
     }
 
     /* NOTIFICATION LIKE */
 
     fun getNotificationLike(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "like").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "like")
+           .orderBy("time", Query.Direction.DESCENDING)
+
 
     fun addNotificationLike(me: FirebaseUser?, you: String, postId: String): Task<Void> {
+
+        if(you == me?.uid.toString()){
+            return firestore.runBatch{
+            }
+        }
+
         val data = hashMapOf(
-            "userId"  to you,
+            "userId" to you,
             "friendId" to me?.uid.toString(),
             "postId" to postId,
             "time" to FieldValue.serverTimestamp(),
@@ -94,13 +128,14 @@ class NotificationService @Inject constructor() {
             "like" to "yes"
         )
 
-        return firestore.runBatch{
+        return firestore.runBatch {
             db.add(data).addOnSuccessListener {}
         }
     }
 
-    fun deleteNotificationLike(me: FirebaseUser?, you: String, postId: String): Unit{
-        db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString()).whereEqualTo("postId", postId)
+    fun deleteNotificationLike(me: FirebaseUser?, you: String, postId: String): Unit {
+        db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString())
+            .whereEqualTo("postId", postId)
             .whereEqualTo("type", "like").whereEqualTo("like", "yes").get()
             .addOnSuccessListener {
                 for (document in it.documents)
@@ -109,8 +144,14 @@ class NotificationService @Inject constructor() {
     }
 
     fun addNotificationDislike(me: FirebaseUser?, you: String, postId: String): Task<Void> {
+
+        if(you == me?.uid.toString()){
+            return firestore.runBatch{
+            }
+        }
+
         val data = hashMapOf(
-            "userId"  to you,
+            "userId" to you,
             "friendId" to me?.uid.toString(),
             "postId" to postId,
             "time" to FieldValue.serverTimestamp(),
@@ -118,13 +159,14 @@ class NotificationService @Inject constructor() {
             "like" to "no"
         )
 
-        return firestore.runBatch{
+        return firestore.runBatch {
             db.add(data).addOnSuccessListener {}
         }
     }
 
-    fun deleteNotificationDislike(me: FirebaseUser?, you: String, postId: String): Unit{
-        db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString()).whereEqualTo("postId", postId)
+    fun deleteNotificationDislike(me: FirebaseUser?, you: String, postId: String): Unit {
+        db.whereEqualTo("userId", you).whereEqualTo("friendId", me?.uid.toString())
+            .whereEqualTo("postId", postId)
             .whereEqualTo("type", "like").whereEqualTo("like", "no").get()
             .addOnSuccessListener {
                 for (document in it.documents)
@@ -135,11 +177,24 @@ class NotificationService @Inject constructor() {
     /* NOTIFICATION COMMENT */
 
     fun getNotificationComment(userId: String): Query =
-        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment").whereNotEqualTo("friendId", userId).orderBy("friendId", Query.Direction.DESCENDING).orderBy("time", Query.Direction.DESCENDING)
+        db.whereEqualTo("userId", userId).whereEqualTo("type", "comment")
+            .orderBy("time", Query.Direction.DESCENDING)
 
-    fun addNotificationComment(me: FirebaseUser?, post: DocumentSnapshot, postId: String, commentId: String): Task<Void> {
+
+    fun addNotificationComment(
+        me: FirebaseUser?,
+        post: DocumentSnapshot,
+        postId: String,
+        commentId: String
+    ): Task<Void> {
+
+        if(post["userId"].toString() == me?.uid.toString()){
+            return firestore.runBatch{
+            }
+        }
+
         val data = hashMapOf(
-            "userId"  to post["userId"].toString(),
+            "userId" to post["userId"].toString(),
             "friendId" to me?.uid.toString(),
             "postId" to postId,
             "commentId" to commentId,
@@ -147,7 +202,7 @@ class NotificationService @Inject constructor() {
             "type" to "comment"
         )
 
-        return firestore.runBatch{
+        return firestore.runBatch {
             db.add(data).addOnSuccessListener {}
         }
     }

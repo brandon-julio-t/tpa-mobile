@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about">Tentang</string>
-    <string name="about_paragraph1">BRaVeN adalah aplikasi tempat Anda dapat memposting apa saja dan apa yang Anda suka di forum kami. Anda juga dapat membalas forum orang lain. Ini adalah aplikasi yang cukup sederhana yang dapat Anda nikmati.</string>
-    <string name="about_paragraph2">Dengan BRaVeN, Anda dapat berteman dengan siapa saja, berkomentar di postingan mereka, menyukai aktivitas mereka, mengikuti teman, dan mencari postingan yang Anda sukai.</string>
+    <string name="about_paragraph1">BRaVeN adalah aplikasi tempat Anda dapat mengunggah apa saja dan apa yang Anda suka di forum kami. Anda juga dapat membalas forum orang lain. Ini adalah aplikasi yang cukup sederhana yang dapat Anda nikmati.</string>
+    <string name="about_paragraph2">Dengan BRaVeN, Anda dapat berteman dengan siapa saja, berkomentar di Unggahan mereka, menyukai aktivitas mereka, mengikuti teman, dan mencari Unggahan yang Anda sukai.</string>
     <string name="about_paragraph3">Dibuat dengan ❤\noleh\nVincent Benedict VN20–2\ndan\nBrandon Julio Thenaro BR20–2.</string>
     <string name="about_paragraph4">🚀 Dibuat menggunakan Android, Kotlin, dan Firebase.</string>
     <string name="account">Akun</string>
@@ -14,7 +14,7 @@
     <string name="click_here_to_upload_your_profile_picture">Klik di sini untuk mengunggah Gambar Profil Anda...</string>
     <string name="comment">Komentar</string>
     <string name="comment_as">Berkomentar sebagai %s</string>
-    <string name="comment_in_a_week">Komentar Post Orang Lain dalam seminggu</string>
+    <string name="comment_in_a_week">Komentar Unggahan Orang Lain dalam seminggu</string>
     <string name="comments">Komentar</string>
     <string name="create">Membuat</string>
     <string name="created_at">Dibuat di</string>
@@ -23,7 +23,7 @@
     <string name="delete">Menghapus</string>
     <string name="description">Deskripsi</string>
     <string name="display_name">Nama Tampilan</string>
-    <string name="edit_post">Edit Postingan</string>
+    <string name="edit_post">Edit Unggahan</string>
     <string name="edit_profile">Sunting Profil</string>
     <string name="email">Surel</string>
     <string name="enable_dark_mode_switch">Aktifkan Mode Gelap</string>
@@ -48,16 +48,16 @@
     <string name="notification">Notifikasi</string>
     <string name="password">Kata Sandi</string>
     <string name="personal_data">%s (%s) • %s</string>
-    <string name="post_categories">Kategori Posting</string>
-    <string name="post_category">Kategori Posting</string>
+    <string name="post_categories">Kategori Unggahan</string>
+    <string name="post_category">Kategori Unggahan</string>
     <string name="post_comment">Tambahkan</string>
-    <string name="post_create">Buat Posting</string>
-    <string name="post_detail">Detail Posting</string>
-    <string name="post_edit">Edit Posting</string>
+    <string name="post_create">Buat Unggahan</string>
+    <string name="post_detail">Detail Unggahan</string>
+    <string name="post_edit">Edit Unggahan</string>
     <string name="poster_information">%s • %s</string>
-    <string name="posts_count">%d\nPosting</string>
-    <string name="posts_in_a_month">Posting dalam Sebulan</string>
-    <string name="posts_in_a_year">Posting dalam Setahun</string>
+    <string name="posts_count">%d\nUnggahan</string>
+    <string name="posts_in_a_month">Unggahan dalam Sebulan</string>
+    <string name="posts_in_a_year">Unggahan dalam Setahun</string>
     <string name="preview_image">Gambar Pratinjau</string>
     <string name="profile_picture">Gambar Profil</string>
     <string name="recent_likes">Suka Terbaru</string>
@@ -82,11 +82,11 @@
     <string name="zero">0</string>
     <string name="empty">Kosong</string>
     <string name="large_text">Text Besar</string>
-    <string name="comment_text">%s Mengomentari Post Anda !</string>
+    <string name="comment_text">%s Mengomentari Unggahan Anda !</string>
     <string name="follow_text">%s Mulai Mengikuti Anda !</string>
-    <string name="like_text">%s Menyukai Postingan Anda !</string>
-    <string name="dislike_text">%s Tidak Menyukai Post Anda !</string>
-    <string name="title_post">Judul Post : %s</string>
+    <string name="like_text">%s Menyukai Unggahan Anda !</string>
+    <string name="dislike_text">%s Tidak Menyukai Unggahan Anda !</string>
+    <string name="title_post">Judul Unggahan : %s</string>
     <string name="following">Mengikuti</string>
     <string name="followings">Ikuti</string>
     <string name="save">Simpan</string>
@@ -96,19 +96,19 @@
     <string name="validator_description">Deskripsi tidak boleh kosong !</string>
     <string name="validator_category">Kategori tidak boleh kosong !</string>
     <string name="validator_ok">oke</string>
-    <string name="post_unliked">Postingan tidak disukai</string>
-    <string name="post_liked">Postingan disukai</string>
-    <string name="post_undisliked">Postingan tidak tidak disukai</string>
-    <string name="post_disliked">Post tidak disukai</string>
+    <string name="post_unliked">Unggahan tidak disukai</string>
+    <string name="post_liked">Unggahan disukai</string>
+    <string name="post_undisliked">Unggahan tidak tidak disukai</string>
+    <string name="post_disliked">Unggahan tidak disukai</string>
     <string name="sb_profile_selected">Profil foto Dipilih</string>
     <string name="sb_profile_updated">Profil terupdate!</string>
     <string name="sb_user_followed">Mengikuti Pengguna !</string>
     <string name="sb_user_unfollowed">Batal Mengikuti Pengguna !</string>
     <string name="sb_thumbnail_selected">Gambar Mini dipilih !</string>
-    <string name="sb_post_updated">Postingan Diupdate !</string>
+    <string name="sb_post_updated">Unggahan Diupdate !</string>
     <string name="sb_comment_posted">Komen di Kirim !</string>
-    <string name="sb_post_created">Postingan Dibuat !</string>
-    <string name="no_posts">Tidak ada postingan</string>
+    <string name="sb_post_created">Unggahan Dibuat !</string>
+    <string name="no_posts">Tidak ada Unggahan</string>
     <plurals name="fui_error_weak_password" translation_description="Inline error for weak password">
 <!--        <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character.</item>-->
         <item quantity="other" translation_description="Inline error for weak password">Kata sandi kurang kuat. Gunakan setidaknya 6 karakter.</item>
