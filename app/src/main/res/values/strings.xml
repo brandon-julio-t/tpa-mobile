@@ -111,4 +111,7 @@
         <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character.</item>
         <item quantity="other" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d characters.</item>
     </plurals>
+    <string name="fui_sign_in_with_google" translation_description="Sign in button text">Sign in with Google</string>
+    <string name="fui_sign_in_with_email" translation_description="Sign in button text">Sign in with email</string>
+    <string name="fui_sign_in_default" translation_description="Button text to sign in">Sign in</string>
 </resources>

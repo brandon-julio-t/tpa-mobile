@@ -8,7 +8,7 @@
     <string name="account">Akun</string>
     <string name="advanced_filter">Filter Lanjutan</string>
     <string name="app_name">BRaVeN</string>
-    <string name="biography">Biography</string>
+    <string name="biography">Biografi</string>
     <string name="body">Konten</string>
     <string name="category">Kategori</string>
     <string name="click_here_to_upload_your_profile_picture">Klik di sini untuk mengunggah Gambar Profil Anda...</string>
@@ -23,7 +23,7 @@
     <string name="delete">Menghapus</string>
     <string name="description">Deskripsi</string>
     <string name="display_name">Nama Tampilan</string>
-    <string name="edit_post">Edit Unggahan</string>
+    <string name="edit_post">Sunting Unggahan</string>
     <string name="edit_profile">Sunting Profil</string>
     <string name="email">Surel</string>
     <string name="enable_dark_mode_switch">Aktifkan Mode Gelap</string>
@@ -53,7 +53,7 @@
     <string name="post_comment">Tambahkan</string>
     <string name="post_create">Buat Unggahan</string>
     <string name="post_detail">Detail Unggahan</string>
-    <string name="post_edit">Edit Unggahan</string>
+    <string name="post_edit">Sunting Unggahan</string>
     <string name="poster_information">%s • %s</string>
     <string name="posts_count">%d\nUnggahan</string>
     <string name="posts_in_a_month">Unggahan dalam Sebulan</string>
@@ -81,7 +81,7 @@
     <string name="username">Nama Pengguna</string>
     <string name="zero">0</string>
     <string name="empty">Kosong</string>
-    <string name="large_text">Text Besar</string>
+    <string name="large_text">Teks Besar</string>
     <string name="comment_text">%s Mengomentari Unggahan Anda !</string>
     <string name="follow_text">%s Mulai Mengikuti Anda !</string>
     <string name="like_text">%s Menyukai Unggahan Anda !</string>
@@ -91,7 +91,7 @@
     <string name="followings">Ikuti</string>
     <string name="save">Simpan</string>
     <string name="click_save">Klik di sini untuk simpan...</string>
-    <string name="validator_username">Username tidak boleh kosong !</string>
+    <string name="validator_username">Nama pengguna tidak boleh kosong !</string>
     <string name="validator_title">Judul tidak boleh kosong !</string>
     <string name="validator_description">Deskripsi tidak boleh kosong !</string>
     <string name="validator_category">Kategori tidak boleh kosong !</string>
@@ -101,11 +101,11 @@
     <string name="post_undisliked">Unggahan tidak tidak disukai</string>
     <string name="post_disliked">Unggahan tidak disukai</string>
     <string name="sb_profile_selected">Profil foto Dipilih</string>
-    <string name="sb_profile_updated">Profil terupdate!</string>
+    <string name="sb_profile_updated">Profil diperbarui!</string>
     <string name="sb_user_followed">Mengikuti Pengguna !</string>
     <string name="sb_user_unfollowed">Batal Mengikuti Pengguna !</string>
     <string name="sb_thumbnail_selected">Gambar Mini dipilih !</string>
-    <string name="sb_post_updated">Unggahan Diupdate !</string>
+    <string name="sb_post_updated">Unggahan Diperbarui !</string>
     <string name="sb_comment_posted">Komen di Kirim !</string>
     <string name="sb_post_created">Unggahan Dibuat !</string>
     <string name="no_posts">Tidak ada Unggahan</string>
@@ -113,4 +113,7 @@
 <!--        <item quantity="one" translation_description="Inline error for weak password">Password not strong enough. Use at least %1$d character.</item>-->
         <item quantity="other" translation_description="Inline error for weak password">Kata sandi kurang kuat. Gunakan setidaknya 6 karakter.</item>
     </plurals>
+    <string name="fui_sign_in_with_google" translation_description="Sign in button text">Masuk dengan Google</string>
+    <string name="fui_sign_in_with_email" translation_description="Sign in button text">Masuk dengan Email</string>
+    <string name="fui_sign_in_default" translation_description="Button text to sign in">Masuk</string>
 </resources>
